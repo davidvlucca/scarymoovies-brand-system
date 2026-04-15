@@ -1,0 +1,269 @@
+import { InteractionDemo } from '@/components/brand/interaction-demo'
+import { ScreenAnnotation } from '@/components/brand/screen-annotation'
+
+# Interactions
+
+ScaryMoovies interactions are designed to feel immediate and deliberate — responsive enough to feel alive, restrained enough to stay out of the way. Every animation has a functional reason.
+
+---
+
+## Explore Page — Genre Filter
+
+<InteractionDemo variant="genre-filter" label="Genre Filter Collapse" />
+
+The genre filter uses a **structural hide** pattern. Clicking a genre label collapses all other genre sections entirely, leaving only the selected genre fully expanded.
+
+**Why hide, not dim:** Genres represent mutually exclusive content spaces. When a user selects Horror, they have no interest in browsing Thriller or Sci-Fi simultaneously — those sections would only create noise and visual clutter. Removing them from view gives the selected genre room to breathe and signals clearly that the user has navigated into a specific space.
+
+### CSS Spec
+
+```css
+/* Sections that are NOT selected */
+.genre-section[data-hidden="true"] {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 300ms ease-in-out, opacity 300ms ease-in-out;
+}
+
+/* The selected section */
+.genre-section[data-hidden="false"] {
+  max-height: 2000px; /* large enough for any genre's content */
+  opacity: 1;
+  overflow: visible;
+  transition: max-height 300ms ease-in-out, opacity 300ms ease-in-out;
+}
+```
+
+| Property | Value |
+|---|---|
+| Hidden state | `max-height: 0; opacity: 0; overflow: hidden` |
+| Visible state | `max-height: 2000px; opacity: 1` |
+| Duration | `300ms` |
+| Easing | `ease-in-out` |
+
+---
+
+## Explore Page — Mood Filter
+
+<InteractionDemo variant="mood-filter" label="Mood Filter Opacity" />
+
+The mood filter uses an **opacity dim** pattern. It is applied on top of whatever genre state is active. Cards that do not match the selected mood are dimmed in place — they are not removed, hidden, or reordered.
+
+**Why dim, not hide:** Moods are an overlay lens, not a navigation destination. A user browsing Horror with the "Dread" mood selected should still see the full Horror catalog — they're looking through it, not filtering down to a subset. Keeping non-matching cards at low opacity preserves layout context and lets the user understand what they're choosing not to see. This also prevents layout shift, which would be disorienting when many cards change state at once.
+
+### CSS Spec
+
+```css
+/* Cards that do NOT match the selected mood */
+.movie-card[data-mood-match="false"] {
+  opacity: 0.15;
+  transition: opacity 200ms ease;
+}
+
+/* Cards that DO match (or when no mood is selected) */
+.movie-card[data-mood-match="true"] {
+  opacity: 1;
+  transition: opacity 200ms ease;
+}
+```
+
+| Property | Value |
+|---|---|
+| Non-matching card opacity | `0.15` |
+| Matching card opacity | `1` |
+| Transition | `opacity 200ms ease` |
+| Layout shift | None — all cards remain in place |
+
+### Layering with Genre Filter
+
+The mood filter reads from whatever cards are currently visible after genre filtering. The two filters are independent and composable: genre filter controls which sections are structurally present; mood filter controls which cards within visible sections are emphasized. A card can only be mood-dimmed if it is in an expanded genre section.
+
+<ScreenAnnotation
+  src="/assets/screen-genres.png"
+  alt="Explore page with genre filter and mood filter active"
+  caption="Explore page: genre filter collapse and mood filter opacity working together"
+  annotations={[
+    { number: 1, x: 8, y: 20, label: "Genre label — click to collapse all other sections" },
+    { number: 2, x: 50, y: 40, label: "Expanded genre section — max-height: 2000px, opacity: 1" },
+    { number: 3, x: 50, y: 75, label: "Non-matching mood cards — opacity: 0.15, no layout shift" },
+    { number: 4, x: 85, y: 12, label: "Mood filter controls — overlay lens, composable with genre" }
+  ]}
+/>
+
+---
+
+## Why Two Different Filter Patterns
+
+Genres and moods answer different questions.
+
+**Genre = where am I?** It's structural navigation. Selecting Horror means you've entered the Horror space. The other genres are irrelevant — hiding them is honest about that.
+
+**Mood = what am I looking for within here?** It's a discovery lens. Moods surface films that match a feeling from within the catalog you're already browsing. Dimming (rather than hiding) preserves the full picture and lets the mood operate as a filter you can lift at any time without disorientation.
+
+Using the same pattern for both would blur this distinction. The visual difference in behavior — collapse vs. dim — communicates the difference in intent.
+
+---
+
+## Hover States
+
+All hover transitions use CSS and run at the component level. No JavaScript involvement.
+
+| Element | Property | Default | Hover | Transition |
+|---|---|---|---|---|
+| Movie poster | `transform` | `scale(1)` | `scale(1.03)` | `transform 200ms ease` |
+| Card | `background-color` | `black-500` | `black-400` | `background-color 150ms ease` |
+| Button | `background-color` | per component spec | per component spec | `background-color 150ms ease` |
+| Nav link | `color` | `white-700` | `white-50` | `color 100ms ease` |
+
+```css
+.movie-poster {
+  transition: transform 200ms ease;
+}
+.movie-poster:hover {
+  transform: scale(1.03);
+}
+
+.card {
+  transition: background-color 150ms ease;
+}
+.card:hover {
+  background-color: var(--color-black-400);
+}
+
+.nav-link {
+  color: var(--color-white-700);
+  transition: color 100ms ease;
+}
+.nav-link:hover {
+  color: var(--color-white-50);
+}
+```
+
+---
+
+## Skeleton Loading
+
+Skeletons replace content during data fetches. They match the dimensions of the elements they stand in for, preventing layout shift when real content loads.
+
+**Used for:** movie poster grids, section rows, search results.
+
+```css
+.skeleton {
+  background-color: var(--color-black-400);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-black-300) 50%,
+    transparent 100%
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+```
+
+| Property | Value |
+|---|---|
+| Base color | `black-400` |
+| Shimmer color | `black-300` |
+| Direction | Left to right |
+| Duration | `1.5s` |
+| Iteration | `infinite` |
+
+---
+
+## Search Flyout
+
+The search flyout opens and closes with a combined opacity and vertical translate.
+
+```css
+.search-flyout {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 150ms ease, transform 150ms ease;
+  pointer-events: none;
+}
+
+.search-flyout[data-open="true"] {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+```
+
+| State | `opacity` | `transform` | Duration |
+|---|---|---|---|
+| Closed | `0` | `translateY(-8px)` | — |
+| Open | `1` | `translateY(0)` | `150ms ease` |
+
+**Dismiss triggers:** Escape key or click outside the flyout. Both close the panel without animation delay.
+
+---
+
+## Pick Your Fear Quiz — Question Transitions
+
+Questions slide and fade as the user moves through the quiz. The directional motion reinforces forward progression.
+
+```css
+/* Entering question */
+.quiz-question[data-state="enter"] {
+  animation: question-enter 250ms ease-out forwards;
+}
+
+/* Exiting question */
+.quiz-question[data-state="exit"] {
+  animation: question-exit 200ms ease-in forwards;
+}
+
+@keyframes question-enter {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes question-exit {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(-20px); }
+}
+```
+
+| Direction | `opacity` | `transform` | Duration | Easing |
+|---|---|---|---|---|
+| Enter | `0 → 1` | `translateX(20px) → translateX(0)` | `250ms` | `ease-out` |
+| Exit | `1 → 0` | `translateX(0) → translateX(-20px)` | `200ms` | `ease-in` |
+
+---
+
+## General Animation Principles
+
+**Prefer CSS transitions over JavaScript animations.** CSS transitions run on the compositor thread where possible, are more performant, and are easier to audit. JavaScript animation libraries are not used for UI feedback states.
+
+**No UI feedback animation should exceed 400ms.** Anything longer makes the interface feel sluggish. The longest animation in this system is the genre filter collapse at 300ms. Quiz transitions are the next longest at 250ms. Skeleton loading is exempt — it runs indefinitely until content arrives.
+
+**Respect `prefers-reduced-motion`.** Every animation in this system must be suppressible. Apply the following globally:
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+This preserves instant state changes (so interactions still function) while eliminating motion for users who have opted out. Skeleton shimmer, quiz slides, flyout fades, and all hover transitions are covered by this rule.

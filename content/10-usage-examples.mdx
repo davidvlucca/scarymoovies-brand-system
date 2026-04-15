@@ -1,0 +1,173 @@
+import { ScreenAnnotation } from '@/components/brand/screen-annotation'
+
+# Usage Examples
+
+The sections below walk through each major product surface, naming the specific brand elements in play — color tokens, typography roles, component types, and spacing decisions. Use these as a reference when building new screens or auditing existing ones for brand consistency.
+
+---
+
+## 1. Homepage
+
+<ScreenAnnotation
+  src="/assets/screen-homepage.png"
+  alt="ScaryMoovies Homepage MVP"
+  caption="Homepage: primary discovery surface — hero, Featured, Coming Soon, Scary Picks, Spooky People"
+  annotations={[
+    { number: 1, x: 10, y: 8, label: "Global navigation — sticky, 64px, black-600 bg" },
+    { number: 2, x: 50, y: 30, label: "Hero — full-width backdrop, Playfair Display 900, PYF Button CTA" },
+    { number: 3, x: 15, y: 58, label: "Section label — Inter 700, all-caps, 0.08em tracking, white-50" },
+    { number: 4, x: 50, y: 65, label: "Featured row — landscape 16:9 cards, 8px radius, black-700 fallback" },
+    { number: 5, x: 78, y: 65, label: "Coming Soon badge — red-500 bg, white Inter 11px" }
+  ]}
+/>
+
+The Homepage is the densest single surface in the product and the one that must establish the cinematic tone within the first viewport.
+
+**Hero.** The hero occupies the full viewport width and roughly 60–70% of the viewport height. A movie backdrop image fills the container via `object-fit: cover`, and a dark overlay — `black-900` at approximately 70% opacity — sits above it. This overlay is the defining technique of the dark-first surface system: it absorbs the image's color noise and ensures that white text remains legible regardless of the poster behind it. The hero title renders in Playfair Display, weight 900, at display scale (56–72px depending on breakpoint), color `white-50`. The PYF Button sits centered beneath the title as the primary CTA, using its resting state: `purple-400` background, `white` label, `PICK YOUR FEAR` text all-caps, pill shape. This is the highest-emphasis placement for that component in the entire product.
+
+**Featured and Coming Soon rows.** Below the hero, horizontal scroll rows present landscape movie cards. Section labels — "FEATURED", "COMING SOON" — render in Inter, weight 700, all-caps, letter-spacing `0.08em`, color `white-50`, at approximately 14–16px. This caps-plus-tracking treatment is the consistent section-header pattern throughout the app. Landscape cards use a 16:9 aspect ratio, `border-radius: 8px`, and `black-700` as the fallback background before images load. The Coming Soon row adds release date chips — small pill badges in `red-500` background with `white` Inter text at 11px — overlaid at the bottom-left of each card. Red here functions as its designated role: a genre-marking urgency signal, not a decorative accent.
+
+**Scary Picks (tabbed sub-genres).** The Scary Picks section introduces the only tab component on the homepage. Sub-genre tabs — Supernatural, Slasher, Alien — are rendered in Inter medium at 13–14px. The active tab carries a `purple-400` underline or background indicator; inactive tabs use `white-700` text with no underline, transitioning to `white-50` on hover. Each selected tab reveals a horizontal movie card row beneath, maintaining the same landscape card pattern used in Featured.
+
+**Spooky People.** The cast section uses circular thumbnail avatars — equal width and height, `border-radius: 9999px`, typically 80–96px diameter. Each is labeled below with Inter Regular at 12px in `white-300`. The row scrolls horizontally on smaller viewports. The circular crop against the dark `black-900` background creates a deliberate contrast: human faces lit against the void, keeping the horror aesthetic intact even in a social/cast context.
+
+---
+
+## 2. Explore / Genres
+
+<ScreenAnnotation
+  src="/assets/screen-genres.png"
+  alt="ScaryMoovies Explore page — genre rows"
+  caption="Explore / Genres: vertically stacked sub-genre sections with 4-column landscape card grids"
+  annotations={[
+    { number: 1, x: 10, y: 18, label: "Sub-genre label — white-50, weight 700, all-caps, tracking-widest" },
+    { number: 2, x: 50, y: 40, label: "4-column landscape card grid — 16:9, 8px radius, 12-16px gutter" },
+    { number: 3, x: 90, y: 18, label: "Collapse chevron — white-500, indicates expandable section" }
+  ]}
+/>
+
+The Explore page is organized as a vertically stacked list of sub-genre sections, each functioning as a labeled block with its own 4-column landscape card grid.
+
+**Sub-genre labels.** Each section opens with a label in the same caps-and-tracking Inter treatment used for section headers on the Homepage (`white-50`, weight 700, all-caps, `tracking-widest`). The label is left-aligned and sits 16–24px above the grid it introduces. This consistent label style creates a vertical rhythm that lets users scan quickly from section to section.
+
+**4-column card grid.** Within each sub-genre block, landscape movie cards are arranged in a fixed 4-column grid with a gutter of 12–16px. Cards maintain the 16:9 ratio and `border-radius: 8px`. The grid does not compress to fewer columns on wide viewports — it is a deliberate fixed-density layout that prioritizes browse efficiency. On smaller viewports the grid collapses to 2 columns.
+
+**Collapsible section behavior.** Sub-genre sections support a collapsed state: when collapsed, the card grid is hidden and only the section label remains, with a chevron icon in `white-500` at the right edge indicating expandability. This is a surface-specific brand decision — density control through collapse, not pagination. The interaction keeps the dark background continuous without large blank zones between sections.
+
+---
+
+## 3. Profile
+
+<ScreenAnnotation
+  src="/assets/screen-profile.png"
+  alt="ScaryMoovies Profile page"
+  caption="Profile: cover banner, avatar, stats row, and personal tier list"
+  annotations={[
+    { number: 1, x: 50, y: 15, label: "Cover banner — object-fit: cover, black-900 gradient overlay" },
+    { number: 2, x: 50, y: 28, label: "Avatar — 120-140px, border-radius: 9999px, 3px purple-400 ring" },
+    { number: 3, x: 50, y: 42, label: "Stats row — Playfair Display 700 numerals, Inter 12px labels" },
+    { number: 4, x: 10, y: 60, label: "Watchlist label — standard caps-and-tracking Inter treatment" },
+    { number: 5, x: 50, y: 70, label: "Watchlist row — vertical poster thumbnails, 2:3, horizontal scroll" }
+  ]}
+/>
+
+The Profile page adapts the cinematic language to a personal context without losing the horror-platform identity.
+
+**Cover banner.** A full-width movie backdrop fills the top of the page, approximately 200–240px tall, using the same `object-fit: cover` technique as the hero. A dark gradient overlay — `black-900` fading from bottom to 0% opacity at the top — ensures the avatar and stats below it remain readable against any backdrop color.
+
+**Avatar.** A centered circular avatar (120–140px diameter, `border-radius: 9999px`, `border: 3px solid purple-400`) sits at the bottom edge of the cover banner, overlapping it by roughly 50%. The `purple-400` ring is the brand's primary accent making its clearest non-interactive appearance: here it marks the user's identity as the most important element on the surface.
+
+**Stats row.** Four stat blocks — Films Watched, Watchlist, Reviews, Hours — are laid out in equal-width columns beneath the avatar. The numeric value renders in Playfair Display, weight 700, at 28–32px, `white-50`. The label beneath each number is Inter Regular, 12px, `white-500`. This pairing (display serif for the number, body sans for the label) applies the typographic hierarchy at a data-display scale: the number carries the emotional weight, the label provides context.
+
+**Watchlist row.** A horizontal scroll row of vertical poster thumbnails (2:3 ratio, `border-radius: 8px`) represents the user's saved films. The section label "WATCHLIST" follows the standard caps-and-tracking treatment.
+
+---
+
+## 4. Tier List
+
+<ScreenAnnotation
+  src="/assets/screen-tier-list.png"
+  alt="ScaryMoovies Tier List — all 7 tiers"
+  caption="Tier List: S through F rows with horizontally scrolling poster strips and unrated grid"
+  annotations={[
+    { number: 1, x: 4, y: 15, label: "S-tier label — Playfair Display 900, purple-400 left border 4px" },
+    { number: 2, x: 4, y: 85, label: "F-tier label — red-500 left border, marks the bottom of the scale" },
+    { number: 3, x: 50, y: 50, label: "Poster strip — 2:3 thumbnails, 8px gaps, overflow-x: auto, snap" },
+    { number: 4, x: 50, y: 92, label: "Unrated grid — black-900 bg, content awaiting tier placement" }
+  ]}
+/>
+
+The Tier List is the profile page's signature component and the most structured layout in the product.
+
+**Tier rows.** Seven tier rows run vertically: S, A, B, C, D, E, F. The left column of each row is a fixed-width cell (approximately 40px wide) containing the tier label. The label renders in Playfair Display, weight 900, at 20–24px. The cell background is `black-700`. The S-tier cell carries a `purple-400` left border (4px) as a visual accent — marking S as the pinnacle, the brand's primary color elevated to the position of highest honor. The F-tier cell mirrors this with a `red-500` left border, the danger/horror accent used to signal the bottom of the scale without ambiguity.
+
+**Poster scroll.** The right side of each row is a horizontally scrolling strip of vertical movie poster thumbnails (2:3 ratio, `border-radius: 8px`), with 8px gaps between them. The strip has no visible end cap — it implies abundance. The entire row sits on `black-800`, one surface step above the page background, creating a subtle separation between rows without requiring divider lines.
+
+**Unrated grid.** Below the tier rows, a grid of poster thumbnails awaiting user rating is presented on `black-900` — the base background, one surface level down from the tier rows. The visual step down signals a different state: content that has been seen but not yet judged. A section label "UNRATED" in the standard caps-and-tracking Inter style introduces the grid.
+
+---
+
+## 5. Pick Your Fear
+
+<ScreenAnnotation
+  src="/assets/screen-pyf.png"
+  alt="ScaryMoovies Pick Your Fear quiz"
+  caption="Pick Your Fear: full-screen atmospheric quiz with centered question card and pill-shaped answer options"
+  annotations={[
+    { number: 1, x: 50, y: 5, label: "Navbar — transparent/black-900 bg, does not compete with quiz" },
+    { number: 2, x: 50, y: 45, label: "Question card — black-700, 32-40px padding, Playfair Display 700" },
+    { number: 3, x: 50, y: 65, label: "Answer options — PYF Button style, purple-400, pill shape, Inter all-caps" },
+    { number: 4, x: 50, y: 95, label: "Progress indicator — question number out of 8 total" }
+  ]}
+/>
+
+The Pick Your Fear screen is the most atmospheric surface in the product. It functions more like an interactive experience than a standard app page.
+
+**Background.** The full screen renders on `black-500` — the mid-range of the black scale, darker than a card surface but lighter than the deepest void. This choice is deliberate: it avoids the absolute flatness of `black-900` while still reading as immersive darkness. No image backdrop is used; the dark field is the atmosphere.
+
+**Navbar.** The standard navbar appears at the top, maintaining product continuity. Its background is transparent or `black-900`, ensuring it does not visually compete with the central content. The PYF button in the navbar renders in its resting state (`purple-400`) even while the user is mid-flow, serving as a consistent anchor point.
+
+**Central question card.** The quiz question is presented in a centered card on `black-700`, with generous internal padding (32–40px). The question text renders in Playfair Display, weight 700, at 24–32px, `white-50` — the display typeface carrying the emotional charge of the horror prompt. Answer options are styled as the PYF Button component: pill shape, `purple-400` background, Inter medium all-caps label, full clickable area. This is the primary interactive expression of the PYF button outside of its navbar and hero CTA contexts, and it demonstrates that the component scales from a single prominent CTA to a set of parallel choices without losing legibility or brand coherence.
+
+---
+
+## 6. Component States
+
+<ScreenAnnotation
+  src="/assets/screen-components.png"
+  alt="ScaryMoovies component states reference sheet"
+  caption="Component states: PYF button variants, movie poster types, and navbar layout documented in isolation"
+  annotations={[
+    { number: 1, x: 15, y: 20, label: "PYF Button — Primary: purple-400 bg, white label" },
+    { number: 2, x: 15, y: 40, label: "PYF Button — Hover: purple-300 bg, lightens on cursor enter" },
+    { number: 3, x: 15, y: 60, label: "PYF Button — Active: purple-500 bg, scale(0.97)" },
+    { number: 4, x: 15, y: 80, label: "PYF Button — Disabled: black-300 bg, white-700 text" },
+    { number: 5, x: 55, y: 35, label: "Vertical poster 2:3 — rest and hover states" },
+    { number: 6, x: 80, y: 35, label: "Horizontal poster 16:9 — rest and hover with play icon" },
+    { number: 7, x: 50, y: 80, label: "Navbar — full-width, black-900, logo left, PYF right" }
+  ]}
+/>
+
+The components screen documents the interface system in isolation, outside any product surface.
+
+**PYF Button states.** All four states are displayed in a vertical or horizontal stack: Primary (`purple-400` background), Hover (`purple-300`, lighter and more saturated), Active (`purple-500`, darker, `scale(0.97)` transform implied), and Disabled (`black-300` background, `white-700` text, no hover response). The progression from Primary to Hover is a deliberate lightening — interactive affordance is communicated by moving toward brightness, not away from it. The Active state darkens slightly and compresses, simulating a physical press. The Disabled state desaturates entirely into the black scale, signaling unavailability without requiring an icon or label.
+
+**Movie Poster variants.** The Vertical poster (2:3, `border-radius: 8px`) and Horizontal/Landscape card (16:9, same radius) are shown in both rest and hover states. The hover overlay — `black/50` scrim that fades in — is the only treatment applied; no border or glow is added. The rating chip that surfaces on hover sits bottom-right of the vertical poster in a small pill (`black-900/80` background, `white-50` text, Inter Regular 11px). The landscape card hover may surface additional metadata in a similar bottom-anchored scrim.
+
+**Navbar layout.** The navbar is a full-width bar on `black-900`, with the ScaryMoovies wordmark left-anchored and the PYF button right-anchored. Navigation links (if present) sit in the center or left cluster in Inter Regular 14px, `white-300` at rest, `white-50` on hover. The PYF button in the navbar is the smallest and least padded instance of the component but maintains its full pill radius and `purple-400` fill.
+
+---
+
+## 7. Brand Application Principles
+
+When designing screens not yet built, apply the following five principles to ensure decisions stay on-brand without referencing individual component specs.
+
+**1. Start from darkness, earn light.** Every new surface begins with `black-900` as the base. Color, light, and image are added only where they carry meaning — to mark hierarchy, signal interactivity, or create atmosphere. If you find yourself adding light elements for decoration, remove them. The dark field is not empty space; it is the designed state.
+
+**2. Reserve purple for action, red for danger.** These are the only two hues with semantic weight in the system. Purple (`purple-400`) belongs exclusively to interactive affordances: buttons, active tabs, focus rings, the avatar border on Profile. Red (`red-500`) belongs exclusively to urgency, error, and horror-genre signals: badges, alerts, F-tier accents. Using either color in a purely decorative capacity — as a background fill, a divider, a section tint — is a brand violation. Their power comes from scarcity.
+
+**3. Let the display typeface set the mood, let Inter carry the information.** Playfair Display, weight 900, is the emotional instrument. Every screen that needs to feel cinematic — a new landing section, an onboarding moment, a feature announcement — should have at least one Playfair Display headline. Everything functional (labels, metadata, tabs, buttons, form fields) is Inter. Mixing the roles blurs both: do not set button labels in Playfair, do not use Inter for hero headlines.
+
+**4. Use the surface stack to create depth, not lines.** The three surface levels — `black-900` (base), `black-700` (card), `black-500` (elevated) — are the only tools needed to separate content layers. Divider lines, borders between sections, and separator rules are almost never necessary when the surface stack is applied correctly. If you feel the need to add a line, first try lifting the content above it by one surface step instead.
+
+**5. Scale components, do not invent new ones.** Every interactive element in a new screen should map to an existing component in the system — the PYF Button, the vertical poster, the landscape card, the circular avatar, the stat block. If the use case seems to require a novel element, first check whether an existing component can be scaled (made smaller, stripped of a layer, or used in a new arrangement) before introducing a new pattern. Brand coherence comes from a small vocabulary applied consistently, not from a large vocabulary applied once each.

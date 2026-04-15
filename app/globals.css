@@ -1,0 +1,325 @@
+@import "tailwindcss";
+
+/* ─── Raw Color Tokens ─────────────────────────────── */
+:root {
+  /* Purple scale */
+  --purple-50:  #ebe6ef;
+  --purple-100: #c0b0cd;
+  --purple-200: #a28ab4;
+  --purple-300: #785492;
+  --purple-400: #5d337d;
+  --purple-500: #35005d;
+  --purple-600: #300055;
+  --purple-700: #260042;
+  --purple-800: #1d0033;
+  --purple-900: #160027;
+
+  /* Red scale */
+  --red-50:  #f1e7e7;
+  --red-100: #d4b5b5;
+  --red-200: #c09292;
+  --red-300: #a36060;
+  --red-400: #914141;
+  --red-500: #751111;
+  --red-600: #6a0f0f;
+  --red-700: #530c0c;
+  --red-800: #400909;
+  --red-900: #310707;
+
+  /* Black scale */
+  --black-50:  #e7e7e7;
+  --black-100: #b4b3b4;
+  --black-200: #8f8e90;
+  --black-300: #5c5b5e;
+  --black-400: #3d3b3e;
+  --black-500: #0c0a0e;
+  --black-600: #0b090d;
+  --black-700: #09070a;
+  --black-800: #070608;
+  --black-900: #050406;
+
+  /* White scale */
+  --white-50:  #fefefe;
+  --white-100: #fcfbfc;
+  --white-200: #faf9fa;
+  --white-300: #f8f6f8;
+  --white-400: #f6f5f7;
+  --white-500: #f4f2f5;
+  --white-600: #dedcdf;
+  --white-700: #adacae;
+  --white-800: #868587;
+  --white-900: #666667;
+
+  /* ─── Semantic Tokens ─────────────────────────────── */
+  --bg-primary:          var(--black-500);
+  --bg-surface:          var(--black-600);   /* #0b090d — near-black surface */
+  --bg-elevated:         var(--black-700);   /* #09070a — deepest surface */
+  --bg-overlay:          var(--purple-900);
+
+  --text-primary:        var(--white-500);
+  --text-secondary:      var(--white-700);
+  --text-muted:          var(--black-200);
+
+  --accent-primary:      var(--purple-500);
+  --accent-hover:        var(--purple-400);
+  --accent-strong:       var(--purple-300);
+  --accent-danger:       var(--red-500);
+  --accent-danger-hover: var(--red-400);
+
+  --border-subtle:       rgba(254, 254, 254, 0.08);   /* slightly more visible */
+  --border-default:      rgba(254, 254, 254, 0.12);
+  --border-focus:        var(--purple-300);
+}
+
+/* ─── Tailwind v4 Theme Mapping ───────────────────── */
+@theme inline {
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+
+  --color-purple-50: var(--purple-50);
+  --color-purple-100: var(--purple-100);
+  --color-purple-200: var(--purple-200);
+  --color-purple-300: var(--purple-300);
+  --color-purple-400: var(--purple-400);
+  --color-purple-500: var(--purple-500);
+  --color-purple-600: var(--purple-600);
+  --color-purple-700: var(--purple-700);
+  --color-purple-800: var(--purple-800);
+  --color-purple-900: var(--purple-900);
+
+  --color-red-50: var(--red-50);
+  --color-red-100: var(--red-100);
+  --color-red-200: var(--red-200);
+  --color-red-300: var(--red-300);
+  --color-red-400: var(--red-400);
+  --color-red-500: var(--red-500);
+  --color-red-600: var(--red-600);
+  --color-red-700: var(--red-700);
+  --color-red-800: var(--red-800);
+  --color-red-900: var(--red-900);
+
+  --color-black-50: var(--black-50);
+  --color-black-100: var(--black-100);
+  --color-black-200: var(--black-200);
+  --color-black-300: var(--black-300);
+  --color-black-400: var(--black-400);
+  --color-black-500: var(--black-500);
+  --color-black-600: var(--black-600);
+  --color-black-700: var(--black-700);
+  --color-black-800: var(--black-800);
+  --color-black-900: var(--black-900);
+
+  --color-white-50: var(--white-50);
+  --color-white-100: var(--white-100);
+  --color-white-200: var(--white-200);
+  --color-white-300: var(--white-300);
+  --color-white-400: var(--white-400);
+  --color-white-500: var(--white-500);
+  --color-white-600: var(--white-600);
+  --color-white-700: var(--white-700);
+  --color-white-800: var(--white-800);
+  --color-white-900: var(--white-900);
+}
+
+/* ─── Base Reset ──────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Focus Rings ─────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* ─── Reduced Motion ──────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Prose Styles (MDX content) ─────────────────── */
+.prose {
+  color: var(--text-primary);
+  max-width: 72ch;
+}
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  color: var(--white-50);
+  font-family: var(--font-body);
+  letter-spacing: -0.03em;
+}
+.prose h1 { font-weight: 800; }
+.prose h2 { font-weight: 700; }
+.prose h3 { font-weight: 600; }
+.prose h4 { font-weight: 600; }
+.prose h1 { font-size: 2.5rem; margin-top: 0; }
+.prose h2 { font-size: 1.75rem; margin-top: 3rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.5rem; }
+.prose h3 { font-size: 1.25rem; margin-top: 2rem; color: var(--accent-strong); }
+.prose p  { font-size: 1rem; line-height: 1.7; color: var(--text-secondary); }
+.prose a  { color: var(--accent-strong); text-decoration: underline; text-underline-offset: 3px; }
+.prose a:hover { color: var(--white-50); }
+.prose code {
+  font-size: 0.875em;
+  background: var(--bg-surface);
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+  color: var(--accent-strong);
+}
+.prose pre {
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 1.25rem;
+  overflow-x: auto;
+}
+.prose pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+.prose blockquote {
+  border-left: 3px solid var(--accent-primary);
+  padding-left: 1.25rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+.prose ul, .prose ol {
+  padding-left: 1.5rem;
+  color: var(--text-secondary);
+}
+.prose li { margin-bottom: 0.4rem; line-height: 1.6; }
+.prose table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.prose th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border-default);
+  color: var(--white-50);
+  font-weight: 600;
+}
+.prose td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+.prose hr { border-color: var(--border-subtle); margin: 3rem 0; }
+
+/* ─── App Shell Layout ────────────────────────────── */
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  margin-left: 240px;
+  flex: 1;
+  min-height: 100vh;
+  padding: 48px 56px;
+  max-width: 900px;
+  transition: margin-left 200ms ease;
+}
+
+/* ─── Mobile Menu Button ──────────────────────────── */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 50;
+  width: 40px;
+  height: 40px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0;
+}
+.mobile-menu-btn span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+/* ─── Sidebar Responsive ──────────────────────────── */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 35;
+}
+
+/* ─── Responsive Breakpoints ──────────────────────── */
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 72px 20px 40px;
+    max-width: 100%;
+  }
+
+  .sidebar-overlay.is-open {
+    display: block;
+  }
+
+  aside[data-open="false"] {
+    transform: translateX(-100%);
+  }
+  aside[data-open="true"] {
+    transform: translateX(0);
+  }
+  aside {
+    transition: transform 250ms ease;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.6);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .main-content {
+    padding: 48px 32px;
+    max-width: 100%;
+  }
+}
+
+/* ─── Prose Responsive ────────────────────────────── */
+@media (max-width: 768px) {
+  .prose h1 { font-size: 1.875rem; }
+  .prose h2 { font-size: 1.375rem; }
+  .prose h3 { font-size: 1.125rem; }
+  .prose table { font-size: 0.8rem; }
+  .prose th, .prose td { padding: 0.4rem 0.5rem; }
+}
+
+/* ─── Dos & Donts Grid ────────────────────────────── */
+.dos-donts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 640px) {
+  .dos-donts-grid {
+    grid-template-columns: 1fr;
+  }
+}

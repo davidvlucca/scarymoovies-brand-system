@@ -1,0 +1,247 @@
+import { TypeSpecimen } from '@/components/brand/type-specimen'
+
+# Typography
+
+Type is atmosphere. On ScaryMoovies, every headline that makes a viewer lean forward and every body line they read in low light is shaped by two deliberately paired typefaces — one built for legibility under pressure, the other for cinematic dread.
+
+---
+
+## Font Families
+
+### Primary — Inter
+
+**Inter** is the backbone of the entire UI. Designed by Rasmus Andersson for screens first, it is an exceptionally legible sans-serif that handles small sizes, dark backgrounds, and dense metadata with zero fatigue. Its slightly wide letterforms and open apertures keep reading comfortable at the low-contrast conditions typical of a dark-mode film platform.
+
+Use Inter for: all body text, navigation labels, buttons, form inputs, metadata strings (runtime, year, rating), badge text, captions, tooltips, and any interactive element where clarity is mission-critical.
+
+**Google Fonts / Next.js loading:**
+
+```tsx
+// app/layout.tsx
+import { Inter } from 'next/font/google';
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+});
+```
+
+**CSS custom property:** `--font-inter`
+**Fallback stack:** `system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`
+
+---
+
+### Display — Playfair Display
+
+**Playfair Display** (heavy weight, Black 900) is the horror voice of ScaryMoovies. It is a high-contrast serif with sharply tapered serifs, dramatic thick-to-thin stroke transitions, and an inherent theatricality rooted in 18th-century type design. At large sizes it reads like a film poster pulled from the archive — authoritative, slightly unsettling, unmistakably cinematic. Unlike novelty "horror" fonts, Playfair Display is fully legible, which means it can carry long hero headlines without sacrificing readability. The darkness lives in the contrast and the weight, not in distortion.
+
+Use Playfair Display for: hero banners, section titles that establish mood, genre header cards, editorial pull-quotes, and any display moment where the type itself needs to carry emotional weight.
+
+**Google Fonts / Next.js loading:**
+
+```tsx
+// app/layout.tsx
+import { Inter, Playfair_Display } from 'next/font/google';
+
+const playfairDisplay = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['700', '900'],
+  style: ['normal', 'italic'],
+  variable: '--font-playfair',
+  display: 'swap',
+});
+```
+
+**CSS custom property:** `--font-playfair`
+**Fallback stack:** `'Georgia', 'Times New Roman', serif`
+
+---
+
+## Type Scale
+
+The scale is built on a fluid but deliberate step system. All values are expressed in `rem` (base 16px). The `display-*` steps use Playfair Display; all `heading-*`, `body-*`, and `label` steps use Inter.
+
+<TypeSpecimen level="display" text="Horror Lives in the Dark" />
+
+<TypeSpecimen level="h1" text="The Overlook Has Never Been Empty" />
+
+<TypeSpecimen level="h2" text="Supernatural — Slow Burn — Atmospheric" />
+
+<TypeSpecimen level="h3" text="Community Reviews" />
+
+<TypeSpecimen level="body" text="The silence between screams is where the real horror lives. ScaryMoovies was built for people who understand that." />
+
+<TypeSpecimen level="caption" text="113 min · 1980 · Stanley Kubrick" />
+
+<TypeSpecimen level="label" text="S TIER" />
+
+| Token | rem | px | Font | Default Weight | Usage |
+|---|---|---|---|---|---|
+| `display-2xl` | 4.5rem | 72px | Playfair Display | 900 Black | Hero moments only — full-bleed banners |
+| `display-xl` | 3.75rem | 60px | Playfair Display | 900 Black | Page heroes, feature film titles |
+| `display-lg` | 3rem | 48px | Playfair Display | 700 Bold | Section heroes, genre landing headers |
+| `heading-xl` | 2.25rem | 36px | Inter | 700 Bold | Page-level titles (h1 within content areas) |
+| `heading-lg` | 1.875rem | 30px | Inter | 700 Bold | Section titles (h2) |
+| `heading-md` | 1.5rem | 24px | Inter | 600 SemiBold | Card titles, modal headers (h3) |
+| `heading-sm` | 1.25rem | 20px | Inter | 600 SemiBold | Subsection labels, accordion headers (h4) |
+| `body-lg` | 1.125rem | 18px | Inter | 400 Regular | Featured body text, synopsis introductions |
+| `body-md` | 1rem | 16px | Inter | 400 Regular | Default body text, list items, descriptions |
+| `body-sm` | 0.875rem | 14px | Inter | 400 Regular | Secondary text, metadata, timestamps |
+| `label` | 0.75rem | 12px | Inter | 500 Medium | Tags, badges, category labels (always uppercase) |
+
+---
+
+## Font Weights
+
+ScaryMoovies uses a controlled weight palette. Using fewer weights keeps the visual hierarchy intentional and prevents visual noise on dark surfaces.
+
+| Weight | Value | When to Use |
+|---|---|---|
+| Regular | 400 | All body text, descriptions, general prose |
+| Medium | 500 | Subtle emphasis within body, label text, nav items at rest |
+| SemiBold | 600 | Heading-md and heading-sm, active nav states, button labels |
+| Bold | 700 | Heading-xl and heading-lg, strong emphasis, display-lg |
+| Black | 900 | Display-xl and display-2xl (Playfair Display only) |
+
+Avoid using weights below 400 in the product UI. Thin weights on dark backgrounds fail contrast checks and feel anaemic against the mood of the platform.
+
+---
+
+## Line Height and Letter Spacing
+
+Display text needs compressed tracking so large letterforms feel architectural rather than scattered. Body text needs generous leading to stay readable in low-light viewing contexts.
+
+| Category | Line Height | Letter Spacing | Notes |
+|---|---|---|---|
+| `display-2xl` / `display-xl` | 1.05 | −0.03em | Near-solid leading; Playfair serifs provide natural rhythm |
+| `display-lg` | 1.1 | −0.025em | Slight breathing room added |
+| `heading-xl` / `heading-lg` | 1.2 | −0.02em | Tight but not cramped; Inter handles this cleanly |
+| `heading-md` / `heading-sm` | 1.3 | −0.01em | Comfortable for multi-line card titles |
+| `body-lg` / `body-md` | 1.6 | 0em | Relaxed leading improves readability at 16px–18px |
+| `body-sm` | 1.5 | 0.01em | Slightly opened tracking at small sizes aids legibility |
+| `label` | 1.2 | 0.08em | All-caps labels require wide tracking to read correctly |
+
+**Rule of thumb:** as size increases, tighten letter spacing. As size decreases, open it.
+
+---
+
+## Usage Rules
+
+These rules are non-negotiable across all surfaces — product screens, marketing pages, email templates, and component documentation.
+
+**Playfair Display is for mood, not mechanics.** It appears only at `display-lg` and above. Never use Playfair Display for body text, UI controls, or any interactive element. Never use it below 30px. Never use it at weights lighter than 700.
+
+**Inter is for everything functional.** Navigation, buttons, form labels, metadata, body copy, tooltips, captions — Inter handles all of it. If text performs a function rather than setting an atmosphere, Inter is the correct choice.
+
+**No mixing within a single element.** Do not apply a Playfair Display italic to emphasised words inside an Inter body paragraph. Emphasis inside Inter body uses `font-weight: 600` or a dedicated `<em>` style.
+
+**Italic Playfair Display** is reserved for pull-quotes and editorial inserts. It carries a classic-horror-paperback energy that works in isolation but not as structural type.
+
+---
+
+## Type Pairings
+
+Three real-world examples showing how Playfair Display and Inter work together across different ScaryMoovies contexts.
+
+### Pairing 1 — Hero Banner
+
+```
+[display-xl / Playfair Display 900]
+The Silence Between Screams
+
+[body-lg / Inter 400]
+A remote mountain lodge. Seven strangers. And something in the walls
+that has been waiting for exactly this long winter.
+```
+
+---
+
+### Pairing 2 — Genre Section Header
+
+```
+[display-lg / Playfair Display 700]
+New in Psychological Horror
+
+[body-md / Inter 400]
+Films that get under your skin and stay there. Curated weekly from
+festival premieres and underground submissions.
+```
+
+---
+
+### Pairing 3 — Film Detail Card
+
+```
+[heading-md / Inter 600]
+The Caretaker's Vigil
+
+[body-sm / Inter 400]
+2024 · 1h 52m · Unrated · Directed by Mara Osei
+
+[label / Inter 500 / uppercase / wide tracking]
+SLOW BURN   FOLK HORROR   ISOLATION
+```
+
+---
+
+## Accessibility
+
+**Minimum body text size is 14px (`body-sm`).** No informational text in the product may render below this threshold. The `label` token at 12px is permitted only for decorative tags and badges where the same information is available elsewhere in context (for example, a genre tag on a card that also displays the genre in the title).
+
+**Playfair Display at large display sizes** has high inherent contrast between thick and thin strokes. Do not reduce opacity of display type below 90% — the thin strokes disappear first and legibility collapses faster than the eye expects.
+
+**Letter spacing and all-caps labels:** the `label` token requires `letter-spacing: 0.08em` whenever text is rendered in uppercase. All-caps text without wide tracking fails WCAG SC 1.4.12 (Text Spacing) in practice even when it technically passes.
+
+**Font loading:** both fonts are loaded via `next/font/google` with `display: swap`. This ensures body text is visible immediately using the system fallback stack rather than leaving an invisible text flash during font load. Fallback metrics should be adjusted via `adjustFontFallback: true` (the Next.js default) to minimise layout shift.
+
+---
+
+## CSS Token Reference
+
+```css
+:root {
+  /* Font families */
+  --font-inter: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-playfair: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+
+  /* Type scale — size */
+  --text-display-2xl: 4.5rem;
+  --text-display-xl: 3.75rem;
+  --text-display-lg: 3rem;
+  --text-heading-xl: 2.25rem;
+  --text-heading-lg: 1.875rem;
+  --text-heading-md: 1.5rem;
+  --text-heading-sm: 1.25rem;
+  --text-body-lg: 1.125rem;
+  --text-body-md: 1rem;
+  --text-body-sm: 0.875rem;
+  --text-label: 0.75rem;
+
+  /* Line heights */
+  --leading-display-2xl: 1.05;
+  --leading-display-xl: 1.05;
+  --leading-display-lg: 1.1;
+  --leading-heading-xl: 1.2;
+  --leading-heading-lg: 1.2;
+  --leading-heading-md: 1.3;
+  --leading-heading-sm: 1.3;
+  --leading-body-lg: 1.6;
+  --leading-body-md: 1.6;
+  --leading-body-sm: 1.5;
+  --leading-label: 1.2;
+
+  /* Letter spacing */
+  --tracking-display-2xl: -0.03em;
+  --tracking-display-xl: -0.03em;
+  --tracking-display-lg: -0.025em;
+  --tracking-heading-xl: -0.02em;
+  --tracking-heading-lg: -0.02em;
+  --tracking-heading-md: -0.01em;
+  --tracking-heading-sm: -0.01em;
+  --tracking-body-lg: 0em;
+  --tracking-body-md: 0em;
+  --tracking-body-sm: 0.01em;
+  --tracking-label: 0.08em;
+}
+```

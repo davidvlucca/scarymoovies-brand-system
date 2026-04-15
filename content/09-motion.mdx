@@ -1,0 +1,184 @@
+import { ComponentDemo } from '@/components/brand/component-demo'
+
+## Motion Philosophy
+
+ScaryMoovies motion is cinematic and deliberate. Every animation should feel like tension building — the slow pull of a camera toward something unseen, not the bounce of a celebration notification. If an animation makes the interface feel playful or energetic, it is wrong for this brand.
+
+In practice, this means:
+
+- **Slower is usually better.** A 200ms card transition reads as polished; an 80ms one reads as twitchy.
+- **Transforms are purposeful.** Elements enter as if arriving from somewhere; they exit as if receding.
+- **Nothing loops unless it has a loading purpose.** Infinite animations exist only for skeleton loading states. Decorative loops are off-brand.
+- **No spring physics.** Spring-based easing introduces bounce and overshoot. ScaryMoovies motion never overshoots its target.
+
+The goal is an interface that feels like it breathes slowly — not one that reacts with nervous energy.
+
+---
+
+## Duration Scale
+
+| Name | Value | When to use |
+|---|---|---|
+| Instant | `0ms` | State changes that must register without any perceived delay — toggling a checkbox, applying a keyboard shortcut |
+| Fast | `100ms` | Hover color changes, active/pressed states, focus ring appearance |
+| Base | `150ms–200ms` | Most UI transitions: buttons, links, card hovers, icon swaps |
+| Moderate | `250ms–300ms` | Panel transitions, filter animations, flyouts, dropdowns |
+| Slow | `400ms` | Page-level transitions, section reveals, modal entrances |
+| Cinematic | `600ms–800ms` | Hero backdrop reveals, intentional slow fades reserved for high-impact moments |
+
+Use the shortest duration that communicates the transition clearly. Reserve Slow and Cinematic exclusively for high-hierarchy moments. Applying a 400ms duration to a button press is wrong — it makes the interface feel sluggish.
+
+---
+
+## Easing Guide
+
+| Value | Description | Use cases |
+|---|---|---|
+| `ease` | General default. Slightly biased toward ease-out feel. | Buttons, links, card hovers, color transitions — the safe default when no directional intent is needed |
+| `ease-out` | Decelerates as it arrives. Elements feel like they land with weight. | Any element entering the screen: flyouts opening, modals appearing, cards loading in |
+| `ease-in` | Accelerates as it leaves. Elements feel like they're pulled away. | Any element exiting the screen: flyouts closing, modals dismissing, panels collapsing |
+| `ease-in-out` | Symmetrical acceleration and deceleration. Smooth in both directions. | Panel expansions/collapses, filter open/close, max-height transitions |
+
+**Never use `linear` for UI motion.** Linear easing feels mechanical and robotic — appropriate for a progress bar fill but not for any transition that involves a UI element moving or appearing.
+
+**Never use spring physics.** Spring easing (popularized by animation libraries like Framer Motion's default config) introduces bounce and overshoot. That playfulness is antithetical to the ScaryMoovies brand. If you are using a JS animation library, explicitly disable spring and set tension/friction to produce a standard ease-out curve.
+
+---
+
+## Core Animation Patterns
+
+| Pattern | Property animated | Duration | Easing | Notes |
+|---|---|---|---|---|
+| Skeleton shimmer | `background-position` | `1.5s` infinite | `ease-in-out` | Left-to-right gradient sweep; disable entirely under reduced motion |
+| Backdrop reveal | `opacity` 0→1 | `800ms` | `ease-out` | Hero section background image fade-in; most impactful use of Cinematic timing |
+| Card hover | `transform: scale(1.03)` | `200ms` | `ease` | No bounce; no shadow pop; scale only |
+| Genre filter collapse | `max-height` + `opacity` | `300ms` | `ease-in-out` | Collapse and expand use the same curve; avoids jarring snap on close |
+| Mood filter dim | `opacity` | `200ms` | `ease` | Opacity only — no layout shift, no transform |
+| PYF quiz enter | `translateX` + `opacity` | `250ms` | `ease-out` | Slide in from right as user advances |
+| PYF quiz exit | `translateX` + `opacity` | `200ms` | `ease-in` | Slide out to left as user advances; slightly faster than enter |
+| Search flyout | `translateY(-8px)→translateY(0)` + `opacity` | `150ms` | `ease` | Drops down from nav bar; small translate keeps it subtle |
+
+<ComponentDemo
+  title="Card Hover — scale + opacity transition"
+  code={`.movie-card {
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+.movie-card:hover {
+  transform: scale(1.03);
+}
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .movie-card {
+    transition: opacity 100ms ease;
+  }
+  .movie-card:hover {
+    transform: none;
+  }
+}`}
+>
+  <style>{`.motion-demo-card { width: 120px; height: 180px; background: var(--bg-elevated); border-radius: 8px; transition: transform 200ms ease; cursor: pointer; } .motion-demo-card:hover { transform: scale(1.03); } @media (prefers-reduced-motion: reduce) { .motion-demo-card { transition: none; } .motion-demo-card:hover { transform: none; } }`}</style>
+  <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+    <div className="motion-demo-card" />
+    <div style={{ color: 'var(--text-secondary)', fontSize: '14px', lineHeight: 1.6, maxWidth: '240px' }}>
+      Hover the card to see the 200ms ease scale transition. No bounce. No shadow pop. Scale only.
+    </div>
+  </div>
+</ComponentDemo>
+
+---
+
+## Reduced Motion
+
+All animations must respect `@media (prefers-reduced-motion: reduce)`. Users who opt into reduced motion have vestibular disorders, motion sensitivity, or personal preference. Ignoring this setting is an accessibility failure.
+
+**Policy under `prefers-reduced-motion: reduce`:**
+
+- Remove all `transform` animations entirely (`scale`, `translate`, `rotate`).
+- Keep `opacity` fades, but cut their duration to 50% of the normal value.
+- Disable the skeleton shimmer sweep; replace with a static semi-transparent fill.
+- Never remove feedback entirely. A state change with zero visual response (no opacity shift, no color change) leaves users uncertain the interaction registered. At minimum, apply an instant `opacity` change.
+
+**CSS implementation pattern:**
+
+```css
+/* Default: full animation */
+.card {
+  transition: transform var(--duration-base) var(--ease-default),
+              opacity var(--duration-base) var(--ease-default);
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+/* Reduced motion: strip transforms, keep opacity at half duration */
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: opacity calc(var(--duration-base) * 0.5) var(--ease-default);
+  }
+
+  .card:hover {
+    transform: none;
+  }
+}
+```
+
+Apply this pattern at the component level rather than globally overriding `* { transition: none }` — the global override removes all opacity feedback, which violates the policy above.
+
+---
+
+## What NOT to Do
+
+- **Spring physics or bounce easing.** Never. The interface should feel controlled, not elastic.
+- **Infinite decorative loops.** Spinning icons, pulsing glows, looping background animations — these make the UI feel restless. The only permitted infinite animation is the skeleton loading shimmer, and only while content is loading.
+- **Applying Slow or Cinematic timing to common actions.** A 400ms button press is not atmospheric, it is broken. Reserve long durations for page-level and hero-level reveals.
+- **`linear` easing on any UI motion.** Linear transitions feel like a machine is moving, not an interface.
+- **Animating layout properties (`width`, `height`, `padding`, `margin`).** These force layout recalculation and cause jank. Use `max-height` with a known upper bound for expand/collapse, and `transform` for positional movement. Use `opacity` for show/hide where possible.
+- **Staggered animation sequences on standard navigation.** Staggered entrance animations (each list item flying in 50ms after the previous) are a common over-design trap. On ScaryMoovies, reserve stagger effects exclusively for intentional cinematic moments such as the hero content reveal.
+- **Animating anything that moves a large portion of the screen during scroll.** Parallax and scroll-linked transforms are motion-sickness triggers. Avoid.
+
+---
+
+## CSS Implementation
+
+Declare all timing values and easing curves as CSS custom properties on `:root`. Never hardcode durations or easing strings in component stylesheets — always reference the token.
+
+```css
+:root {
+  /* Duration tokens */
+  --duration-fast: 100ms;
+  --duration-base: 150ms;
+  --duration-moderate: 250ms;
+  --duration-slow: 400ms;
+  --duration-cinematic: 700ms;
+
+  /* Easing tokens */
+  --ease-default: ease;
+  --ease-enter: ease-out;
+  --ease-exit: ease-in;
+  --ease-inout: ease-in-out;
+}
+```
+
+**Usage example:**
+
+```css
+/* Button press feedback */
+.btn {
+  transition: background-color var(--duration-fast) var(--ease-default),
+              color var(--duration-fast) var(--ease-default);
+}
+
+/* Flyout entrance */
+.search-flyout {
+  transition: transform var(--duration-fast) var(--ease-enter),
+              opacity var(--duration-fast) var(--ease-enter);
+}
+
+/* Hero backdrop */
+.hero-backdrop {
+  transition: opacity var(--duration-cinematic) var(--ease-enter);
+}
+```
+
+The `--duration-base` token maps to the 150ms end of the 150–200ms base range. For transitions that benefit from the slightly longer 200ms feel (card hover scale, for example), authors may use `calc(var(--duration-base) + 50ms)` or define a `--duration-base-long: 200ms` alias if the project warrants it.

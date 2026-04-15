@@ -1,0 +1,283 @@
+import { TierList } from '@/components/brand/tier-list'
+import { ComponentDemo } from '@/components/brand/component-demo'
+import { ScreenAnnotation } from '@/components/brand/screen-annotation'
+
+# Components
+
+This reference documents the six core UI components of the ScaryMoovies interface. Each entry covers purpose, anatomy, all interactive states with exact color tokens, dimensional specs, and rules governing correct use. Treat these specs as the source of truth; never override them with one-off values.
+
+---
+
+## Pick Your Fear (PYF) Button
+
+### Purpose
+
+The PYF Button is the primary conversion action in the interface. It drives the core ScaryMoovies experience loop — inviting the user to enter the fear-selection flow. It appears in two fixed locations: the right side of the Navbar and as the primary CTA inside hero sections.
+
+### Anatomy
+
+1. **Container** — pill shape (`border-radius: 9999px`), fixed horizontal padding
+2. **Label** — the string `PICK YOUR FEAR`, all-caps, medium weight, horizontally centered
+3. **Interaction surface** — full container area is clickable; no icon
+
+<ComponentDemo title="PYF Button — Default State" code={`<button style={{ background: '#5d337d', color: '#fefefe', borderRadius: '9999px', padding: '12px 24px', fontSize: '14px', fontWeight: 500, letterSpacing: '0.08em', border: 'none', cursor: 'pointer', minWidth: '160px' }}>PICK YOUR FEAR</button>`}>
+  <button style={{ background: '#5d337d', color: '#fefefe', borderRadius: '9999px', padding: '12px 24px', fontSize: '14px', fontWeight: 500, letterSpacing: '0.08em', border: 'none', cursor: 'pointer', minWidth: '160px' }}>PICK YOUR FEAR</button>
+</ComponentDemo>
+
+<ComponentDemo title="PYF Button — Hover State" code={`<button style={{ background: '#785492', color: '#fefefe', borderRadius: '9999px', padding: '12px 24px', fontSize: '14px', fontWeight: 500, letterSpacing: '0.08em', border: 'none', cursor: 'pointer', minWidth: '160px' }}>PICK YOUR FEAR</button>`}>
+  <button style={{ background: '#785492', color: '#fefefe', borderRadius: '9999px', padding: '12px 24px', fontSize: '14px', fontWeight: 500, letterSpacing: '0.08em', border: 'none', cursor: 'pointer', minWidth: '160px' }}>PICK YOUR FEAR</button>
+</ComponentDemo>
+
+<ComponentDemo title="PYF Button — Disabled State" code={`<button disabled style={{ background: '#5c5b5e', color: '#adacae', borderRadius: '9999px', padding: '12px 24px', fontSize: '14px', fontWeight: 500, letterSpacing: '0.08em', border: 'none', cursor: 'not-allowed', minWidth: '160px' }}>PICK YOUR FEAR</button>`}>
+  <button disabled style={{ background: '#5c5b5e', color: '#adacae', borderRadius: '9999px', padding: '12px 24px', fontSize: '14px', fontWeight: 500, letterSpacing: '0.08em', border: 'none', cursor: 'not-allowed', minWidth: '160px' }}>PICK YOUR FEAR</button>
+</ComponentDemo>
+
+### States
+
+| State    | Background  | Text color  | Token reference              | Other                          |
+|----------|-------------|-------------|------------------------------|--------------------------------|
+| Primary  | `purple-400` | `white`     | `bg-purple-400 text-white`   | Default resting state          |
+| Hover    | `purple-300` | `white`     | `bg-purple-300 text-white`   | Lightens on cursor enter       |
+| Active   | `purple-500` | `white`     | `bg-purple-500 text-white`   | `scale(0.97)` transform        |
+| Disabled | `black-300`  | `white-700` | `bg-black-300 text-white-700`| `cursor-not-allowed`, no hover |
+
+### Specs
+
+| Property        | Value                        |
+|-----------------|------------------------------|
+| Border radius   | `9999px` (rounded-full)      |
+| Padding         | `12px 24px` (py-3 px-6)      |
+| Font size       | `14px` (text-sm)             |
+| Font weight     | `500` (medium)               |
+| Letter spacing  | `0.08em` (tracking-widest)   |
+| Label case      | All caps — hardcoded in text |
+| Transition      | `background 150ms ease`      |
+| Active scale    | `transform: scale(0.97)`     |
+| Min width       | `160px`                      |
+
+### Usage Rules
+
+**Use when:** triggering the fear-selection flow is the intended action and the context supports a high-emphasis CTA (Navbar, hero, empty-state prompts).
+
+**Do not use when:** a secondary or destructive action is needed. Do not duplicate the button more than twice on a single viewport. Do not relabel the button — the string `PICK YOUR FEAR` is brand-critical and must not be shortened or reworded. Do not render the Disabled state unless the fear-selection flow is genuinely unavailable (e.g., during loading).
+
+**Common mistakes:** using `purple-500` as the resting background (that is the Active token); nesting the button inside another interactive element; applying custom width constraints that break the pill shape on smaller viewports.
+
+---
+
+## Movie Poster — Vertical
+
+### Purpose
+
+The vertical poster represents a single film in portrait orientation. It is the most common content unit across the product — appearing in collection grids, watchlist layouts, and as thumbnails inside Tier List rows.
+
+### Anatomy
+
+1. **Image frame** — 2:3 aspect ratio container, `border-radius: 8px`
+2. **Poster image** — fills frame via `object-fit: cover`
+3. **Hover overlay** — semi-transparent scrim (`black/50`) that fades in on hover
+4. **Rating chip** — surfaces on hover, positioned bottom-right of the overlay
+
+### States
+
+| State  | Transform        | Overlay opacity | Rating chip |
+|--------|------------------|-----------------|-------------|
+| Rest   | `scale(1.00)`    | `0`             | Hidden      |
+| Hover  | `scale(1.03)`    | `1` (black/50)  | Visible     |
+
+### Specs
+
+| Property         | Value                                |
+|------------------|--------------------------------------|
+| Aspect ratio     | `2 / 3`                              |
+| Border radius    | `8px` (radius-md)                    |
+| Hover scale      | `1.03`                               |
+| Transition       | `transform 200ms ease, opacity 200ms ease` |
+| Overlay color    | `rgba(0, 0, 0, 0.50)`               |
+| Rating chip pos. | Bottom-right, `8px` inset            |
+| Min width        | `120px` (thumbnail), `200px` (grid) |
+
+### Usage Rules
+
+**Use when:** displaying a film in any grid, list, or tier-row context where portrait imagery is available.
+
+**Do not use when:** the layout demands a wide-format preview (use the Horizontal variant). Do not stretch the container to a non-2:3 ratio; always constrain via aspect-ratio utility. Do not show the rating chip in the resting state — it must only appear inside the hover overlay.
+
+---
+
+## Movie Poster — Horizontal
+
+### Purpose
+
+The horizontal poster presents a film in landscape orientation. It is used for editorial placements where cinematic framing matters more than density — featured section rows and the Recently Watched strip.
+
+### Anatomy
+
+1. **Image frame** — 16:9 aspect ratio container, `border-radius: 8px`
+2. **Poster image** — fills frame via `object-fit: cover`
+3. **Hover overlay** — semi-transparent scrim
+4. **Play icon** — centered SVG icon, surfaces on hover
+
+### States
+
+| State | Transform     | Overlay opacity | Play icon |
+|-------|---------------|-----------------|-----------|
+| Rest  | `scale(1.00)` | `0`             | Hidden    |
+| Hover | `scale(1.02)` | `1` (black/50)  | Visible   |
+
+### Specs
+
+| Property      | Value                                     |
+|---------------|-------------------------------------------|
+| Aspect ratio  | `16 / 9`                                  |
+| Border radius | `8px` (radius-md)                         |
+| Hover scale   | `1.02` (more subtle than vertical)        |
+| Overlay color | `rgba(0, 0, 0, 0.50)`                    |
+| Play icon     | `48px`, centered, `white`, opacity `0.9` |
+| Transition    | `transform 200ms ease, opacity 200ms ease`|
+
+### Usage Rules
+
+**Use when:** the layout has horizontal room and cinematic context is appropriate — featured rows, hero-adjacent carousels, recently watched strips.
+
+**Do not use when:** displaying dense grids or tier list thumbnails (use the Vertical variant). Do not use a play icon that implies immediate streaming if the action is navigation rather than inline playback — align the icon semantics with the actual behavior.
+
+---
+
+## Navbar
+
+### Purpose
+
+The Navbar provides persistent top-level navigation, brand identity, and primary actions. It is sticky to the top of the viewport and present on every page.
+
+### Anatomy
+
+1. **Root bar** — full-width, `height: 64px`, `background: black-600` (bg-surface)
+2. **Logo** — left-aligned, links to `/`
+3. **Nav links** — centered; `EXPLORE` and `COLLECTIONS` as plain text links
+4. **Action group** — right-aligned; Search icon · PYF Button · Bell icon · Profile avatar
+
+### States — Nav Links
+
+| State   | Text color  | Token          |
+|---------|-------------|----------------|
+| Default | `white-700` | `text-white-700`|
+| Hover   | `white-50`  | `text-white-50` |
+| Active  | `white-50`  | `text-white-50` |
+
+### Specs
+
+| Property        | Value                         |
+|-----------------|-------------------------------|
+| Height          | `64px`                        |
+| Background      | `black-600` / `bg-surface`    |
+| Position        | `sticky`, `top: 0`, `z-50`   |
+| Logo height     | `32px`                        |
+| Nav link size   | `14px`, `500` weight, `0.06em` tracking, all-caps |
+| Nav link gap    | `32px` between items          |
+| Action gap      | `16px` between icons/button   |
+| Icon size       | `20px` (search, bell)         |
+| Avatar size     | `32px`, `border-radius: 9999px`|
+
+### Usage Rules
+
+**Use when:** on all pages, without exception. The Navbar must not be hidden, replaced, or repositioned.
+
+**Do not use when:** building isolated modal or full-screen overlays that require temporary nav suppression — in those cases, retain the Navbar beneath the overlay rather than removing it from the DOM.
+
+**Common mistakes:** duplicating PYF Button elsewhere in the Navbar; reducing height below 64px on desktop; using `position: fixed` instead of `sticky` (breaks scroll context).
+
+---
+
+## Tier List
+
+### Purpose
+
+The Tier List allows users to rank movies across seven ordered tiers from S (best) down to F (worst). It is a structured, horizontally scrollable grid used on the Tier List feature page.
+
+### Anatomy
+
+1. **Tier row** — full-width horizontal strip per tier
+2. **Tier label** — `40px` wide column, left-aligned; bold uppercase letter; colored background per tier
+3. **Poster strip** — horizontally scrollable row of vertical Movie Poster thumbnails (smaller size)
+
+<TierList />
+
+### Tier Colors
+
+| Tier | Label bg color | Semantic meaning |
+|------|---------------|-----------------|
+| S    | `purple-400`  | Exceptional      |
+| A    | `purple-300`  | Excellent        |
+| B    | `purple-200` (tint) | Good       |
+| C    | neutral       | Average          |
+| D    | `red-300` (tint) | Below average |
+| E    | `red-400` (tint) | Poor          |
+| F    | `red-500`     | Unwatchable      |
+
+### Specs
+
+| Property          | Value                              |
+|-------------------|------------------------------------|
+| Label column width| `40px`                             |
+| Label background  | Per tier table above               |
+| Label text        | `white`, bold (`700`), uppercase   |
+| Label font size   | `18px`                             |
+| Row height        | `88px` (accommodates thumbnail)    |
+| Thumbnail size    | `~56px` wide (2:3 ratio, ~84px tall — clipped to row) |
+| Thumbnail gap     | `8px`                              |
+| Poster strip      | `overflow-x: auto`, `scroll-snap-type: x mandatory` |
+| Background        | `black-900`                        |
+
+### Usage Rules
+
+**Use when:** displaying a user's ranked film list in the dedicated Tier List view.
+
+**Do not use when:** a simple ordered list or grid is sufficient. Do not reorder the tier sequence (S → F is fixed). Do not change the tier label letters — they carry established meaning for the target audience.
+
+---
+
+## Movie Card (Grid)
+
+### Purpose
+
+The Movie Card is the standard unit for browsing contexts — Explore page grids, search results, and collection views. It combines the vertical poster with metadata below it.
+
+### Anatomy
+
+1. **Poster** — Vertical Movie Poster component (2:3, 8px radius, with hover behavior)
+2. **Title** — film title, below the poster
+3. **Rating chip** — small badge showing score or star rating, positioned below the title or overlaid on the poster on hover
+
+<ScreenAnnotation
+  src="/assets/components-reference.png"
+  alt="ScaryMoovies component states reference sheet"
+  caption="Component states: PYF button variants, movie poster types, and navbar layout"
+  annotations={[
+    { number: 1, x: 12, y: 15, label: "PYF Button — all four states" },
+    { number: 2, x: 50, y: 15, label: "Movie Poster — vertical 2:3" },
+    { number: 3, x: 75, y: 15, label: "Movie Poster — horizontal 16:9" },
+    { number: 4, x: 50, y: 70, label: "Navbar — full-width layout" }
+  ]}
+/>
+
+### Specs
+
+| Property       | Value                                  |
+|----------------|----------------------------------------|
+| Poster         | Full-width of card column, 2:3 ratio   |
+| Card width     | Column-driven (grid sets width)        |
+| Title size     | `13px`, `500` weight                   |
+| Title color    | `white-50`                             |
+| Title truncation | Single line, `text-overflow: ellipsis`|
+| Rating chip    | `12px` text, `black-600/80` bg, `4px` radius |
+| Gap (poster → title) | `8px`                          |
+| Grid gap       | `16px` column, `24px` row             |
+
+### Usage Rules
+
+**Use when:** rendering browsable film inventories in Explore, search results, or any collection view.
+
+**Do not use when:** a single featured film needs prominent display (use the Horizontal Poster in a featured row instead). Do not omit the title — the rating chip alone is insufficient for accessibility. Ensure the title always renders even when the poster image fails to load.
+
+**Common mistakes:** applying custom aspect ratios to the poster within a card; showing the rating chip in the resting state without the hover overlay (it should follow the Vertical Poster hover rules unless placed statically below the title).

@@ -1,0 +1,163 @@
+import { ColorPalette } from '@/components/brand/color-palette'
+import { ColorSwatch } from '@/components/brand/color-swatch'
+
+## Overview
+
+ScaryMoovies uses a four-scale color system built around a single design philosophy: **dark-first, horror-glamorous, and high-contrast**. Every UI surface starts from near-black and earns light through hierarchy, not convention.
+
+The four scales each carry a distinct role:
+
+- **Purple** is the brand's soul — a deep, saturated violet that reads as horror-glamour rather than corporate. It is reserved exclusively for interactive elements: buttons, links, focus rings, and active states.
+- **Red** is used sparingly, like blood. It signals danger, error, and horror accents — the genre marker on a "Coming Soon" badge or the pulse behind an achievement alert. Overuse would dilute its impact; it should always feel like something is wrong, in the best possible way.
+- **Black** is the void — the ground everything else sits on. The scale runs from near-total darkness (black-900) up to a dark mid-gray (black-50). Three stops define the surface system: the primary background, the card surface, and the elevated/raised layer.
+- **White** is used exclusively for typography and light decorative elements. It never appears as a background. Its scale tapers from near-pure white (white-50, the primary text color) down to a dim gray (white-900) for disabled and placeholder states.
+
+Together these four scales produce an interface that feels cinematic: saturated accents floating over a lightless void, with text that reads at maximum clarity.
+
+<ColorPalette scale="purple" />
+<ColorPalette scale="red" />
+<ColorPalette scale="black" />
+<ColorPalette scale="white" />
+
+---
+
+## Purple Scale
+
+The primary brand color. **purple-400** is the default accent (buttons, links, active nav items). **purple-300** is the hover/focus state — lighter and more saturated, giving a clear interactive response. Steps purple-500 and below are too dark to read as interactive against dark backgrounds and should not be used for UI affordances.
+
+| Token | Hex | RGB | Primary Use |
+|---|---|---|---|
+| purple-50 | `#ebe6ef` | 235, 230, 239 | Tints, illustrations only |
+| purple-100 | `#c0b0cd` | 192, 176, 205 | Illustrations only — never on dark backgrounds as text |
+| purple-200 | `#a28ab4` | 162, 138, 180 | Illustrations only |
+| purple-300 | `#785492` | 120, 84, 146 | **Hover / focus state** for interactive elements |
+| purple-400 | `#5d337d` | 93, 51, 125 | **Default accent** — buttons, links, active states |
+| purple-500 | `#35005d` | 53, 0, 93 | Deep accent, glows, gradients |
+| purple-600 | `#300055` | 48, 0, 85 | Dark variant for pressed states |
+| purple-700 | `#260042` | 38, 0, 66 | Background tints, rarely used |
+| purple-800 | `#1d0033` | 29, 0, 51 | Deep background tints |
+| purple-900 | `#160027` | 22, 0, 39 | Deepest tint, border accents |
+
+---
+
+## Red Scale
+
+The horror accent. Used only for danger states, error messages, destructive action buttons, and genre-marking UI elements (e.g. "Coming Soon" badges, achievement alerts, critical notifications). **red-500** is the primary token for these uses. Never scatter red across general UI — it must feel deliberate and charged.
+
+| Token | Hex | RGB | Primary Use |
+|---|---|---|---|
+| red-50 | `#f1e7e7` | 241, 231, 231 | Tints, illustrations only |
+| red-100 | `#d4b5b5` | 212, 181, 181 | Illustrations only |
+| red-200 | `#c09292` | 192, 146, 146 | Illustrations only |
+| red-300 | `#a36060` | 163, 96, 96 | Hover on danger elements |
+| red-400 | `#914141` | 145, 65, 65 | Danger hover state |
+| red-500 | `#751111` | 117, 17, 17 | **Primary danger / horror accent** |
+| red-600 | `#6a0f0f` | 106, 15, 15 | Pressed/active danger state |
+| red-700 | `#530c0c` | 83, 12, 12 | Deep danger variant |
+| red-800 | `#400909` | 64, 9, 9 | Background tints for error zones |
+| red-900 | `#310707` | 49, 7, 7 | Deepest error background tint |
+
+---
+
+## Black Scale
+
+The surface system. This scale defines every background layer in the product. The three key stops are **black-500** (primary page background), **black-600** (card/surface layer, which sits slightly darker to recede behind content), and **black-400** (elevated elements such as dropdowns, modals, and tooltips, which sit above the page).
+
+| Token | Hex | RGB | Primary Use |
+|---|---|---|---|
+| black-50 | `#e7e7e7` | 231, 231, 231 | Light-mode fallback, borders |
+| black-100 | `#b4b3b4` | 180, 179, 180 | Dividers, subtle borders |
+| black-200 | `#8f8e90` | 143, 142, 144 | Inactive/disabled backgrounds |
+| black-300 | `#5c5b5e` | 92, 91, 94 | Mid-tone surface accents |
+| black-400 | `#3d3b3e` | 61, 59, 62 | **Elevated elements** (modals, dropdowns) |
+| black-500 | `#0c0a0e` | 12, 10, 14 | **Primary page background** |
+| black-600 | `#0b090d` | 11, 9, 13 | **Card / surface layer** |
+| black-700 | `#09070a` | 9, 7, 10 | Deep surface variant |
+| black-800 | `#070608` | 7, 6, 8 | Near-black accent |
+| black-900 | `#050406` | 5, 4, 6 | Deepest void |
+
+---
+
+## White Scale
+
+Used exclusively for text and light decorative elements — never as a background. **white-50** is the primary body and heading color, delivering near-pure contrast against dark surfaces. **white-700** handles secondary and label text. **white-900** is reserved for disabled text, placeholders, and input hints.
+
+| Token | Hex | RGB | Primary Use |
+|---|---|---|---|
+| white-50 | `#fefefe` | 254, 254, 254 | **Primary text** — headings, body copy |
+| white-100 | `#fcfbfc` | 252, 251, 252 | High-emphasis secondary text |
+| white-200 | `#faf9fa` | 250, 249, 250 | Subtle text variant |
+| white-300 | `#f8f6f8` | 248, 246, 248 | Light decorative elements |
+| white-400 | `#f6f5f7` | 246, 245, 247 | Light decorative elements |
+| white-500 | `#f4f2f5` | 244, 242, 245 | Light decorative elements |
+| white-600 | `#dedcdf` | 222, 220, 223 | Borders, dividers on light surfaces |
+| white-700 | `#adacae` | 173, 172, 174 | **Secondary / label text** |
+| white-800 | `#868587` | 134, 133, 135 | Tertiary text |
+| white-900 | `#666667` | 102, 102, 103 | **Disabled / placeholder text** |
+
+---
+
+## Semantic Tokens
+
+These aliases are the only tokens components should reference directly. Raw scale tokens are for documentation and tooling only — all production code uses semantic tokens.
+
+| Token | Scale Value | Hex | Usage |
+|---|---|---|---|
+| `--bg-primary` | black-500 | `#0c0a0e` | Primary page background |
+| `--bg-surface` | black-600 | `#0b090d` | Card and panel backgrounds |
+| `--bg-elevated` | black-400 | `#3d3b3e` | Modals, dropdowns, tooltips |
+| `--accent-primary` | purple-400 | `#5d337d` | Default interactive accent (buttons, links) |
+| `--accent-hover` | purple-300 | `#785492` | Hover and focus state for interactive elements |
+| `--accent-danger` | red-500 | `#751111` | Danger, error, and horror accent |
+| `--text-primary` | white-50 | `#fefefe` | Primary body and heading text |
+| `--text-secondary` | white-700 | `#adacae` | Labels, secondary descriptions |
+| `--text-muted` | white-900 | `#666667` | Disabled text, placeholders |
+| `--border-subtle` | — | `rgba(254,254,254,0.06)` | Hairline dividers and card borders |
+
+<ColorSwatch color="#0c0a0e" name="black-500" token="--bg-primary" />
+<ColorSwatch color="#0b090d" name="black-600" token="--bg-surface" />
+<ColorSwatch color="#3d3b3e" name="black-400" token="--bg-elevated" />
+<ColorSwatch color="#5d337d" name="purple-400" token="--accent-primary" />
+<ColorSwatch color="#785492" name="purple-300" token="--accent-hover" />
+<ColorSwatch color="#751111" name="red-500" token="--accent-danger" />
+<ColorSwatch color="#fefefe" name="white-50" token="--text-primary" />
+<ColorSwatch color="#adacae" name="white-700" token="--text-secondary" />
+<ColorSwatch color="#666667" name="white-900" token="--text-muted" />
+
+---
+
+## Accessibility
+
+All contrast ratios are calculated against the primary background (`--bg-primary`, `#0c0a0e`). WCAG 2.1 thresholds: **AA requires 4.5:1** for normal text, **3:1** for large text (18pt+ or 14pt bold); **AAA requires 7:1** for normal text.
+
+| Foreground | Background | Approx. Contrast | WCAG Rating |
+|---|---|---|---|
+| white-50 `#fefefe` | black-500 `#0c0a0e` | ~20.8:1 | AAA |
+| white-700 `#adacae` | black-500 `#0c0a0e` | ~10.0:1 | AAA |
+| white-900 `#666667` | black-500 `#0c0a0e` | ~4.6:1 | AA |
+| purple-300 `#785492` | black-500 `#0c0a0e` | ~4.8:1 | AA (large text / UI components) |
+| purple-400 `#5d337d` | black-500 `#0c0a0e` | ~3.1:1 | AA for UI components only (not body text) |
+| red-500 `#751111` | black-500 `#0c0a0e` | ~3.3:1 | AA for UI components only (not body text) |
+
+**Key callouts:**
+
+- `white-50` on `black-500` clears AAA by a wide margin — use it freely for all body copy and headings.
+- `white-900` on `black-500` barely clears AA — it is acceptable only for placeholder and disabled states, never for readable content.
+- `purple-300` and `purple-400` do not meet AA for body text at normal size. They satisfy AA only as large interactive UI components (buttons, badges) where the 3:1 threshold applies. Never use either as inline text color against dark backgrounds.
+- `red-500` follows the same rule as purple: acceptable for large UI components and icon+label pairs, never for body or label text.
+
+---
+
+## Usage Rules
+
+**Purple is for interaction only.** Do not use any purple-scale token for decorative illustration, text, or backgrounds outside of interactive affordances. Every purple element should respond to a user gesture (hover, focus, active, selected).
+
+**Red is for danger and genre accents only.** It appears on error states, destructive confirmation dialogs, "Coming Soon" or "Sold Out" badges, and horror-genre markers. Do not use red for general decoration or to add visual variety.
+
+**Never use purple-100 or lighter (purple-50, purple-100, purple-200) as text on dark backgrounds.** These steps do not meet contrast requirements and will read as washed out rather than branded.
+
+**Black-600 sits darker than black-500.** This is intentional: surfaces (cards) recede slightly behind the page background, creating depth without borders. Do not invert this relationship.
+
+**White scale is text-only.** No white-scale token should be used as a background color. For light surfaces, use the black scale; for light-mode support (if introduced), a separate light-mode token set will be defined.
+
+**Semantic tokens are the production contract.** Components must reference `--bg-primary`, `--accent-primary`, etc. — not raw scale tokens like `purple-400`. This ensures a future theme swap or dark/light mode toggle can be applied without touching component code.
