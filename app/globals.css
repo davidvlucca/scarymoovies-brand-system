@@ -416,6 +416,16 @@ html, body {
   }
 }
 
+/* ─── Form Showcase Grid ─────────────────────────── */
+.form-showcase-grid {
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 768px) {
+  .form-showcase-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ─── Movie Poster Grid ───────────────────────────── */
 .movie-poster-grid {
   display: grid;

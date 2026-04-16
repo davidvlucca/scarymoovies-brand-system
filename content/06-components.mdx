@@ -1,67 +1,97 @@
 import { TierList } from '@/components/brand/tier-list'
 import { ComponentDemo } from '@/components/brand/component-demo'
 import { ScreenAnnotation } from '@/components/brand/screen-annotation'
+import { ButtonShowcase, PYFButton } from '@/components/brand/button-showcase'
+import { FormShowcase } from '@/components/brand/form-showcase'
 
 # Components
 
-This reference documents the six core UI components of the ScaryMoovies interface. Each entry covers purpose, anatomy, all interactive states with exact color tokens, dimensional specs, and rules governing correct use. Treat these specs as the source of truth; never override them with one-off values.
+This reference documents the core UI components of the ScaryMoovies interface. Each entry covers purpose, anatomy, all interactive states with exact color tokens, dimensional specs, and rules governing correct use. Treat these specs as the source of truth; never override them with one-off values.
+
+---
+
+## Form Elements
+
+shadcn/ui primitives adapted to the ScaryMoovies design system. Every state — focus, error, disabled — uses CSS variables from the token set. No hardcoded values. All components are interactive below.
+
+<FormShowcase />
+
+---
+
+## Button System
+
+The ScaryMoovies button system is built on shadcn/ui with brand token overrides. All interactive states, focus rings, and disabled styles are wired to CSS variables — never hardcoded hex values.
+
+<ButtonShowcase />
+
+### Variants
+
+| Variant | Token | When to use |
+|---|---|---|
+| `default` | `--accent-primary` bg | Primary action — main CTA, confirm, save |
+| `destructive` | `--accent-danger` bg | Irreversible actions — delete, remove, clear data |
+| `outline` | `--border-default` border | Secondary action alongside a primary button |
+| `secondary` | `--bg-elevated` bg | Supplementary actions — add to list, share |
+| `ghost` | transparent, hover fills | Low-emphasis inline actions — skip, mark watched |
+| `ghost-danger` | transparent, hover danger | Low-emphasis destructive — clear list, unfriend |
+| `link` | underline text | Inline prose actions — read more, see reviews |
+
+### Sizes
+
+| Size | Height | Use case |
+|---|---|---|
+| `sm` | 36px | Compact UI — table actions, chip controls |
+| `default` | 40px | Standard UI — forms, modals, cards |
+| `lg` | 44px | Section-level CTAs — collection headers |
+| `xl` | 52px | Hero CTAs — landing page, empty states |
+| `icon` | 40×40px | Icon-only actions — share, bookmark |
+
+### Focus and Accessibility
+
+All buttons carry a `2px solid var(--ring)` focus outline (`--purple-300`) that appears on keyboard navigation. Never suppress this with `outline: none` without a replacement. Disabled states use `opacity: 50%` and `cursor: not-allowed` — the disabled prop is always required, never achieved through CSS alone.
 
 ---
 
 ## Pick Your Fear (PYF) Button
 
-### Purpose
+The PYF Button is a distinct component from the button system above. It uses a **pill shape** (`border-radius: 9999px`) and is reserved exclusively for triggering the fear-selection flow.
 
-The PYF Button is the primary conversion action in the interface. It drives the core ScaryMoovies experience loop — inviting the user to enter the fear-selection flow. It appears in two fixed locations: the right side of the Navbar and as the primary CTA inside hero sections.
-
-### Anatomy
-
-1. **Container** — pill shape (`border-radius: 9999px`), fixed horizontal padding
-2. **Label** — the string `PICK YOUR FEAR`, all-caps, medium weight, horizontally centered
-3. **Interaction surface** — full container area is clickable; no icon
-
-<ComponentDemo title="PYF Button — Default State" code={`<button style={{ background: '#5d337d', color: '#fefefe', borderRadius: '9999px', padding: '12px 24px', fontSize: '14px', fontWeight: 500, letterSpacing: '0.08em', border: 'none', cursor: 'pointer', minWidth: '160px' }}>PICK YOUR FEAR</button>`}>
-  <button style={{ background: '#5d337d', color: '#fefefe', borderRadius: '9999px', padding: '12px 24px', fontSize: '14px', fontWeight: 500, letterSpacing: '0.08em', border: 'none', cursor: 'pointer', minWidth: '160px' }}>PICK YOUR FEAR</button>
-</ComponentDemo>
-
-<ComponentDemo title="PYF Button — Hover State" code={`<button style={{ background: '#785492', color: '#fefefe', borderRadius: '9999px', padding: '12px 24px', fontSize: '14px', fontWeight: 500, letterSpacing: '0.08em', border: 'none', cursor: 'pointer', minWidth: '160px' }}>PICK YOUR FEAR</button>`}>
-  <button style={{ background: '#785492', color: '#fefefe', borderRadius: '9999px', padding: '12px 24px', fontSize: '14px', fontWeight: 500, letterSpacing: '0.08em', border: 'none', cursor: 'pointer', minWidth: '160px' }}>PICK YOUR FEAR</button>
-</ComponentDemo>
-
-<ComponentDemo title="PYF Button — Disabled State" code={`<button disabled style={{ background: '#5c5b5e', color: '#adacae', borderRadius: '9999px', padding: '12px 24px', fontSize: '14px', fontWeight: 500, letterSpacing: '0.08em', border: 'none', cursor: 'not-allowed', minWidth: '160px' }}>PICK YOUR FEAR</button>`}>
-  <button disabled style={{ background: '#5c5b5e', color: '#adacae', borderRadius: '9999px', padding: '12px 24px', fontSize: '14px', fontWeight: 500, letterSpacing: '0.08em', border: 'none', cursor: 'not-allowed', minWidth: '160px' }}>PICK YOUR FEAR</button>
+<ComponentDemo title="PYF Button — Active and Disabled" code={`import { PYFButton } from '@/components/brand/button-showcase'\n\n<PYFButton />\n<PYFButton disabled />`}>
+  <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+    <PYFButton />
+    <PYFButton disabled />
+  </div>
 </ComponentDemo>
 
 ### States
 
-| State    | Background  | Text color  | Token reference              | Other                          |
-|----------|-------------|-------------|------------------------------|--------------------------------|
-| Primary  | `purple-400` | `white`     | `bg-purple-400 text-white`   | Default resting state          |
-| Hover    | `purple-300` | `white`     | `bg-purple-300 text-white`   | Lightens on cursor enter       |
-| Active   | `purple-500` | `white`     | `bg-purple-500 text-white`   | `scale(0.97)` transform        |
-| Disabled | `black-300`  | `white-700` | `bg-black-300 text-white-700`| `cursor-not-allowed`, no hover |
+| State    | Background       | Text           | Token                          | Other                          |
+|----------|------------------|----------------|--------------------------------|--------------------------------|
+| Default  | `--accent-primary` | `--text-primary` | `var(--accent-primary)`      | Resting state                  |
+| Hover    | `--accent-hover`  | `--text-primary` | `var(--accent-hover)`        | Lightens on cursor enter       |
+| Active   | pressed           | —              | `scale(0.97)` transform        | Momentary press feedback       |
+| Disabled | `--black-300`    | `--text-muted` | `var(--black-300)`             | `cursor-not-allowed`, no hover |
 
 ### Specs
 
-| Property        | Value                        |
-|-----------------|------------------------------|
-| Border radius   | `9999px` (rounded-full)      |
-| Padding         | `12px 24px` (py-3 px-6)      |
-| Font size       | `14px` (text-sm)             |
-| Font weight     | `500` (medium)               |
-| Letter spacing  | `0.08em` (tracking-widest)   |
-| Label case      | All caps — hardcoded in text |
-| Transition      | `background 150ms ease`      |
-| Active scale    | `transform: scale(0.97)`     |
-| Min width       | `160px`                      |
+| Property       | Value                          |
+|----------------|--------------------------------|
+| Border radius  | `9999px` (pill — never square) |
+| Padding        | `12px 24px`                    |
+| Font size      | `14px`                         |
+| Font weight    | `500` (medium)                 |
+| Letter spacing | `0.08em`                       |
+| Label          | `PICK YOUR FEAR` — never reworded |
+| Transition     | `background 150ms ease`        |
+| Min width      | `160px`                        |
 
 ### Usage Rules
 
 **Use when:** triggering the fear-selection flow is the intended action and the context supports a high-emphasis CTA (Navbar, hero, empty-state prompts).
 
-**Do not use when:** a secondary or destructive action is needed. Do not duplicate the button more than twice on a single viewport. Do not relabel the button — the string `PICK YOUR FEAR` is brand-critical and must not be shortened or reworded. Do not render the Disabled state unless the fear-selection flow is genuinely unavailable (e.g., during loading).
+**Do not use when:** a secondary or destructive action is needed. Do not duplicate more than twice on a single viewport. Do not relabel — `PICK YOUR FEAR` is brand-critical. Do not use the `Button` component for this — it uses `border-radius: 6px`. PYFButton is its own component.
 
-**Common mistakes:** using `purple-500` as the resting background (that is the Active token); nesting the button inside another interactive element; applying custom width constraints that break the pill shape on smaller viewports.
+**Common mistakes:** using `purple-500` as the resting background (that is the Active token); applying rounded-md instead of pill radius; nesting inside another interactive element.
 
 ---
 

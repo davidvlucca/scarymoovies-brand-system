@@ -12,6 +12,18 @@ import { SemanticTokens } from "@/components/brand/semantic-tokens";
 import { AtmosphericImage } from "@/components/brand/atmospheric-image";
 import { MoviePosterCard, MoviePosterGrid } from "@/components/brand/movie-poster-card";
 import { PullQuote, HorrorCallout } from "@/components/brand/pull-quote";
+import { ButtonShowcase, PYFButton } from "@/components/brand/button-showcase";
+import {
+  FormShowcase,
+  BrandInput,
+  BrandCheckbox,
+  BrandSwitch,
+  BrandBadge,
+  BrandRadioGroup,
+  BrandSelect,
+  BrandTextarea,
+  BrandLabel,
+} from "@/components/brand/form-showcase";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -31,5 +43,16 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     MoviePosterGrid,
     PullQuote,
     HorrorCallout,
+    ButtonShowcase,
+    PYFButton,
+    FormShowcase,
+    BrandInput,
+    BrandCheckbox,
+    BrandSwitch,
+    BrandBadge,
+    BrandRadioGroup,
+    BrandSelect,
+    BrandTextarea,
+    BrandLabel,
   };
 }
