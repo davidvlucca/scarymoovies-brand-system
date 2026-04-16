@@ -8,6 +8,7 @@ import { ComponentDemo } from "@/components/brand/component-demo";
 import { TierList } from "@/components/brand/tier-list";
 import { InteractionDemo } from "@/components/brand/interaction-demo";
 import { ScreenAnnotation } from "@/components/brand/screen-annotation";
+import { SemanticTokens } from "@/components/brand/semantic-tokens";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -21,5 +22,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     TierList,
     InteractionDemo,
     ScreenAnnotation,
+    SemanticTokens,
   };
 }

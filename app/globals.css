@@ -53,16 +53,16 @@
   /* ─── Semantic Tokens ─────────────────────────────── */
   --bg-primary:          var(--black-500);
   --bg-surface:          var(--black-600);   /* #0b090d — near-black surface */
-  --bg-elevated:         var(--black-700);   /* #09070a — deepest surface */
+  --bg-elevated:         var(--black-400);   /* #3d3b3e — modals, dropdowns */
   --bg-overlay:          var(--purple-900);
 
-  --text-primary:        var(--white-500);
+  --text-primary:        var(--white-50);
   --text-secondary:      var(--white-700);
-  --text-muted:          var(--black-200);
+  --text-muted:          var(--white-900);   /* #666667 — placeholders, disabled */
 
-  --accent-primary:      var(--purple-500);
-  --accent-hover:        var(--purple-400);
-  --accent-strong:       var(--purple-300);
+  --accent-primary:      var(--purple-400);  /* #5d337d — buttons, active states */
+  --accent-hover:        var(--purple-300);  /* #785492 — hover state */
+  --accent-strong:       var(--purple-200);  /* #a28ab4 — readable purple on dark */
   --accent-danger:       var(--red-500);
   --accent-danger-hover: var(--red-400);
 
@@ -71,11 +71,67 @@
   --border-focus:        var(--purple-300);
 }
 
+/* ─── shadcn/ui CSS Variable Bridge ──────────────── */
+/* Maps ScaryMoovies tokens to shadcn's convention   */
+:root {
+  --background:         var(--black-500);      /* #0c0a0e */
+  --foreground:         var(--white-50);        /* #fefefe */
+  --card:               var(--black-600);       /* #0b090d */
+  --card-foreground:    var(--white-50);
+  --popover:            var(--black-400);       /* #3d3b3e */
+  --popover-foreground: var(--white-50);
+  --primary:            var(--purple-400);      /* #5d337d */
+  --primary-foreground: var(--white-50);
+  --secondary:          var(--black-400);       /* #3d3b3e */
+  --secondary-foreground: var(--white-50);
+  --muted:              var(--black-600);
+  --muted-foreground:   var(--white-700);       /* #adacae */
+  --accent:             var(--purple-400);
+  --accent-foreground:  var(--white-50);
+  --destructive:        var(--red-500);         /* #751111 */
+  --destructive-foreground: var(--white-50);
+  --border:             rgba(254, 254, 254, 0.12);
+  --input:              rgba(254, 254, 254, 0.08);
+  --ring:               var(--purple-300);      /* #785492 */
+  --radius: 0.5rem;
+}
+
 /* ─── Tailwind v4 Theme Mapping ───────────────────── */
 @theme inline {
   --font-display: var(--font-display);
   --font-body: var(--font-body);
   --font-mono: var(--font-mono);
+
+  /* Semantic token utilities — use as bg-surface, text-muted, etc. */
+  --color-bg-primary:    var(--bg-primary);
+  --color-bg-surface:    var(--bg-surface);
+  --color-bg-elevated:   var(--bg-elevated);
+  --color-text-primary:  var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted:    var(--text-muted);
+  --color-accent:        var(--accent-primary);
+  --color-accent-hover:  var(--accent-hover);
+  --color-danger:        var(--accent-danger);
+
+  /* shadcn/ui convention → Tailwind utilities */
+  --color-background:         var(--background);
+  --color-foreground:         var(--foreground);
+  --color-card:               var(--card);
+  --color-card-foreground:    var(--card-foreground);
+  --color-popover:            var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary:            var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary:          var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted:              var(--muted);
+  --color-muted-foreground:   var(--muted-foreground);
+  --color-destructive:        var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border:             var(--border);
+  --color-input:              var(--input);
+  --color-ring:               var(--ring);
+  --radius-md:                var(--radius);
 
   --color-purple-50: var(--purple-50);
   --color-purple-100: var(--purple-100);
@@ -165,10 +221,11 @@ html, body {
 .prose h2 { font-weight: 700; }
 .prose h3 { font-weight: 600; }
 .prose h4 { font-weight: 600; }
-.prose h1 { font-size: 2.5rem; margin-top: 0; }
-.prose h2 { font-size: 1.75rem; margin-top: 3rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.5rem; }
-.prose h3 { font-size: 1.25rem; margin-top: 2rem; color: var(--accent-strong); }
-.prose p  { font-size: 1rem; line-height: 1.7; color: var(--text-secondary); }
+.prose h1 { font-size: 2.25rem; margin-top: 0; margin-bottom: 0.5rem; }
+.prose h2 { font-size: 1.625rem; margin-top: 3.5rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.625rem; }
+.prose h3 { font-size: 1.125rem; margin-top: 2rem; color: var(--text-primary); }
+.prose p  { font-size: 1rem; line-height: 1.75; color: var(--text-secondary); margin-bottom: 0; }
+.prose p + p { margin-top: 1rem; }
 .prose a  { color: var(--accent-strong); text-decoration: underline; text-underline-offset: 3px; }
 .prose a:hover { color: var(--white-50); }
 .prose code {
@@ -227,8 +284,14 @@ html, body {
   flex: 1;
   min-height: 100vh;
   padding: 48px 56px;
-  max-width: 900px;
+  display: flex;
+  justify-content: center;
   transition: margin-left 200ms ease;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 780px;
 }
 
 /* ─── Mobile Menu Button ──────────────────────────── */
@@ -277,6 +340,10 @@ html, body {
   .main-content {
     margin-left: 0;
     padding: 72px 20px 40px;
+    justify-content: flex-start;
+  }
+
+  .content-wrapper {
     max-width: 100%;
   }
 
@@ -299,6 +366,9 @@ html, body {
 @media (min-width: 769px) and (max-width: 1024px) {
   .main-content {
     padding: 48px 32px;
+  }
+
+  .content-wrapper {
     max-width: 100%;
   }
 }
@@ -310,6 +380,28 @@ html, body {
   .prose h3 { font-size: 1.125rem; }
   .prose table { font-size: 0.8rem; }
   .prose th, .prose td { padding: 0.4rem 0.5rem; }
+}
+
+/* ─── Section Divider ─────────────────────────────── */
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--border-subtle);
+  margin: 3rem 0;
+}
+
+/* ─── Callout ─────────────────────────────────────── */
+.callout {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--accent-primary);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin: 1.5rem 0;
+}
+.callout strong {
+  color: var(--text-primary);
 }
 
 /* ─── Dos & Donts Grid ────────────────────────────── */

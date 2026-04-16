@@ -1,17 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { sections } from "@/lib/navigation";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 export function Sidebar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [query, setQuery] = useState("");
+
+  const filtered = useMemo(() => {
+    if (!query.trim()) return sections;
+    const q = query.toLowerCase();
+    return sections.filter((s) => s.title.toLowerCase().includes(q));
+  }, [query]);
 
   return (
     <>
-      {/* Mobile hamburger button */}
+      {/* Mobile hamburger */}
       <button
         className="mobile-menu-btn"
         onClick={() => setMobileOpen(true)}
@@ -25,108 +34,122 @@ export function Sidebar() {
 
       {/* Mobile overlay */}
       <div
-        className={`sidebar-overlay${mobileOpen ? " is-open" : ""}`}
+        className={cn("sidebar-overlay", mobileOpen && "is-open")}
         onClick={() => setMobileOpen(false)}
         aria-hidden="true"
       />
 
-      {/* Sidebar */}
+      {/* Sidebar shell */}
       <aside
+        className="fixed top-0 left-0 bottom-0 z-40 flex flex-col overflow-y-auto"
         style={{
           width: "240px",
-          minHeight: "100vh",
           backgroundColor: "var(--bg-primary)",
           borderRight: "1px solid var(--border-subtle)",
-          display: "flex",
-          flexDirection: "column",
-          position: "fixed",
-          top: 0,
-          left: 0,
-          bottom: 0,
-          overflowY: "auto",
-          zIndex: 40,
         }}
         data-open={mobileOpen}
       >
-        {/* Logo */}
+        {/* Wordmark */}
         <div
-          style={{
-            padding: "24px 20px 20px",
-            borderBottom: "1px solid var(--border-subtle)",
-          }}
+          className="px-5 pt-6 pb-4"
+          style={{ borderBottom: "1px solid var(--border-subtle)" }}
         >
           <Link
             href="/"
-            style={{ textDecoration: "none" }}
+            className="no-underline"
             aria-label="ScaryMoovies Brand System Home"
           >
             <span
+              className="block font-extrabold uppercase tracking-widest leading-tight"
               style={{
-                display: "block",
                 fontFamily: "var(--font-body)",
-                fontWeight: 800,
-                fontSize: "1.4rem",
+                fontSize: "1.05rem",
                 color: "var(--white-50)",
-                letterSpacing: "0.05em",
-                lineHeight: 1.2,
               }}
             >
-              SCARY MOOVIES
+              Scary Moovies
             </span>
           </Link>
           <p
+            className="mt-1 uppercase tracking-widest"
             style={{
-              margin: "6px 0 0",
-              fontSize: "0.7rem",
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
+              fontSize: "0.62rem",
+              letterSpacing: "0.15em",
               color: "var(--text-muted)",
               fontFamily: "var(--font-body)",
+              margin: "5px 0 0",
             }}
           >
             Brand System
           </p>
         </div>
 
-        {/* Navigation */}
-        <nav aria-label="Brand System sections" style={{ flex: 1, padding: "12px 0" }}>
-          <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
-            {sections.map((section) => {
+        {/* Search */}
+        <div
+          className="px-4 py-3"
+          style={{ borderBottom: "1px solid var(--border-subtle)" }}
+        >
+          <div className="relative">
+            <svg
+              aria-hidden="true"
+              width="13"
+              height="13"
+              viewBox="0 0 16 16"
+              fill="none"
+              className="absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none"
+              style={{ color: "var(--text-muted)" }}
+            >
+              <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" strokeWidth="1.5" />
+              <line x1="10.5" y1="10.5" x2="14.5" y2="14.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+            <Input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search…"
+              className="pl-8 h-8 text-xs"
+              style={{ fontFamily: "var(--font-body)" }}
+              aria-label="Search sections"
+            />
+          </div>
+        </div>
+
+        {/* Nav */}
+        <nav aria-label="Brand System sections" className="flex-1 py-2">
+          <ul className="m-0 p-0 list-none">
+            {filtered.length === 0 && (
+              <li
+                className="px-5 py-3 italic"
+                style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}
+              >
+                No sections found
+              </li>
+            )}
+            {filtered.map((section) => {
               const isActive =
                 section.href === "/"
                   ? pathname === "/"
-                  : pathname === section.href || pathname.startsWith(section.href + "/");
+                  : pathname === section.href ||
+                    pathname.startsWith(section.href + "/");
               return (
-                <li key={section.href}>
+                <li key={section.href} data-nav-item>
                   <Link
                     href={section.href}
                     onClick={() => setMobileOpen(false)}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "12px",
-                      padding: "10px 20px",
-                      textDecoration: "none",
-                      fontSize: "0.875rem",
-                      transition: "color 150ms ease, background-color 150ms ease",
-                      borderLeft: isActive
-                        ? "3px solid var(--accent-hover)"
-                        : "3px solid transparent",
-                      backgroundColor: isActive
-                        ? "rgba(93, 51, 125, 0.12)"
-                        : "transparent",
-                      color: isActive
-                        ? "var(--white-50)"
-                        : "var(--text-secondary)",
-                      fontFamily: "var(--font-body)",
-                    }}
+                    className={cn(
+                      "flex items-center gap-2.5 px-5 py-2.5 no-underline transition-colors duration-150",
+                      isActive
+                        ? "text-white-50 bg-[rgba(93,51,125,0.10)] border-l-2 border-[var(--accent-hover)]"
+                        : "text-text-secondary border-l-2 border-transparent hover:text-white-50 hover:bg-[rgba(93,51,125,0.06)]"
+                    )}
+                    style={{ fontFamily: "var(--font-body)", fontSize: "0.85rem" }}
                   >
                     <span
+                      className="tabular-nums shrink-0"
                       style={{
-                        fontSize: "0.7rem",
-                        color: isActive ? "var(--accent-strong)" : "var(--text-muted)",
-                        fontVariantNumeric: "tabular-nums",
-                        minWidth: "20px",
+                        fontSize: "0.68rem",
+                        minWidth: "18px",
+                        color: isActive ? "var(--accent-hover)" : "var(--text-muted)",
                       }}
                     >
                       {section.num}
@@ -138,6 +161,27 @@ export function Sidebar() {
             })}
           </ul>
         </nav>
+
+        {/* Footer */}
+        <div
+          className="flex items-center justify-between px-5 py-3.5"
+          style={{ borderTop: "1px solid var(--border-subtle)" }}
+        >
+          <span
+            className="tracking-wider"
+            style={{
+              fontSize: "0.63rem",
+              color: "var(--text-muted)",
+              fontFamily: "var(--font-mono)",
+              letterSpacing: "0.08em",
+            }}
+          >
+            v1.0 · Brand System
+          </span>
+          <span style={{ fontSize: "0.63rem", color: "var(--text-muted)" }}>
+            © 2025
+          </span>
+        </div>
       </aside>
     </>
   );

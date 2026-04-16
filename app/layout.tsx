@@ -51,7 +51,9 @@ export default function RootLayout({
         <div className="app-shell">
           <Sidebar />
           <main className="main-content">
-            {children}
+            <div className="content-wrapper">
+              {children}
+            </div>
           </main>
         </div>
       </body>
