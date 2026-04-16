@@ -415,3 +415,20 @@ html, body {
     grid-template-columns: 1fr;
   }
 }
+
+/* ─── Movie Poster Grid ───────────────────────────── */
+.movie-poster-grid {
+  display: grid;
+  gap: 16px;
+  margin: 24px 0;
+}
+.movie-poster-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.movie-poster-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.movie-poster-grid-4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 640px) {
+  .movie-poster-grid-2,
+  .movie-poster-grid-3,
+  .movie-poster-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

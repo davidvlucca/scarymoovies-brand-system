@@ -1,4 +1,6 @@
 import { LogoDisplay } from '@/components/brand/logo-display'
+import { AtmosphericImage } from '@/components/brand/atmospheric-image'
+import { MoviePosterCard, MoviePosterGrid } from '@/components/brand/movie-poster-card'
 
 # Introduction
 
@@ -17,6 +19,13 @@ The horror genre has no home that takes it seriously from the inside.
 Netflix carries horror, but it is a genre tab buried inside a mass-market platform that treats a slasher the same way it treats a cooking competition. IMDB is a comprehensive database, but it is encyclopaedic rather than experiential — it will tell you cast and crew, but it has no opinion, no curation, no sense of what it means to love the genre. Letterboxd has a passionate horror community, but it is a general film journal first and was never designed around the particular way horror fans navigate taste: by sub-genre, by mood, by fear type, by the specific kind of dread a film delivers.
 
 The gap is real: there is no dedicated horror platform with editorial curation, community tools, and mood-aware discovery built into a single coherent experience. ScaryMoovies exists to close that gap.
+
+<AtmosphericImage
+  src="/assets/horror-ghostface-02.jpg"
+  alt="A masked figure in the dark — the platform that refuses to be anything else"
+  caption="The gap is real. ScaryMoovies exists to close it."
+  size="wide"
+/>
 
 ## Who It Is For
 
@@ -39,6 +48,29 @@ The **community reviewer** treats watching as a social act. They write reviews, 
 
 The **Tier List** sits across all three pillars. It is personal (your taste map), social (visible to followers), and discovery-adjacent (tier rankings surface patterns across the community).
 
+<MoviePosterGrid columns={3}>
+  <MoviePosterCard
+    src="/assets/poster-the-shining.jpg"
+    title="The Shining"
+    year={1980}
+    genre="Psychological Horror"
+    tier="S"
+  />
+  <MoviePosterCard
+    src="/assets/poster-scream.jpg"
+    title="Scream"
+    year={1996}
+    genre="Slasher"
+    tier="A"
+  />
+  <MoviePosterCard
+    src="/assets/poster-hereditary.jpg"
+    title="Hereditary"
+    year={2018}
+    genre="Supernatural"
+    tier="S"
+  />
+</MoviePosterGrid>
 
 ## What This Brand System Covers
 
