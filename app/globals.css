@@ -382,6 +382,15 @@ html, body {
   .prose th, .prose td { padding: 0.4rem 0.5rem; }
 }
 
+/* ─── Sidebar Search ─────────────────────────────── */
+input[type="search"]::placeholder {
+  color: var(--text-muted);
+}
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  display: none;
+}
+
 /* ─── Section Divider ─────────────────────────────── */
 .section-divider {
   border: none;

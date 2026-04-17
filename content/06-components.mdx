@@ -1,5 +1,4 @@
 import { TierList } from '@/components/brand/tier-list'
-import { ComponentDemo } from '@/components/brand/component-demo'
 import { ScreenAnnotation } from '@/components/brand/screen-annotation'
 import { ButtonShowcase, PYFButton } from '@/components/brand/button-showcase'
 import { FormShowcase } from '@/components/brand/form-showcase'
@@ -56,12 +55,10 @@ All buttons carry a `2px solid var(--ring)` focus outline (`--purple-300`) that 
 
 The PYF Button is a distinct component from the button system above. It uses a **pill shape** (`border-radius: 9999px`) and is reserved exclusively for triggering the fear-selection flow.
 
-<ComponentDemo title="PYF Button — Active and Disabled" code={`import { PYFButton } from '@/components/brand/button-showcase'\n\n<PYFButton />\n<PYFButton disabled />`}>
-  <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-    <PYFButton />
-    <PYFButton disabled />
-  </div>
-</ComponentDemo>
+<div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap', padding: '24px 20px', background: 'var(--bg-surface)', borderRadius: '8px', border: '1px solid var(--border-subtle)', margin: '24px 0' }}>
+  <PYFButton />
+  <PYFButton disabled />
+</div>
 
 ### States
 

@@ -4,7 +4,6 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { sections } from "@/lib/navigation";
-import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 export function Sidebar() {
@@ -15,7 +14,11 @@ export function Sidebar() {
   const filtered = useMemo(() => {
     if (!query.trim()) return sections;
     const q = query.toLowerCase();
-    return sections.filter((s) => s.title.toLowerCase().includes(q));
+    return sections.filter(
+      (s) =>
+        s.title.toLowerCase().includes(q) ||
+        s.keywords.toLowerCase().includes(q)
+    );
   }, [query]);
 
   return (
@@ -89,27 +92,54 @@ export function Sidebar() {
           className="px-4 py-3"
           style={{ borderBottom: "1px solid var(--border-subtle)" }}
         >
-          <div className="relative">
+          <div style={{ position: "relative" }}>
             <svg
               aria-hidden="true"
               width="13"
               height="13"
               viewBox="0 0 16 16"
               fill="none"
-              className="absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none"
-              style={{ color: "var(--text-muted)" }}
+              style={{
+                position: "absolute",
+                left: "10px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                pointerEvents: "none",
+                color: "var(--text-muted)",
+              }}
             >
               <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" strokeWidth="1.5" />
               <line x1="10.5" y1="10.5" x2="14.5" y2="14.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
-            <Input
+            <input
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search…"
-              className="pl-8 h-8 text-xs"
-              style={{ fontFamily: "var(--font-body)" }}
+              placeholder="Search sections…"
               aria-label="Search sections"
+              style={{
+                width: "100%",
+                height: "32px",
+                paddingLeft: "30px",
+                paddingRight: "8px",
+                backgroundColor: "var(--bg-elevated)",
+                border: "1px solid var(--border-default)",
+                borderRadius: "6px",
+                color: "var(--text-primary)",
+                fontSize: "0.75rem",
+                fontFamily: "var(--font-body)",
+                outline: "none",
+                appearance: "none",
+                WebkitAppearance: "none",
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = "var(--accent-hover)";
+                e.currentTarget.style.boxShadow = "0 0 0 2px rgba(120,84,146,0.20)";
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = "var(--border-default)";
+                e.currentTarget.style.boxShadow = "none";
+              }}
             />
           </div>
         </div>

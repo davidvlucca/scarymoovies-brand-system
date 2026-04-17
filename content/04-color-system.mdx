@@ -6,11 +6,15 @@ ScaryMoovies uses four precisely defined color scales — Purple, Red, Black, an
 
 The system is dark-first by design — not as a style choice, but as a brand statement. Black is the natural environment of horror. Purple carries the weight of something otherworldly, the color of bruises and shadows cast by things that shouldn't exist. Red is blood, used sparingly so it means something when it appears. White is pure contrast — legibility against the void.
 
+---
+
 ## Purple — Primary Brand Color
 
 Purple drives every interactive moment on the platform. It marks what can be clicked, what is active, and what deserves attention. Use it for interactive elements only — buttons, links, focus rings, active navigation states.
 
 <ColorPalette scale="purple" />
+
+---
 
 ## Red — Horror Accent
 
@@ -18,17 +22,23 @@ Red is reserved. It appears only for danger states, destructive actions, and the
 
 <ColorPalette scale="red" />
 
+---
+
 ## Black — Surface & Background
 
 The black scale defines every surface and background in the interface. It is not a single flat black — it is a family of near-identical dark values that create subtle depth without introducing obvious contrast breaks.
 
 <ColorPalette scale="black" />
 
+---
+
 ## White — Text & Contrast
 
 White handles all text and light-on-dark contrast. The scale from `white-50` through `white-900` creates the typographic hierarchy — primary text, secondary labels, muted annotations — all without introducing any actual color.
 
 <ColorPalette scale="white" />
+
+---
 
 ## Semantic Tokens
 
@@ -38,6 +48,8 @@ Click any value to copy it to clipboard.
 
 <SemanticTokens />
 
+---
+
 ## Usage Rules
 
 - **Purple is for interactive elements only.** Decorative use of purple dilutes its signal value as an affordance indicator.
@@ -46,6 +58,8 @@ Click any value to copy it to clipboard.
 - **Always reference semantic tokens in production code**, not raw scale values. Write `var(--accent-primary)`, not `var(--purple-400)`.
 - **Do not darken `--border-subtle`.** Its 0.06 alpha opacity is intentional — it creates structure without competing with content.
 - **Text hierarchy is white-only.** Do not use purple or red for headings or labels outside of specific badge contexts.
+
+---
 
 ## Accessibility
 
