@@ -39,6 +39,7 @@ import { SearchFlyout } from "@/components/brand/search-flyout";
 import { CalloutBox, CalloutShowcase } from "@/components/brand/callout-box";
 import { ImageGrid } from "@/components/brand/image-grid";
 import { IconShowcase, IconSizeShowcase } from "@/components/brand/icon-showcase";
+import { PersonaCard, PersonaShowcase } from "@/components/brand/persona-card";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -100,5 +101,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ImageGrid,
     IconShowcase,
     IconSizeShowcase,
+    PersonaCard,
+    PersonaShowcase,
   };
 }
