@@ -3,16 +3,18 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { sections } from "@/lib/navigation";
+import { ChevronRight } from "lucide-react";
+import { sectionGroups, sections } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
 export function Sidebar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
 
   const filtered = useMemo(() => {
-    if (!query.trim()) return sections;
+    if (!query.trim()) return null; // null = show groups
     const q = query.toLowerCase();
     return sections.filter(
       (s) =>
@@ -20,6 +22,10 @@ export function Sidebar() {
         s.keywords.toLowerCase().includes(q)
     );
   }, [query]);
+
+  function toggleGroup(label: string) {
+    setCollapsed((prev) => ({ ...prev, [label]: !prev[label] }));
+  }
 
   return (
     <>
@@ -146,50 +152,116 @@ export function Sidebar() {
 
         {/* Nav */}
         <nav aria-label="Brand System sections" className="flex-1 py-2">
-          <ul className="m-0 p-0 list-none">
-            {filtered.length === 0 && (
-              <li
-                className="px-5 py-3 italic"
-                style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}
-              >
-                No sections found
-              </li>
-            )}
-            {filtered.map((section) => {
-              const isActive =
-                section.href === "/"
-                  ? pathname === "/"
-                  : pathname === section.href ||
-                    pathname.startsWith(section.href + "/");
-              return (
-                <li key={section.href} data-nav-item>
-                  <Link
-                    href={section.href}
-                    onClick={() => setMobileOpen(false)}
-                    className={cn(
-                      "flex items-center gap-2.5 px-5 py-2.5 no-underline transition-colors duration-150",
-                      isActive
-                        ? "text-white-50 bg-[rgba(93,51,125,0.10)] border-l-2 border-[var(--accent-hover)]"
-                        : "text-text-secondary border-l-2 border-transparent hover:text-white-50 hover:bg-[rgba(93,51,125,0.06)]"
-                    )}
-                    style={{ fontFamily: "var(--font-body)", fontSize: "0.85rem" }}
-                  >
-                    <span
-                      className="tabular-nums shrink-0"
+          {/* Search results (flat list) */}
+          {filtered !== null && (
+            <ul className="m-0 p-0 list-none">
+              {filtered.length === 0 && (
+                <li
+                  className="px-5 py-3 italic"
+                  style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}
+                >
+                  No sections found
+                </li>
+              )}
+              {filtered.map((section) => {
+                const isActive =
+                  section.href === "/"
+                    ? pathname === "/"
+                    : pathname === section.href ||
+                      pathname.startsWith(section.href + "/");
+                return (
+                  <li key={section.href} data-nav-item>
+                    <NavLink
+                      section={section}
+                      isActive={isActive}
+                      onClick={() => setMobileOpen(false)}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+
+          {/* Grouped nav */}
+          {filtered === null && (
+            <ul className="m-0 p-0 list-none">
+              {sectionGroups.map((group) => {
+                const isGroupCollapsed = collapsed[group.label] ?? false;
+                const hasActive = group.sections.some((s) =>
+                  s.href === "/" ? pathname === "/" : pathname === s.href || pathname.startsWith(s.href + "/")
+                );
+
+                return (
+                  <li key={group.label}>
+                    {/* Group header */}
+                    <button
+                      onClick={() => toggleGroup(group.label)}
+                      aria-expanded={!isGroupCollapsed}
                       style={{
-                        fontSize: "0.68rem",
-                        minWidth: "18px",
-                        color: isActive ? "var(--accent-hover)" : "var(--text-muted)",
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        padding: "8px 20px 6px",
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        marginTop: "6px",
                       }}
                     >
-                      {section.num}
-                    </span>
-                    {section.title}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+                      <span
+                        style={{
+                          fontFamily: "var(--font-body)",
+                          fontSize: "0.65rem",
+                          fontWeight: 600,
+                          textTransform: "uppercase",
+                          letterSpacing: "0.1em",
+                          color: hasActive && !isGroupCollapsed
+                            ? "var(--accent-hover)"
+                            : "var(--text-muted)",
+                          transition: "color 150ms ease",
+                        }}
+                      >
+                        {group.label}
+                      </span>
+                      <ChevronRight
+                        size={11}
+                        strokeWidth={1.5}
+                        style={{
+                          color: "var(--text-muted)",
+                          transform: isGroupCollapsed ? "rotate(0deg)" : "rotate(90deg)",
+                          transition: "transform 200ms ease",
+                          flexShrink: 0,
+                        }}
+                      />
+                    </button>
+
+                    {/* Group items */}
+                    {!isGroupCollapsed && (
+                      <ul className="m-0 p-0 list-none">
+                        {group.sections.map((section) => {
+                          const isActive =
+                            section.href === "/"
+                              ? pathname === "/"
+                              : pathname === section.href ||
+                                pathname.startsWith(section.href + "/");
+                          return (
+                            <li key={section.href} data-nav-item>
+                              <NavLink
+                                section={section}
+                                isActive={isActive}
+                                onClick={() => setMobileOpen(false)}
+                              />
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </nav>
 
         {/* Footer */}
@@ -214,5 +286,41 @@ export function Sidebar() {
         </div>
       </aside>
     </>
+  );
+}
+
+function NavLink({
+  section,
+  isActive,
+  onClick,
+}: {
+  section: { num: string; title: string; href: string };
+  isActive: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <Link
+      href={section.href}
+      onClick={onClick}
+      className={cn(
+        "flex items-center gap-2.5 px-5 py-2 no-underline transition-colors duration-150",
+        isActive
+          ? "text-white-50 bg-[rgba(93,51,125,0.10)] border-l-2 border-[var(--accent-hover)]"
+          : "text-text-secondary border-l-2 border-transparent hover:text-white-50 hover:bg-[rgba(93,51,125,0.06)]"
+      )}
+      style={{ fontFamily: "var(--font-body)", fontSize: "0.82rem" }}
+    >
+      <span
+        className="tabular-nums shrink-0"
+        style={{
+          fontSize: "0.65rem",
+          minWidth: "18px",
+          color: isActive ? "var(--accent-hover)" : "var(--text-muted)",
+        }}
+      >
+        {section.num}
+      </span>
+      {section.title}
+    </Link>
   );
 }

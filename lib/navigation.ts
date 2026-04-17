@@ -1,19 +1,54 @@
-export const sections = [
-  { num: "01", title: "Introduction",     href: "/",               keywords: "overview mission vision platform pillars what is scarymoovies" },
-  { num: "02", title: "Brand Foundation", href: "/brand-foundation", keywords: "values personality archetype promise positioning brand" },
-  { num: "03", title: "Logo",             href: "/logo",            keywords: "wordmark emblem clearspace variants black white minimum size" },
-  { num: "VL", title: "Visual Language",  href: "/visual-language", keywords: "aesthetic dark cinematic horror grain atmospheric moodboard dread philosophy why not generic" },
-  { num: "04", title: "Color System",     href: "/color-system",    keywords: "palette tokens purple red black white hex semantic accessibility" },
-  { num: "05", title: "Typography",       href: "/typography",      keywords: "fonts inter playfair scale weights line height tracking" },
-  { num: "06", title: "Components",       href: "/components",      keywords: "buttons forms navbar tier list movie poster card PYF pick your fear" },
-  { num: "IC", title: "Iconography",      href: "/iconography",     keywords: "icons lucide react size stroke weight usage rules core icon set" },
-  { num: "07", title: "Interactions",     href: "/interactions",    keywords: "hover states animations filters genre mood skeleton search flyout" },
-  { num: "08", title: "Voice & Tone",     href: "/voice-and-tone",  keywords: "copy writing tone vocabulary microcopy voice" },
-  { num: "09", title: "Motion",           href: "/motion",          keywords: "animation duration easing transitions reduced motion cinematic" },
-  { num: "10", title: "Usage Examples",   href: "/usage-examples",  keywords: "homepage explore profile tier list pick your fear screens" },
-] as const;
+export interface SectionEntry {
+  num: string;
+  title: string;
+  href: string;
+  keywords: string;
+}
 
-export type Section = (typeof sections)[number];
+export interface SectionGroup {
+  label: string;
+  sections: SectionEntry[];
+}
+
+export const sectionGroups: SectionGroup[] = [
+  {
+    label: "Brand Identity",
+    sections: [
+      { num: "01", title: "Introduction",     href: "/",                keywords: "overview mission vision platform pillars what is scarymoovies" },
+      { num: "02", title: "Brand Foundation", href: "/brand-foundation", keywords: "values personality archetype promise positioning brand personas" },
+      { num: "03", title: "Logo",             href: "/logo",            keywords: "wordmark emblem clearspace variants black white minimum size" },
+    ],
+  },
+  {
+    label: "Visual System",
+    sections: [
+      { num: "VL", title: "Visual Language",  href: "/visual-language", keywords: "aesthetic dark cinematic horror grain atmospheric moodboard dread philosophy why not generic" },
+      { num: "04", title: "Color System",     href: "/color-system",    keywords: "palette tokens purple red black white hex semantic accessibility" },
+      { num: "05", title: "Typography",       href: "/typography",      keywords: "fonts inter playfair scale weights line height tracking" },
+      { num: "IC", title: "Iconography",      href: "/iconography",     keywords: "icons lucide react size stroke weight usage rules core icon set" },
+    ],
+  },
+  {
+    label: "Voice & Motion",
+    sections: [
+      { num: "08", title: "Voice & Tone",     href: "/voice-and-tone",  keywords: "copy writing tone vocabulary microcopy voice" },
+      { num: "09", title: "Motion",           href: "/motion",          keywords: "animation duration easing transitions reduced motion cinematic" },
+      { num: "07", title: "Interactions",     href: "/interactions",    keywords: "hover states animations filters genre mood skeleton search flyout" },
+    ],
+  },
+  {
+    label: "Components",
+    sections: [
+      { num: "06", title: "Components",       href: "/components",      keywords: "buttons forms navbar tier list movie poster card PYF pick your fear review modal dropdown search" },
+      { num: "10", title: "Usage Examples",   href: "/usage-examples",  keywords: "homepage explore profile tier list pick your fear screens collections" },
+    ],
+  },
+];
+
+// Flat list for prev/next and search
+export const sections: SectionEntry[] = sectionGroups.flatMap((g) => g.sections);
+
+export type Section = SectionEntry;
 
 export function getPrevNext(href: string): {
   prev: Section | null;
