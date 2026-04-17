@@ -171,3 +171,51 @@ When designing screens not yet built, apply the following five principles to ens
 **4. Use the surface stack to create depth, not lines.** The three surface levels — `black-900` (base), `black-700` (card), `black-500` (elevated) — are the only tools needed to separate content layers. Divider lines, borders between sections, and separator rules are almost never necessary when the surface stack is applied correctly. If you feel the need to add a line, first try lifting the content above it by one surface step instead.
 
 **5. Scale components, do not invent new ones.** Every interactive element in a new screen should map to an existing component in the system — the PYF Button, the vertical poster, the landscape card, the circular avatar, the stat block. If the use case seems to require a novel element, first check whether an existing component can be scaled (made smaller, stripped of a layer, or used in a new arrangement) before introducing a new pattern. Brand coherence comes from a small vocabulary applied consistently, not from a large vocabulary applied once each.
+
+---
+
+## 8. Collections
+
+<ScreenAnnotation
+  src="/assets/screen-collections.png"
+  alt="ScaryMoovies Collections page"
+  caption="Collections: user-curated film lists with mosaic cover art, list metadata, and author attribution"
+  annotations={[
+    { number: 1, x: 22, y: 28, label: "Collection card — mosaic cover from 4 poster thumbnails" },
+    { number: 2, x: 22, y: 52, label: "List title — Inter 600, white-50, ellipsis after 1 line" },
+    { number: 3, x: 22, y: 60, label: "Film count + author — Inter 12px, white-500" },
+    { number: 4, x: 70, y: 28, label: "Create Collection CTA — outline button, top-right" }
+  ]}
+/>
+
+The Collections page surfaces user-curated film lists — "Ari Aster Ranked", "Best Endings", "Slow Burn Essential List" — as browsable cards. Collections exist between the personal (Tier List) and the social (Activity Feed): they are authored individually but consumed by the community.
+
+**Collection card.** Each card uses a 2×2 mosaic of poster thumbnails as its cover image — four films from the list, cropped to fill equal quadrants within a square or 4:3 container. The mosaic is a compact, instantly recognizable format that communicates the collection's range without requiring a custom cover image. The `border-radius: 8px` and `black-700` fallback background apply consistently with all other card types.
+
+**Metadata.** Below the mosaic, the collection title renders in Inter weight 600 at 14px, `white-50`, with `text-overflow: ellipsis` on overflow. The second line shows film count and author handle in Inter Regular 12px, `white-500`. This information density is calibrated for browse — enough to evaluate a collection without requiring a hover state or detail page.
+
+**Creation affordance.** A "Create Collection" button in the outline variant (`border: 1px solid --border-default`, transparent background) sits in the page's top-right action area. Outline buttons are the correct choice for secondary creation actions — they signal interactivity without competing with the collection cards, which are the primary content of the surface.
+
+---
+
+## 9. Explore — Genre and Mood Filter
+
+<ScreenAnnotation
+  src="/assets/screen-genre-mood.png"
+  alt="ScaryMoovies Explore page with genre and mood filter active"
+  caption="Genre and mood filter: tag chip clusters with collapse behavior on section change"
+  annotations={[
+    { number: 1, x: 50, y: 12, label: "Genre filter row — TagChip cluster, horizontal scroll on mobile" },
+    { number: 2, x: 50, y: 25, label: "Mood filter row — TagChip cluster, appears below genre" },
+    { number: 3, x: 30, y: 55, label: "Active filter results — matching cards at full opacity" },
+    { number: 4, x: 72, y: 55, label: "Non-matching cards — opacity: 0.15, position preserved (no reflow)" }
+  ]}
+/>
+
+The genre and mood filter system is the Explore page's primary interaction model. It uses TagChip clusters for both dimensions and applies the brand's specific opacity-based filter behavior.
+
+**Genre filter.** A horizontal row of TagChip components represents the top-level sub-genres: Supernatural, Slasher, Psychological, Folk Horror, Body Horror, Found Footage, and others. Selecting a genre chip activates it (filled `--accent-primary` background) and collapses unrelated genre sections using the `max-height` + `opacity: 0` technique. This is a hard constraint: the collapse must not use `display: none` or remove elements from the DOM, as this would break scroll position and cause layout shift.
+
+**Mood filter.** A second TagChip row appears below the genre filter (or within the selected section): atmosphere descriptors — Slow Burn, Atmospheric, Tense, Gory, Funny, Unsettling. Selecting a mood filter applies the card-level opacity dimming: non-matching cards drop to `opacity: 0.15` with a `200ms ease` transition. Matching cards remain at full opacity. Cards do not reflow — they stay in their grid positions. This is a brand-defining interaction: the horror remains in place, it simply retreats into the dark.
+
+**Interaction constraint.** Never use `display: none` or `visibility: hidden` to hide non-matching items. The ghost of the non-matching card at `opacity: 0.15` is an intentional design choice — it communicates the scope of the catalog even when filtered. The darkness is part of the signal.
