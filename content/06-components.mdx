@@ -9,6 +9,11 @@ import { SkeletonShowcase } from '@/components/brand/skeleton-loader'
 import { ToastShowcase } from '@/components/brand/toast-showcase'
 import { ThreeStateShowcase } from '@/components/brand/three-state-button'
 import { StarRatingShowcase } from '@/components/brand/star-rating'
+import { ReviewCardShowcase } from '@/components/brand/review-card'
+import { ModalShowcase } from '@/components/brand/modal-showcase'
+import { DropdownShowcase } from '@/components/brand/dropdown-showcase'
+import { SearchFlyout } from '@/components/brand/search-flyout'
+import { CalloutBox, CalloutShowcase } from '@/components/brand/callout-box'
 
 # Components
 
@@ -455,3 +460,160 @@ Standard unit for browsing — Explore grids, search results, collection views. 
 | Gap (poster→title) | `8px`                                |
 | Grid column gap    | `16px`                               |
 | Grid row gap       | `24px`                               |
+
+---
+
+## Review Card
+
+The primary unit for displaying user reviews. Appears on movie detail pages, activity feeds, and profile pages.
+
+<ReviewCardShowcase />
+
+### Anatomy
+
+1. **Author row** — `UserAvatar` (md) + name (weight 600) + optional `@handle`
+2. **Rating** — right-aligned `StarRating` (readOnly, sm) or `RatingChip` (tier variant)
+3. **Film context** — optional pill showing film title + year; only rendered when review appears outside of a film's own page
+4. **Review text** — `0.9rem`, `line-height: 1.65`, `--text-secondary`
+5. **Footer** — date (left) + Helpful button (right)
+
+### Specs
+
+| Property       | Value                                      |
+|----------------|--------------------------------------------|
+| Background     | `var(--bg-surface)`                        |
+| Border         | `1px solid var(--border-subtle)`           |
+| Border radius  | `8px`                                      |
+| Padding        | `20px`                                     |
+| Author name    | `14px`, weight `600`, `--text-primary`     |
+| Handle         | `12px`, `--text-muted`                     |
+| Review text    | `0.9rem`, `line-height: 1.65`              |
+| Date           | `12px`, `--text-muted`                     |
+| Helpful button | `12px`, border `--border-subtle`, hover border `--border-default` |
+
+### Usage Rules
+
+Show `film` context only when the card appears in a cross-film context (activity feed, profile). Omit it on the movie's own detail page — it's redundant. The Helpful button is optional; omit it in compact list views.
+
+---
+
+## Modal
+
+Overlay dialogs for add-to-list, write-review, and confirm-action flows.
+
+<ModalShowcase />
+
+### Anatomy
+
+1. **Overlay** — `rgba(12,10,14,0.85)` with `backdrop-filter: blur(4px)`; click-outside closes
+2. **Dialog** — `var(--bg-elevated)` background, max-width `480px`, `border-radius: 10px`
+3. **Header** — title (Playfair Display, `1.1rem`) + close button (X icon, `--text-muted`)
+4. **Body** — freeform content area, `padding: 20px 24px`
+5. **Footer** — right-aligned action buttons separated by `--border-subtle` top border
+
+### Specs
+
+| Property       | Value                                         |
+|----------------|-----------------------------------------------|
+| Overlay bg     | `rgba(12,10,14,0.85)` + `blur(4px)`           |
+| Dialog bg      | `var(--bg-elevated)`                          |
+| Max width      | `480px`                                       |
+| Border radius  | `10px`                                        |
+| Box shadow     | `0 24px 64px rgba(0,0,0,0.7)`                 |
+| Header padding | `20px 24px 16px`                              |
+| Body padding   | `20px 24px`                                   |
+| Footer padding | `16px 24px 20px`                              |
+| Title font     | `var(--font-display)`, `1.1rem`, weight `600` |
+
+### Usage Rules
+
+Always support click-outside and Escape to close. Destructive actions (Remove, Delete) use `--accent-danger` for the primary button. Non-destructive actions use `--accent-primary`. Never use more than two footer buttons.
+
+---
+
+## Dropdown
+
+Select input for sort order, filter criteria, and single-choice options.
+
+<DropdownShowcase />
+
+### Anatomy
+
+1. **Trigger button** — shows selected label + `ChevronDown` icon; rotates on open
+2. **Option list** — `var(--bg-elevated)` panel, `border-radius: 8px`, floating below trigger
+3. **Option row** — hover bg `rgba(255,255,255,0.04)`; selected row gets accent tint + `Check` icon
+
+### Specs
+
+| Property         | Value                                   |
+|------------------|-----------------------------------------|
+| Trigger bg       | `var(--bg-elevated)`                    |
+| Trigger border   | `--border-subtle` (default), `--border-default` (open/hover) |
+| Trigger padding  | `8px 12px`                              |
+| Option padding   | `8px 10px`                              |
+| List shadow      | `0 12px 32px rgba(0,0,0,0.5)`           |
+| Selected tint    | `rgba(93,51,125,0.2)`                   |
+| Check icon       | `13px`, `--accent-hover`                |
+| Font             | `var(--font-body)`, `0.85rem`           |
+
+### Usage Rules
+
+Prefer dropdowns over radio groups when there are 4+ options. Always show the current selection in the trigger. Dismiss by clicking outside — never require an explicit close button.
+
+---
+
+## Search Flyout
+
+Animated search input that expands from the Navbar search icon, showing poster-thumbnail results inline.
+
+<SearchFlyout />
+
+### Anatomy
+
+1. **Trigger** — compact ghost button with `Search` icon and placeholder text
+2. **Expanded input** — full-width input with clear button; transitions from collapsed state
+3. **Results panel** — floating list below input; each row: poster thumbnail (28×42px) + title + year
+4. **Empty state** — "Nothing found for…" message at ≥2 chars with no matches
+
+### Specs
+
+| Property          | Value                                          |
+|-------------------|------------------------------------------------|
+| Input bg          | `var(--bg-elevated)`                           |
+| Input border      | `--border-default` when focused                |
+| Results panel bg  | `var(--bg-elevated)`                           |
+| Results shadow    | `0 16px 40px rgba(0,0,0,0.6)`                  |
+| Poster thumbnail  | `28×42px` (2:3), `border-radius: 3px`          |
+| Result row padding | `8px 10px`                                    |
+| Result hover bg   | `rgba(255,255,255,0.05)`                       |
+
+### Usage Rules
+
+Show results at ≥1 character. Dismiss on Escape or click-outside. The search flyout is for quick navigation — it is not the full search results page. Limit to 5–6 results; link to a full results page for more.
+
+---
+
+## Callout
+
+Inline spec callout for documentation use. Three variants: `info`, `warning`, `tip`.
+
+<CalloutShowcase />
+
+### Variants
+
+| Variant   | Icon          | Border              | Use for                                      |
+|-----------|---------------|---------------------|----------------------------------------------|
+| `info`    | Info circle   | `--border-default`  | General notes, requirements, reminders       |
+| `warning` | Triangle      | `--accent-danger`   | Breaking constraints, size limits, avoid-X  |
+| `tip`     | Lightbulb     | `--accent-hover`    | Best-practice hints, recommended patterns   |
+
+### Usage
+
+```mdx
+<CalloutBox variant="warning">
+  Do not use below 20px — legibility breaks at smaller sizes.
+</CalloutBox>
+```
+
+Use `info` as the default. Only reach for `warning` when the guidance prevents a real mistake. `tip` is for advice that's useful but not blocking.
+

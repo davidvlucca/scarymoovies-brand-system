@@ -32,6 +32,12 @@ import { Skeleton, SkeletonPoster, SkeletonCard, SkeletonTextBlock, SkeletonShow
 import { ToastShowcase } from "@/components/brand/toast-showcase";
 import { ThreeStateButton, ThreeStateShowcase } from "@/components/brand/three-state-button";
 import { StarRating, TierSelector, StarRatingShowcase } from "@/components/brand/star-rating";
+import { ReviewCard, ReviewCardShowcase } from "@/components/brand/review-card";
+import { Modal, ModalShowcase } from "@/components/brand/modal-showcase";
+import { BrandDropdown, DropdownShowcase } from "@/components/brand/dropdown-showcase";
+import { SearchFlyout } from "@/components/brand/search-flyout";
+import { CalloutBox, CalloutShowcase } from "@/components/brand/callout-box";
+import { ImageGrid } from "@/components/brand/image-grid";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -81,5 +87,15 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     StarRating,
     TierSelector,
     StarRatingShowcase,
+    ReviewCard,
+    ReviewCardShowcase,
+    Modal,
+    ModalShowcase,
+    BrandDropdown,
+    DropdownShowcase,
+    SearchFlyout,
+    CalloutBox,
+    CalloutShowcase,
+    ImageGrid,
   };
 }
