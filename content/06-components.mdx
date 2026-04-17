@@ -1,17 +1,67 @@
 import { TierList } from '@/components/brand/tier-list'
-import { ScreenAnnotation } from '@/components/brand/screen-annotation'
 import { ButtonShowcase, PYFButton } from '@/components/brand/button-showcase'
 import { FormShowcase } from '@/components/brand/form-showcase'
+import { NavbarShowcase } from '@/components/brand/navbar'
+import { RatingChipShowcase } from '@/components/brand/rating-chip'
+import { TagChipShowcase } from '@/components/brand/tag-chip'
+import { UserAvatarShowcase } from '@/components/brand/user-avatar'
+import { SkeletonShowcase } from '@/components/brand/skeleton-loader'
+import { ToastShowcase } from '@/components/brand/toast-showcase'
+import { ThreeStateShowcase } from '@/components/brand/three-state-button'
+import { StarRatingShowcase } from '@/components/brand/star-rating'
 
 # Components
 
-This reference documents the core UI components of the ScaryMoovies interface. Each entry covers purpose, anatomy, all interactive states with exact color tokens, dimensional specs, and rules governing correct use. Treat these specs as the source of truth; never override them with one-off values.
+This reference documents every UI component in the ScaryMoovies system. Each entry covers purpose, anatomy, all interactive states with exact color tokens, dimensional specs, and usage rules. Treat these specs as the source of truth — never override with one-off values.
+
+---
+
+## Navbar
+
+The Navbar is present on every page of the product. It provides brand identity, primary navigation, and the main action controls — including the PYF Button and user account access.
+
+<NavbarShowcase />
+
+### Anatomy
+
+1. **Root bar** — full-width, `height: 64px`, `background: var(--bg-surface)`, `sticky top-0 z-50`
+2. **Logo** — left-aligned wordmark, links to `/`
+3. **Nav links** — centered; `EXPLORE` and `COLLECTIONS`, all-caps Inter
+4. **Action group** — right-aligned; Search icon · PYF Button · Bell icon · Avatar
+
+### Nav Link States
+
+| State   | Color       | Token             |
+|---------|-------------|-------------------|
+| Default | `white-700` | `--text-secondary` |
+| Hover   | `white-50`  | `--text-primary`   |
+| Active  | `white-50`  | `--text-primary`   |
+
+### Specs
+
+| Property       | Value                                              |
+|----------------|----------------------------------------------------|
+| Height         | `64px`                                             |
+| Background     | `var(--bg-surface)` (`#0b090d`)                   |
+| Position       | `sticky`, `top: 0`, `z-index: 50`                 |
+| Nav link size  | `14px`, weight `500`, `0.06em` tracking, all-caps |
+| Nav link gap   | `32px`                                             |
+| Action gap     | `16px`                                             |
+| Icon size      | `20px`, `strokeWidth: 1.5`                        |
+| PYF button     | Pill shape, `8px 16px` padding, 75% scale of hero variant |
+| Avatar size    | `32px`, `border-radius: 9999px`                   |
+
+### Usage Rules
+
+**Use on:** every page without exception. The Navbar is never hidden, replaced, or removed from the DOM — even on full-screen overlays, it renders beneath.
+
+**Do not:** reduce height below 64px on desktop; use `position: fixed` instead of `sticky`; duplicate the PYF button anywhere else in the Navbar.
 
 ---
 
 ## Form Elements
 
-shadcn/ui primitives adapted to the ScaryMoovies design system. Every state — focus, error, disabled — uses CSS variables from the token set. No hardcoded values. All components are interactive below.
+shadcn/ui primitives adapted to the ScaryMoovies token system. Every state — focus, error, disabled — uses CSS variables. No hardcoded values anywhere.
 
 <FormShowcase />
 
@@ -19,7 +69,7 @@ shadcn/ui primitives adapted to the ScaryMoovies design system. Every state — 
 
 ## Button System
 
-The ScaryMoovies button system is built on shadcn/ui with brand token overrides. All interactive states, focus rings, and disabled styles are wired to CSS variables — never hardcoded hex values.
+Built on shadcn/ui with brand token overrides. All interactive states, focus rings, and disabled styles reference CSS variables.
 
 <ButtonShowcase />
 
@@ -27,33 +77,29 @@ The ScaryMoovies button system is built on shadcn/ui with brand token overrides.
 
 | Variant | Token | When to use |
 |---|---|---|
-| `default` | `--accent-primary` bg | Primary action — main CTA, confirm, save |
-| `destructive` | `--accent-danger` bg | Irreversible actions — delete, remove, clear data |
-| `outline` | `--border-default` border | Secondary action alongside a primary button |
-| `secondary` | `--bg-elevated` bg | Supplementary actions — add to list, share |
-| `ghost` | transparent, hover fills | Low-emphasis inline actions — skip, mark watched |
-| `ghost-danger` | transparent, hover danger | Low-emphasis destructive — clear list, unfriend |
-| `link` | underline text | Inline prose actions — read more, see reviews |
+| `default` | `--accent-primary` bg | Primary action — confirm, save |
+| `destructive` | `--accent-danger` bg | Irreversible — delete, remove |
+| `outline` | `--border-default` border | Secondary action alongside primary |
+| `secondary` | `--bg-elevated` bg | Supplementary — add to list, share |
+| `ghost` | transparent, hover fills | Low-emphasis inline — skip, mark watched |
+| `ghost-danger` | transparent, hover danger | Low-emphasis destructive |
+| `link` | underline text | Inline prose actions |
 
 ### Sizes
 
 | Size | Height | Use case |
 |---|---|---|
 | `sm` | 36px | Compact UI — table actions, chip controls |
-| `default` | 40px | Standard UI — forms, modals, cards |
-| `lg` | 44px | Section-level CTAs — collection headers |
+| `default` | 40px | Standard UI — forms, modals |
+| `lg` | 44px | Section-level CTAs |
 | `xl` | 52px | Hero CTAs — landing page, empty states |
 | `icon` | 40×40px | Icon-only actions — share, bookmark |
-
-### Focus and Accessibility
-
-All buttons carry a `2px solid var(--ring)` focus outline (`--purple-300`) that appears on keyboard navigation. Never suppress this with `outline: none` without a replacement. Disabled states use `opacity: 50%` and `cursor: not-allowed` — the disabled prop is always required, never achieved through CSS alone.
 
 ---
 
 ## Pick Your Fear (PYF) Button
 
-The PYF Button is a distinct component from the button system above. It uses a **pill shape** (`border-radius: 9999px`) and is reserved exclusively for triggering the fear-selection flow.
+A distinct component from the button system. Pill shape (`border-radius: 9999px`), reserved exclusively for triggering the fear-selection flow.
 
 <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap', padding: '24px 20px', background: 'var(--bg-surface)', borderRadius: '8px', border: '1px solid var(--border-subtle)', margin: '24px 0' }}>
   <PYFButton />
@@ -62,249 +108,350 @@ The PYF Button is a distinct component from the button system above. It uses a *
 
 ### States
 
-| State    | Background       | Text           | Token                          | Other                          |
-|----------|------------------|----------------|--------------------------------|--------------------------------|
-| Default  | `--accent-primary` | `--text-primary` | `var(--accent-primary)`      | Resting state                  |
-| Hover    | `--accent-hover`  | `--text-primary` | `var(--accent-hover)`        | Lightens on cursor enter       |
-| Active   | pressed           | —              | `scale(0.97)` transform        | Momentary press feedback       |
-| Disabled | `--black-300`    | `--text-muted` | `var(--black-300)`             | `cursor-not-allowed`, no hover |
+| State    | Background         | Text            | Other                      |
+|----------|--------------------|-----------------|----------------------------|
+| Default  | `--accent-primary` | `--text-primary` | Resting                   |
+| Hover    | `--accent-hover`   | `--text-primary` | Lightens on cursor enter  |
+| Active   | pressed            | —               | `scale(0.97)` transform    |
+| Disabled | `--black-300`      | `--text-muted`  | `cursor-not-allowed`       |
 
 ### Specs
 
-| Property       | Value                          |
-|----------------|--------------------------------|
-| Border radius  | `9999px` (pill — never square) |
-| Padding        | `12px 24px`                    |
-| Font size      | `14px`                         |
-| Font weight    | `500` (medium)                 |
-| Letter spacing | `0.08em`                       |
+| Property       | Value                             |
+|----------------|-----------------------------------|
+| Border radius  | `9999px` — never square           |
+| Padding        | `12px 24px`                       |
+| Font           | `14px`, weight `500`, `0.08em` tracking, all-caps |
 | Label          | `PICK YOUR FEAR` — never reworded |
-| Transition     | `background 150ms ease`        |
-| Min width      | `160px`                        |
+| Min width      | `160px`                           |
+| Transition     | `background 150ms ease`           |
+
+---
+
+## Rating Chip
+
+The smallest unit of opinion. Used on every movie card, review, and profile stat block. Two variants: **tier** (S–F) and **star** (numeric score).
+
+<RatingChipShowcase />
+
+### Tier Variant
+
+| Tier | Background    | Semantic meaning |
+|------|--------------|-----------------|
+| S    | `purple-400` | Exceptional      |
+| A    | `purple-300` | Excellent        |
+| B    | `purple-200` | Good             |
+| C    | `black-300`  | Average          |
+| D    | `red-300`    | Below average    |
+| E    | `red-400`    | Poor             |
+| F    | `red-500`    | Unwatchable      |
+
+### Specs
+
+| Property      | Tier chip  | Star chip             |
+|---------------|------------|-----------------------|
+| Size          | `24×24px`  | auto (text-driven)    |
+| Border radius | `4px`      | `4px`                 |
+| Font size     | `12px`     | `12px`                |
+| Font weight   | `700`      | `600`                 |
+| Padding       | none       | `2px 8px`             |
 
 ### Usage Rules
 
-**Use when:** triggering the fear-selection flow is the intended action and the context supports a high-emphasis CTA (Navbar, hero, empty-state prompts).
+**Tier chip:** shown on hover overlays on movie posters, as a tier label on profile stat blocks, and inside tier list rows.
 
-**Do not use when:** a secondary or destructive action is needed. Do not duplicate more than twice on a single viewport. Do not relabel — `PICK YOUR FEAR` is brand-critical. Do not use the `Button` component for this — it uses `border-radius: 6px`. PYFButton is its own component.
+**Star chip:** shown in reviews, metadata strips, and search result cards where a numeric score is available.
 
-**Common mistakes:** using `purple-500` as the resting background (that is the Active token); applying rounded-md instead of pill radius; nesting inside another interactive element.
+**Do not mix both on a single card** — choose tier OR star based on the context. Do not invent custom tier letters.
+
+---
+
+## Tag Chip
+
+Pill-shaped label for genres, moods, and metadata. Supports interactive toggle for filter clusters.
+
+<TagChipShowcase />
+
+### Variants
+
+| Variant   | Background      | Border              | Use when |
+|-----------|-----------------|---------------------|----------|
+| `default` | `--bg-elevated` | `--border-subtle`   | Static label — metadata, search results |
+| `active`  | `--accent-primary` | `--accent-primary` | Selected filter state |
+| `outline` | transparent     | `--border-default`  | Unselected in an interactive cluster |
+
+### Sizes
+
+| Size | Padding    | Font size | Use when |
+|------|------------|-----------|----------|
+| `sm` | `2px 8px`  | `11px`    | Dense rows — cast metadata, sub-genre labels |
+| `md` | `4px 12px` | `13px`    | Primary filter clusters, genre tags on cards |
+
+### Usage Rules
+
+**Use for:** genre labels (Slasher, Folk Horror), mood tags (Dread, Atmospheric), sub-genre metadata, and any multi-select filter cluster.
+
+**Do not use for:** tier labels (use RatingChip) or binary toggles (use ThreeStateButton). Keep labels under 20 characters — tags that wrap break the pill shape.
+
+---
+
+## User Avatar
+
+Circular profile image in five sizes. Used in the Navbar, review cards, activity feed, and the full profile header.
+
+<UserAvatarShowcase />
+
+### Sizes
+
+| Size  | Diameter | Use context                              |
+|-------|----------|------------------------------------------|
+| `sm`  | `24px`   | Dense lists, comment threads, tiny badges |
+| `md`  | `32px`   | Navbar, review card headers              |
+| `lg`  | `48px`   | Activity feed items, review cards        |
+| `xl`  | `80px`   | Profile header compact view              |
+| `2xl` | `120px`  | Full profile page hero                   |
+
+### Ring Variant
+
+The `ring` prop applies a `2px solid var(--accent-primary)` border. Use it when the avatar represents the **signed-in user** — primarily on the profile page header and the Navbar avatar. Never apply the ring to another user's avatar in a social context.
+
+### Fallback
+
+When no image `src` is provided, renders the user's initials (up to 2 characters) in `--text-secondary` on `--bg-elevated`. The fallback font is Inter, weight 600.
+
+---
+
+## Three-State Action
+
+The three-state action group lets users log their relationship to a film: **Watched**, **Watchlist**, and **Liked**. Each state is independent and toggleable.
+
+<ThreeStateShowcase />
+
+### States
+
+| Button    | Icon   | Active color       | Meaning                              |
+|-----------|--------|--------------------|--------------------------------------|
+| Watched   | Eye    | `--accent-hover`   | I have seen this film                |
+| Watchlist | Clock  | `--accent-hover`   | I intend to watch this               |
+| Liked     | Heart  | `--accent-danger`  | This is one of my favourites         |
+
+### Behavior
+
+- Each button toggles independently. A film can be Watched + Liked simultaneously.
+- Active state shows a filled border and background tint using `color-mix` against the accent color.
+- Watched and Watchlist use `--accent-hover` (purple) — both are neutral positive actions.
+- Liked uses `--accent-danger` (red) — the one moment red functions as passion, not danger.
+
+### Usage Rules
+
+**Place on:** movie detail pages, movie cards on hover, and the profile watchlist row.
+
+**Do not:** replace the three-state group with a single "Add to list" button — users need the distinction between queued and watched. Do not apply the Liked red to other heart/favourite interactions elsewhere in the product — it breaks the red scarcity rule except in this one intentional exception.
+
+---
+
+## Star Rating & Tier Selector
+
+Two distinct rating input components. Both are used to capture a user's rating for a film — choose the right one based on context.
+
+<StarRatingShowcase />
+
+### Star Rating
+
+Half-star precision (0.0–5.0). Used in the **review submission flow** and displayed as a read-only badge in **review cards** and **search results**.
+
+| Property       | Value                                      |
+|----------------|--------------------------------------------|
+| Range          | 0.0 – 5.0, half-star increments            |
+| Star color     | `--accent-hover` (filled), `--bg-elevated` (empty) |
+| Sizes          | `sm` (14px), `md` (20px), `lg` (28px)      |
+| Interaction    | Left half of star = 0.5, right half = full |
+
+### Tier Selector
+
+S–F single-select. Used on the **Tier List page** when a user places a film into a tier. The selected tier renders at full opacity; unselected tiers dim to 40%.
+
+**When to use which:**
+- **Star rating** → reviews, public scores, comparison contexts
+- **Tier selector** → the Tier List feature exclusively
+
+Do not present both rating systems simultaneously for the same film. Pick one per context and be consistent.
+
+---
+
+## Skeleton Loader
+
+Replaces content during data fetches. Dimensions match the element being loaded — no layout shift when real content arrives.
+
+<SkeletonShowcase />
+
+### Variants
+
+| Component        | What it replaces              |
+|------------------|-------------------------------|
+| `SkeletonPoster` | Movie poster (2:3 ratio)      |
+| `SkeletonCard`   | Full movie card (poster + meta)|
+| `SkeletonTextBlock` | Prose text lines           |
+| `Skeleton`       | Any single element — pass `width` + `height` |
+
+### Specs
+
+| Property      | Value                                              |
+|---------------|----------------------------------------------------|
+| Base color    | `--bg-elevated` (`#3d3b3e`)                       |
+| Shimmer       | `rgba(255,255,255,0.04)` gradient, left → right   |
+| Duration      | `1.5s`, `infinite`                                 |
+| Border radius | Matches the element it replaces                    |
+| Motion rule   | Shimmer disabled under `prefers-reduced-motion`    |
+
+### Usage Rules
+
+**Always use:** skeleton loaders when a grid or list is waiting on async data. Never show an empty container — it looks like a bug.
+
+**Match dimensions exactly.** A skeleton that is the wrong size causes layout shift when real content arrives.
+
+---
+
+## Toast Notification
+
+Brief, auto-dismissing feedback after a user action. Appears top-right, stacks vertically.
+
+<ToastShowcase />
+
+### Variants
+
+| Variant   | Left border       | Icon        | Use when |
+|-----------|-------------------|-------------|----------|
+| `success` | `--accent-hover`  | CheckCircle | Action completed — added to watchlist, review posted |
+| `error`   | `--accent-danger` | XCircle     | Something failed — write in brand voice |
+| `info`    | `--text-muted`    | Info        | Neutral update — saved, synced |
+
+### Copy Rules
+
+Toast copy follows Voice & Tone exactly. Some reference examples:
+
+- ✓ `Added to watchlist.` + sub: `Hereditary · Your Watchlist`
+- ✓ `Review posted.` + sub: `Visible to followers`
+- ✓ `Something went wrong in the dark.` + sub: `Refresh and try again.`
+- ✗ `Oops! Something went wrong. Please try again later.`
+
+### Specs
+
+| Property      | Value                             |
+|---------------|-----------------------------------|
+| Max width     | `340px`                           |
+| Background    | `--bg-elevated`                   |
+| Border        | `1px solid --border-subtle`       |
+| Left border   | `3px solid` (variant accent color)|
+| Border radius | `8px`                             |
+| Shadow        | `0 8px 32px rgba(0,0,0,0.5)`     |
+| Auto-dismiss  | `4000ms` (success/info), `6000ms` (error) |
 
 ---
 
 ## Movie Poster — Vertical
 
-### Purpose
-
-The vertical poster represents a single film in portrait orientation. It is the most common content unit across the product — appearing in collection grids, watchlist layouts, and as thumbnails inside Tier List rows.
+The most common content unit. 2:3 portrait orientation for collection grids, watchlist layouts, and Tier List rows.
 
 ### Anatomy
 
-1. **Image frame** — 2:3 aspect ratio container, `border-radius: 8px`
-2. **Poster image** — fills frame via `object-fit: cover`
-3. **Hover overlay** — semi-transparent scrim (`black/50`) that fades in on hover
-4. **Rating chip** — surfaces on hover, positioned bottom-right of the overlay
+1. **Image frame** — `aspect-ratio: 2/3`, `border-radius: 8px`
+2. **Poster image** — `object-fit: cover`
+3. **Hover overlay** — `rgba(0,0,0,0.50)` scrim, fades in on hover
+4. **Rating chip** — bottom-right, `8px` inset, appears in hover overlay only
 
 ### States
 
-| State  | Transform        | Overlay opacity | Rating chip |
-|--------|------------------|-----------------|-------------|
-| Rest   | `scale(1.00)`    | `0`             | Hidden      |
-| Hover  | `scale(1.03)`    | `1` (black/50)  | Visible     |
+| State | Transform     | Overlay opacity | Rating chip |
+|-------|---------------|-----------------|-------------|
+| Rest  | `scale(1.00)` | `0`             | Hidden      |
+| Hover | `scale(1.03)` | `1`             | Visible     |
 
 ### Specs
 
-| Property         | Value                                |
-|------------------|--------------------------------------|
-| Aspect ratio     | `2 / 3`                              |
-| Border radius    | `8px` (radius-md)                    |
-| Hover scale      | `1.03`                               |
-| Transition       | `transform 200ms ease, opacity 200ms ease` |
-| Overlay color    | `rgba(0, 0, 0, 0.50)`               |
-| Rating chip pos. | Bottom-right, `8px` inset            |
-| Min width        | `120px` (thumbnail), `200px` (grid) |
-
-### Usage Rules
-
-**Use when:** displaying a film in any grid, list, or tier-row context where portrait imagery is available.
-
-**Do not use when:** the layout demands a wide-format preview (use the Horizontal variant). Do not stretch the container to a non-2:3 ratio; always constrain via aspect-ratio utility. Do not show the rating chip in the resting state — it must only appear inside the hover overlay.
+| Property      | Value                                          |
+|---------------|------------------------------------------------|
+| Aspect ratio  | `2 / 3`                                        |
+| Border radius | `8px`                                          |
+| Hover scale   | `1.03`                                         |
+| Transition    | `transform 200ms ease, opacity 200ms ease`     |
+| Overlay       | `rgba(0, 0, 0, 0.50)`                         |
+| Min width     | `120px` thumbnail, `200px` grid               |
 
 ---
 
 ## Movie Poster — Horizontal
 
-### Purpose
-
-The horizontal poster presents a film in landscape orientation. It is used for editorial placements where cinematic framing matters more than density — featured section rows and the Recently Watched strip.
+Landscape orientation for editorial placements — featured rows and recently watched strips.
 
 ### Anatomy
 
-1. **Image frame** — 16:9 aspect ratio container, `border-radius: 8px`
-2. **Poster image** — fills frame via `object-fit: cover`
-3. **Hover overlay** — semi-transparent scrim
-4. **Play icon** — centered SVG icon, surfaces on hover
+1. **Image frame** — `aspect-ratio: 16/9`, `border-radius: 8px`
+2. **Poster image** — `object-fit: cover`
+3. **Hover overlay** — `rgba(0,0,0,0.50)` scrim
+4. **Play icon** — 48px, centered, appears on hover
 
 ### States
 
 | State | Transform     | Overlay opacity | Play icon |
 |-------|---------------|-----------------|-----------|
 | Rest  | `scale(1.00)` | `0`             | Hidden    |
-| Hover | `scale(1.02)` | `1` (black/50)  | Visible   |
-
-### Specs
-
-| Property      | Value                                     |
-|---------------|-------------------------------------------|
-| Aspect ratio  | `16 / 9`                                  |
-| Border radius | `8px` (radius-md)                         |
-| Hover scale   | `1.02` (more subtle than vertical)        |
-| Overlay color | `rgba(0, 0, 0, 0.50)`                    |
-| Play icon     | `48px`, centered, `white`, opacity `0.9` |
-| Transition    | `transform 200ms ease, opacity 200ms ease`|
-
-### Usage Rules
-
-**Use when:** the layout has horizontal room and cinematic context is appropriate — featured rows, hero-adjacent carousels, recently watched strips.
-
-**Do not use when:** displaying dense grids or tier list thumbnails (use the Vertical variant). Do not use a play icon that implies immediate streaming if the action is navigation rather than inline playback — align the icon semantics with the actual behavior.
-
----
-
-## Navbar
-
-### Purpose
-
-The Navbar provides persistent top-level navigation, brand identity, and primary actions. It is sticky to the top of the viewport and present on every page.
-
-### Anatomy
-
-1. **Root bar** — full-width, `height: 64px`, `background: black-600` (bg-surface)
-2. **Logo** — left-aligned, links to `/`
-3. **Nav links** — centered; `EXPLORE` and `COLLECTIONS` as plain text links
-4. **Action group** — right-aligned; Search icon · PYF Button · Bell icon · Profile avatar
-
-### States — Nav Links
-
-| State   | Text color  | Token          |
-|---------|-------------|----------------|
-| Default | `white-700` | `text-white-700`|
-| Hover   | `white-50`  | `text-white-50` |
-| Active  | `white-50`  | `text-white-50` |
-
-### Specs
-
-| Property        | Value                         |
-|-----------------|-------------------------------|
-| Height          | `64px`                        |
-| Background      | `black-600` / `bg-surface`    |
-| Position        | `sticky`, `top: 0`, `z-50`   |
-| Logo height     | `32px`                        |
-| Nav link size   | `14px`, `500` weight, `0.06em` tracking, all-caps |
-| Nav link gap    | `32px` between items          |
-| Action gap      | `16px` between icons/button   |
-| Icon size       | `20px` (search, bell)         |
-| Avatar size     | `32px`, `border-radius: 9999px`|
-
-### Usage Rules
-
-**Use when:** on all pages, without exception. The Navbar must not be hidden, replaced, or repositioned.
-
-**Do not use when:** building isolated modal or full-screen overlays that require temporary nav suppression — in those cases, retain the Navbar beneath the overlay rather than removing it from the DOM.
-
-**Common mistakes:** duplicating PYF Button elsewhere in the Navbar; reducing height below 64px on desktop; using `position: fixed` instead of `sticky` (breaks scroll context).
+| Hover | `scale(1.02)` | `1`             | Visible   |
 
 ---
 
 ## Tier List
 
-### Purpose
-
-The Tier List allows users to rank movies across seven ordered tiers from S (best) down to F (worst). It is a structured, horizontally scrollable grid used on the Tier List feature page.
-
-### Anatomy
-
-1. **Tier row** — full-width horizontal strip per tier
-2. **Tier label** — `40px` wide column, left-aligned; bold uppercase letter; colored background per tier
-3. **Poster strip** — horizontally scrollable row of vertical Movie Poster thumbnails (smaller size)
+Ranks films across seven tiers, S (best) to F (worst). Used exclusively on the Tier List feature page.
 
 <TierList />
 
 ### Tier Colors
 
-| Tier | Label bg color | Semantic meaning |
-|------|---------------|-----------------|
-| S    | `purple-400`  | Exceptional      |
-| A    | `purple-300`  | Excellent        |
-| B    | `purple-200` (tint) | Good       |
-| C    | neutral       | Average          |
-| D    | `red-300` (tint) | Below average |
-| E    | `red-400` (tint) | Poor          |
-| F    | `red-500`     | Unwatchable      |
+| Tier | Background    | Meaning      |
+|------|--------------|--------------|
+| S    | `purple-400` | Exceptional  |
+| A    | `purple-300` | Excellent    |
+| B    | `purple-200` | Good         |
+| C    | `black-300`  | Average      |
+| D    | `red-300`    | Below average|
+| E    | `red-400`    | Poor         |
+| F    | `red-500`    | Unwatchable  |
 
 ### Specs
 
-| Property          | Value                              |
-|-------------------|------------------------------------|
-| Label column width| `40px`                             |
-| Label background  | Per tier table above               |
-| Label text        | `white`, bold (`700`), uppercase   |
-| Label font size   | `18px`                             |
-| Row height        | `88px` (accommodates thumbnail)    |
-| Thumbnail size    | `~56px` wide (2:3 ratio, ~84px tall — clipped to row) |
-| Thumbnail gap     | `8px`                              |
-| Poster strip      | `overflow-x: auto`, `scroll-snap-type: x mandatory` |
-| Background        | `black-900`                        |
+| Property           | Value                                         |
+|--------------------|-----------------------------------------------|
+| Label column width | `40px`                                        |
+| Label font         | `18px`, weight `700`, uppercase               |
+| Row height         | `88px`                                        |
+| Thumbnail size     | `~56px` wide (2:3 ratio)                     |
+| Thumbnail gap      | `8px`                                         |
+| Poster strip       | `overflow-x: auto`, `scroll-snap-type: x mandatory` |
 
 ### Usage Rules
 
-**Use when:** displaying a user's ranked film list in the dedicated Tier List view.
-
-**Do not use when:** a simple ordered list or grid is sufficient. Do not reorder the tier sequence (S → F is fixed). Do not change the tier label letters — they carry established meaning for the target audience.
+**S–F sequence is fixed.** Never reorder. Never rename. The letters carry established meaning for the audience — they match the cultural shorthand used in gaming and film fandom.
 
 ---
 
 ## Movie Card (Grid)
 
-### Purpose
-
-The Movie Card is the standard unit for browsing contexts — Explore page grids, search results, and collection views. It combines the vertical poster with metadata below it.
+Standard unit for browsing — Explore grids, search results, collection views. Vertical poster with metadata below.
 
 ### Anatomy
 
-1. **Poster** — Vertical Movie Poster component (2:3, 8px radius, with hover behavior)
-2. **Title** — film title, below the poster
-3. **Rating chip** — small badge showing score or star rating, positioned below the title or overlaid on the poster on hover
-
-<ScreenAnnotation
-  src="/assets/components-reference.png"
-  alt="ScaryMoovies component states reference sheet"
-  caption="Component states: PYF button variants, movie poster types, and navbar layout"
-  annotations={[
-    { number: 1, x: 12, y: 15, label: "PYF Button — all four states" },
-    { number: 2, x: 50, y: 15, label: "Movie Poster — vertical 2:3" },
-    { number: 3, x: 75, y: 15, label: "Movie Poster — horizontal 16:9" },
-    { number: 4, x: 50, y: 70, label: "Navbar — full-width layout" }
-  ]}
-/>
+1. **Poster** — Vertical Movie Poster (2:3, hover behavior)
+2. **Title** — below the poster, single line, `text-overflow: ellipsis`
+3. **Rating chip** — below title or in hover overlay
 
 ### Specs
 
-| Property       | Value                                  |
-|----------------|----------------------------------------|
-| Poster         | Full-width of card column, 2:3 ratio   |
-| Card width     | Column-driven (grid sets width)        |
-| Title size     | `13px`, `500` weight                   |
-| Title color    | `white-50`                             |
-| Title truncation | Single line, `text-overflow: ellipsis`|
-| Rating chip    | `12px` text, `black-600/80` bg, `4px` radius |
-| Gap (poster → title) | `8px`                          |
-| Grid gap       | `16px` column, `24px` row             |
-
-### Usage Rules
-
-**Use when:** rendering browsable film inventories in Explore, search results, or any collection view.
-
-**Do not use when:** a single featured film needs prominent display (use the Horizontal Poster in a featured row instead). Do not omit the title — the rating chip alone is insufficient for accessibility. Ensure the title always renders even when the poster image fails to load.
-
-**Common mistakes:** applying custom aspect ratios to the poster within a card; showing the rating chip in the resting state without the hover overlay (it should follow the Vertical Poster hover rules unless placed statically below the title).
+| Property           | Value                                |
+|--------------------|--------------------------------------|
+| Poster             | Full card width, 2:3 ratio           |
+| Title size         | `13px`, weight `500`                 |
+| Title color        | `--text-primary`                     |
+| Gap (poster→title) | `8px`                                |
+| Grid column gap    | `16px`                               |
+| Grid row gap       | `24px`                               |

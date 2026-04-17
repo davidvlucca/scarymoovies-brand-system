@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { Sidebar } from "@/components/layout/sidebar";
+import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 
 const inter = Inter({
@@ -48,6 +49,12 @@ export default function RootLayout({
           fontFamily: "var(--font-body)",
         }}
       >
+        <NextTopLoader
+          color="var(--accent-hover)"
+          height={2}
+          showSpinner={false}
+          shadow={false}
+        />
         <div className="app-shell">
           <Sidebar />
           <main className="main-content">

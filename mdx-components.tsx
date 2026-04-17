@@ -24,6 +24,14 @@ import {
   BrandTextarea,
   BrandLabel,
 } from "@/components/brand/form-showcase";
+import { Navbar, NavbarShowcase } from "@/components/brand/navbar";
+import { RatingChip, RatingChipShowcase } from "@/components/brand/rating-chip";
+import { TagChip, TagChipShowcase } from "@/components/brand/tag-chip";
+import { UserAvatar, UserAvatarShowcase } from "@/components/brand/user-avatar";
+import { Skeleton, SkeletonPoster, SkeletonCard, SkeletonTextBlock, SkeletonShowcase } from "@/components/brand/skeleton-loader";
+import { ToastShowcase } from "@/components/brand/toast-showcase";
+import { ThreeStateButton, ThreeStateShowcase } from "@/components/brand/three-state-button";
+import { StarRating, TierSelector, StarRatingShowcase } from "@/components/brand/star-rating";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -54,5 +62,24 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     BrandSelect,
     BrandTextarea,
     BrandLabel,
+    Navbar,
+    NavbarShowcase,
+    RatingChip,
+    RatingChipShowcase,
+    TagChip,
+    TagChipShowcase,
+    UserAvatar,
+    UserAvatarShowcase,
+    Skeleton,
+    SkeletonPoster,
+    SkeletonCard,
+    SkeletonTextBlock,
+    SkeletonShowcase,
+    ToastShowcase,
+    ThreeStateButton,
+    ThreeStateShowcase,
+    StarRating,
+    TierSelector,
+    StarRatingShowcase,
   };
 }
