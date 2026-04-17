@@ -1,0 +1,127 @@
+import { IconShowcase, IconSizeShowcase } from '@/components/brand/icon-showcase'
+import { DosDonts } from '@/components/brand/dos-and-donts'
+import { CalloutBox } from '@/components/brand/callout-box'
+
+# Iconography
+
+ScaryMoovies uses **Lucide React** as its icon library — the same library used across the brand system components. MIT license. Consistent geometry. Comprehensive coverage of every UI action the platform needs.
+
+---
+
+## Why Lucide
+
+Lucide icons share a single visual grammar: uniform stroke weight, rounded line caps, pixel-perfect at their intended sizes. They look like they were drawn by one hand. For a platform where UI chrome should recede behind film content, that consistency matters more than personality.
+
+The icons are **never filled**. Stroke-only. Filled icons carry visual weight that competes with the photography and film posters that are the real content of every page.
+
+<CalloutBox variant="warning">
+  Always import from `lucide-react`. Never substitute icons from Heroicons, Phosphor, or similar libraries — mixed icon families read as inconsistency at a glance.
+</CalloutBox>
+
+---
+
+## Core Icon Set
+
+The ~21 icons below cover every surface of the current product. No icon should be introduced that isn't in this set unless the feature genuinely requires it, and the addition is documented here.
+
+<IconShowcase />
+
+---
+
+## Size System
+
+Three sizes cover all production uses. Match size to context — never scale to taste.
+
+<IconSizeShowcase />
+
+| Size | Token name | When to use |
+|------|-----------|-------------|
+| `16px` | UI | Inline with body text, badge labels, compact list controls |
+| `20px` | Actions | Navbar icons, button-adjacent icons, standard interactive controls |
+| `24px` | Hero | Empty state illustrations, section openers, prominent feature icons |
+
+<CalloutBox variant="tip">
+  The Navbar uses `20px` icons. If you need an icon in the Navbar or next to a standard button, reach for `20px` before considering any other size.
+</CalloutBox>
+
+---
+
+## Stroke Weight
+
+**Always `strokeWidth={1.5}`.**
+
+This is the weight that ships in Lucide's design. Thinner (`1`) reads as fragile on dark backgrounds. Thicker (`2`) competes with the text it sits beside. `1.5` is calibrated for legibility against `--bg-primary`.
+
+```tsx
+<Search size={20} strokeWidth={1.5} style={{ color: "var(--text-muted)" }} />
+```
+
+---
+
+## Color Rules
+
+Icons always use a CSS token. Never hardcode a hex value.
+
+| Context | Token |
+|---|---|
+| Default / inactive | `--text-muted` |
+| Hover / active | `--text-secondary` |
+| Interactive action (Watched, Liked) when active | `--accent-hover` |
+| Destructive action when active (Liked gone wrong, remove) | `--accent-danger` |
+| Inside filled buttons | `--text-primary` (inherit) |
+
+```tsx
+// Correct
+<Bell size={20} strokeWidth={1.5} style={{ color: "var(--text-muted)" }} />
+
+// Wrong — hardcoded hex
+<Bell size={20} color="#666667" />
+```
+
+---
+
+## Usage Rules
+
+<DosDonts
+  dos={[
+    "Use stroke icons only — lucide-react defaults are always stroke",
+    "Match size to context: 16 / 20 / 24px",
+    "Use strokeWidth={1.5} consistently",
+    "Color with CSS tokens only",
+    "Pair icons with labels in low-familiarity contexts",
+  ]}
+  donts={[
+    "Mix Lucide with other icon libraries",
+    "Use filled variants of any icon",
+    "Scale icons to arbitrary pixel values (18, 22, 26…)",
+    "Use icons as decoration without semantic purpose",
+    "Hardcode hex colors on icon elements",
+  ]}
+/>
+
+---
+
+## Accessibility
+
+Icons used alone (without a visible label) must have an accessible name.
+
+**For decorative icons** — paired with visible text:
+```tsx
+<Search size={20} strokeWidth={1.5} aria-hidden="true" />
+```
+
+**For interactive icon-only buttons:**
+```tsx
+<button aria-label="Open search">
+  <Search size={20} strokeWidth={1.5} aria-hidden="true" />
+</button>
+```
+
+**For status icons** that convey meaning:
+```tsx
+<AlertTriangle size={16} strokeWidth={1.5} aria-label="Warning" role="img" />
+```
+
+<CalloutBox variant="warning">
+  An icon button with no `aria-label` is invisible to screen readers. Every `&lt;button&gt;` or `&lt;a&gt;` that contains only an icon must have an accessible label.
+</CalloutBox>

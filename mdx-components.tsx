@@ -38,6 +38,7 @@ import { BrandDropdown, DropdownShowcase } from "@/components/brand/dropdown-sho
 import { SearchFlyout } from "@/components/brand/search-flyout";
 import { CalloutBox, CalloutShowcase } from "@/components/brand/callout-box";
 import { ImageGrid } from "@/components/brand/image-grid";
+import { IconShowcase, IconSizeShowcase } from "@/components/brand/icon-showcase";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -97,5 +98,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     CalloutBox,
     CalloutShowcase,
     ImageGrid,
+    IconShowcase,
+    IconSizeShowcase,
   };
 }

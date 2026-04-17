@@ -1,0 +1,164 @@
+import { AtmosphericImage } from '@/components/brand/atmospheric-image'
+import { DosDonts } from '@/components/brand/dos-and-donts'
+import { PullQuote } from '@/components/brand/pull-quote'
+import { CalloutBox } from '@/components/brand/callout-box'
+import { ImageGrid } from '@/components/brand/image-grid'
+
+# Visual Language
+
+ScaryMoovies looks the way it looks for a reason. This page explains the "why" behind every visual decision — the aesthetic philosophy that separates this platform from generic dark UI and ties it to the specific visual tradition of horror cinema.
+
+---
+
+## Why Dark-First
+
+Horror lives in the dark. Not because darkness is trendy — it's been the setting of the genre since the first shadow crept across a silent film screen. ScaryMoovies is dark because the films it documents are dark. The background is never "night mode" applied to a light design. It is the starting condition. Light is the exception. Everything that is illuminated — a film title, a rating, a user's name — earns its visibility against the dark.
+
+**Root background: `#0c0a0e`**. Not pure black. A black with a bruised purple undertone. Warm enough to feel organic. Cool enough to feel dangerous.
+
+<PullQuote>
+  The design is not dark. The design is horror. The distinction matters every time you reach for a token.
+</PullQuote>
+
+---
+
+## Why Not Generic Dark SaaS
+
+This is the most important distinction in the entire system.
+
+Any product can apply a dark color palette and call it "night mode." Generic dark SaaS looks like:
+
+- Pure `#000000` or `#1a1a1a` black with no character
+- Bright blue or teal accent colors
+- Clean geometric sans-serif everything
+- Gradients as decoration
+- Glow effects for "premium" feel
+
+ScaryMoovies avoids every one of these. The accent is **desaturated purple** — not the victorious electric purple of productivity tools, but the deep bruise-purple of *Suspiria*, of old VHS boxes, of theatrical velvet. The display font is **Creepster** — explicitly horror-coded. The grain is **atmospheric**, not decorative.
+
+<DosDonts
+  dos={[
+    "Use grain and texture to evoke analog film",
+    "Treat silence and negative space as part of the design",
+    "Let dark images bleed into the background",
+    "Use typography that feels era-specific when appropriate",
+    "Evoke practical effects, not CGI polish",
+  ]}
+  donts={[
+    "Use gradient backgrounds as decoration",
+    "Add neon glow or bloom effects",
+    "Reach for blue or teal as accent colors",
+    "Over-polish — horror is texture, not shine",
+    "Use the dark theme as an afterthought",
+  ]}
+/>
+
+---
+
+## The Three Visual Moods
+
+Every screen in ScaryMoovies exists within one of three visual moods. Understanding them is the foundation for making design decisions at the component level.
+
+### Cinematic
+
+Formal. Still. Referencing the title card tradition of horror cinema — the deliberate composition, the typography that announces rather than decorates. Used for editorial moments: the Pick Your Fear quiz, landing screens, section openers.
+
+**Visual cues:** Centered composition · Playfair Display at large scale · letterboxed imagery · very little motion
+
+### Atmospheric
+
+Immersive. Textured. Edges bleed into dark. Used for browse contexts — the Explore grid, collection views, the homepage scroll. The interface recedes; the posters breathe.
+
+**Visual cues:** Poster art dominant · minimal chrome · gradient fades to `--bg-primary` · subtle grain overlay
+
+### Dread
+
+Tense. Immediate. High contrast. Used sparingly — error states, confirmation dialogs, destructive actions. The red (`--accent-danger: #751111`) is not an error color in the conventional UX sense. It is the color of something that matters.
+
+**Visual cues:** `--accent-danger` borders or backgrounds · direct language · no softening · reduced spacing
+
+---
+
+## Film References
+
+These are not moodboard suggestions. They are the exact visual tradition ScaryMoovies is drawing from.
+
+<ImageGrid
+  images={[
+    { src: "/assets/horror-title-card-01.jpg", alt: "Horror title card — stark typography on dark background", caption: "Title card tradition" },
+    { src: "/assets/horror-cinematic-02.jpg", alt: "Cinematic horror framing", caption: "Cinematic framing" },
+    { src: "/assets/horror-ghostface-01.jpg", alt: "Horror film still — deep shadows", caption: "Practical shadows" },
+  ]}
+  columns={3}
+  caption="Visual references: the title card tradition, cinematic composition, practical effects lighting"
+/>
+
+**What these images share:**
+
+- **Grain** — analog, not digital. The noise is part of the image, not a bug.
+- **Practical light** — a single source. Shadows are as important as what they obscure.
+- **Stillness** — nothing is moving. The tension is in the composition itself.
+- **No CGI smoothness** — jagged edges, imperfect geometry, human scale.
+
+<CalloutBox variant="tip">
+  When you use `AtmosphericImage`, apply `grain` to reinforce this tradition. When the image looks too clean, it reads as generic. The grain is intentional.
+</CalloutBox>
+
+---
+
+## Moodboard
+
+<AtmosphericImage
+  src="/assets/moodboard.jpg"
+  alt="ScaryMoovies moodboard — horror film imagery, VHS textures, Creepster typography"
+  caption="ScaryMoovies visual language — grain, deep shadows, purple tones, analog texture"
+  grain
+/>
+
+The moodboard captures the range across all three visual moods: Cinematic (title cards, formal typography), Atmospheric (film stills bleeding into dark), and Dread (high-contrast close-ups, red-adjacent dark tones).
+
+---
+
+## Texture and Grain
+
+Horror has always been a textured medium. Grain in horror photography and film is not a flaw — it is the material evidence of darkness captured. ScaryMoovies uses grain deliberately in atmospheric imagery as a signal: *this is that tradition.*
+
+The `AtmosphericImage` component provides a CSS noise overlay via the `grain` prop. Use it on hero images, section backgrounds, and mood-defining contexts. Do not apply it to UI components, diagrams, or spec illustrations.
+
+| Context | Grain |
+|---|---|
+| Hero / banner images | Yes — always |
+| Moodboard | Yes |
+| Film posters | No — preserve original art |
+| UI components | Never |
+| Screen annotations | Never |
+
+---
+
+## Light and Shadow
+
+**Elevation is expressed through darkness, not light.** In most design systems, elevated surfaces get lighter. In ScaryMoovies, they get slightly more opaque against the primary background:
+
+| Layer | Token | Hex |
+|---|---|---|
+| Background | `--bg-primary` | `#0c0a0e` |
+| Surfaces (cards, panels) | `--bg-surface` | `#0b090d` |
+| Elevated (modals, dropdowns) | `--bg-elevated` | `#3d3b3e` |
+
+The jump from surface to elevated is intentional — `--bg-elevated` is significantly lighter to create readable layering for floating UI elements.
+
+**Shadows are dark and deep.** Modal overlays use `rgba(12,10,14,0.85)` with blur. Dropdown shadows use `0 12px 32px rgba(0,0,0,0.5)`. Never use box shadows in white or light tones.
+
+---
+
+## What ScaryMoovies Is Not
+
+To protect the visual language, here is what it explicitly rejects:
+
+**Not a dark-mode toggle.** There is no light version. Do not design for one.
+
+**Not edgy-for-edgy's-sake.** The aesthetic is grounded in a specific cinematic tradition. A skull icon, a splatter texture, or a horror stock photo does not automatically fit — it must feel like it belongs to the same visual vocabulary.
+
+**Not generic streaming.** The palette is intentionally distinct from Netflix dark-gray, HBO dark-navy, and Apple TV near-black. The purple undertone is the differentiator. Protect it.
+
+**Not retro-fetish.** VHS grain and analog textures are used as a nod to the era when horror found its identity. Not as irony. Not as trend. Use them where they reinforce the tradition, not as decoration.
