@@ -40,6 +40,9 @@ import { CalloutBox, CalloutShowcase } from "@/components/brand/callout-box";
 import { ImageGrid } from "@/components/brand/image-grid";
 import { IconShowcase, IconSizeShowcase } from "@/components/brand/icon-showcase";
 import { PersonaCard, PersonaShowcase } from "@/components/brand/persona-card";
+import { Lead } from "@/components/brand/lead";
+import { AccentStatement } from "@/components/brand/accent-statement";
+import { PrincipleList } from "@/components/brand/principle-list";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -103,5 +106,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     IconSizeShowcase,
     PersonaCard,
     PersonaShowcase,
+    Lead,
+    AccentStatement,
+    PrincipleList,
   };
 }

@@ -51,11 +51,13 @@ export function Sidebar() {
 
       {/* Sidebar shell */}
       <aside
-        className="fixed top-0 left-0 bottom-0 z-40 flex flex-col overflow-y-auto"
+        className="sidebar-shell fixed top-0 left-0 bottom-0 z-40 flex flex-col overflow-y-auto"
         style={{
           width: "240px",
           backgroundColor: "var(--bg-primary)",
           borderRight: "1px solid var(--border-subtle)",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
         }}
         data-open={mobileOpen}
       >

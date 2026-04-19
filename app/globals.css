@@ -322,7 +322,25 @@ html, body {
   transition: transform 200ms ease, opacity 200ms ease;
 }
 
+/* ─── Category Card (intro page) ──────────────────── */
+.category-card {
+  background-color: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.02) inset;
+  text-decoration: none;
+}
+.category-card:hover {
+  background-color: rgba(255, 255, 255, 0.045);
+  border-color: var(--border-default);
+}
+
 /* ─── Sidebar Responsive ──────────────────────────── */
+.sidebar-shell::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
 .sidebar-overlay {
   display: none;
   position: fixed;
