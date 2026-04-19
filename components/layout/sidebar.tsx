@@ -32,6 +32,7 @@ export function Sidebar() {
       {/* Mobile hamburger */}
       <button
         className="mobile-menu-btn"
+        style={mobileOpen ? { display: "none" } : undefined}
         onClick={() => setMobileOpen(true)}
         aria-label="Open navigation"
         aria-expanded={mobileOpen}
