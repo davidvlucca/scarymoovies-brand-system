@@ -210,20 +210,20 @@ html, body {
 /* ─── Prose Styles (MDX content) ─────────────────── */
 .prose {
   color: var(--text-primary);
-  max-width: 72ch;
 }
 .prose h1, .prose h2, .prose h3, .prose h4 {
   color: var(--white-50);
-  font-family: var(--font-body);
-  letter-spacing: -0.03em;
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
-.prose h1 { font-weight: 800; }
-.prose h2 { font-weight: 700; }
+.prose h1 { font-weight: 700; font-family: var(--font-display); }
+.prose h2 { font-weight: 600; }
 .prose h3 { font-weight: 600; }
 .prose h4 { font-weight: 600; }
 .prose h1 { font-size: 2.25rem; margin-top: 0; margin-bottom: 0.5rem; }
-.prose h2 { font-size: 1.625rem; margin-top: 3.5rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.625rem; }
-.prose h3 { font-size: 1.125rem; margin-top: 2rem; color: var(--text-primary); }
+.prose h2 { font-size: 1.75rem; margin-top: 3.5rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.625rem; }
+.prose h3 { font-size: 1.25rem; margin-top: 2rem; color: var(--text-primary); }
 .prose p  { font-size: 1rem; line-height: 1.75; color: var(--text-secondary); margin-bottom: 0; }
 .prose p + p { margin-top: 1rem; }
 .prose a  { color: var(--accent-strong); text-decoration: underline; text-underline-offset: 3px; }
@@ -291,7 +291,57 @@ html, body {
 
 .content-wrapper {
   width: 100%;
-  max-width: 780px;
+  max-width: 1280px;
+}
+
+/* ─── Editorial Grid (rail + body + full-bleed) ──── */
+.editorial-grid {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  column-gap: 64px;
+  row-gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.editorial-grid > * {
+  grid-column: 2;
+  max-width: 820px;
+  min-width: 0;
+}
+.editorial-grid > .rail {
+  grid-column: 1;
+  grid-row: 1 / span 999;
+  position: sticky;
+  top: 48px;
+  align-self: start;
+  max-width: unset;
+}
+.editorial-grid > .full-bleed {
+  grid-column: 1 / -1;
+  max-width: unset;
+  width: 100%;
+  margin-top: 2.25rem;
+  margin-bottom: 2.25rem;
+}
+@media (max-width: 1024px) {
+  .editorial-grid {
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: 0;
+  }
+  .editorial-grid > * {
+    grid-column: 1;
+    max-width: 72ch;
+  }
+  .editorial-grid > .rail {
+    grid-row: auto;
+    position: static;
+    margin-bottom: 1.5rem;
+    max-width: 100%;
+  }
+  .editorial-grid > .full-bleed {
+    grid-column: 1;
+    max-width: 100%;
+  }
 }
 
 /* ─── Mobile Menu Button ──────────────────────────── */

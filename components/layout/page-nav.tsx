@@ -26,35 +26,36 @@ export function PageNav({ prev, next }: PageNavProps) {
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "4px",
+            gap: "6px",
             textDecoration: "none",
-            padding: "12px 16px",
+            padding: "14px 18px",
             borderRadius: "6px",
             border: "1px solid var(--border-subtle)",
             transition: "border-color 150ms ease",
-            minWidth: "160px",
+            minWidth: "180px",
           }}
         >
           <span
             style={{
-              fontFamily: "var(--font-mono)",
+              fontFamily: "var(--font-body)",
               fontSize: "0.65rem",
               color: "var(--text-muted)",
               textTransform: "uppercase",
-              letterSpacing: "0.14em",
+              letterSpacing: "0.18em",
+              fontWeight: 600,
             }}
           >
-            // Previous
+            ← Previous
           </span>
           <span
             style={{
-              fontSize: "0.9rem",
+              fontFamily: "var(--font-display)",
+              fontSize: "1.05rem",
+              fontWeight: 600,
               color: "var(--text-primary)",
-              fontFamily: "var(--font-body)",
-              fontWeight: 500,
+              letterSpacing: "-0.01em",
             }}
           >
-            <span style={{ fontFamily: "var(--font-mono)", color: "var(--text-muted)", marginRight: "8px", fontSize: "0.78rem" }}>{prev.num}</span>
             {prev.title}
           </span>
         </Link>
@@ -68,36 +69,37 @@ export function PageNav({ prev, next }: PageNavProps) {
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "4px",
+            gap: "6px",
             textDecoration: "none",
-            padding: "12px 16px",
+            padding: "14px 18px",
             borderRadius: "6px",
             border: "1px solid var(--border-subtle)",
             transition: "border-color 150ms ease",
-            minWidth: "160px",
+            minWidth: "180px",
             textAlign: "right",
           }}
         >
           <span
             style={{
-              fontFamily: "var(--font-mono)",
+              fontFamily: "var(--font-body)",
               fontSize: "0.65rem",
               color: "var(--text-muted)",
               textTransform: "uppercase",
-              letterSpacing: "0.14em",
+              letterSpacing: "0.18em",
+              fontWeight: 600,
             }}
           >
-            Next //
+            Next →
           </span>
           <span
             style={{
-              fontSize: "0.9rem",
+              fontFamily: "var(--font-display)",
+              fontSize: "1.05rem",
+              fontWeight: 600,
               color: "var(--text-primary)",
-              fontFamily: "var(--font-body)",
-              fontWeight: 500,
+              letterSpacing: "-0.01em",
             }}
           >
-            <span style={{ fontFamily: "var(--font-mono)", color: "var(--text-muted)", marginRight: "8px", fontSize: "0.78rem" }}>{next.num}</span>
             {next.title}
           </span>
         </Link>

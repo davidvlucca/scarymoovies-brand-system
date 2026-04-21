@@ -276,23 +276,24 @@ export function Sidebar() {
             style={{
               fontSize: "0.62rem",
               color: "var(--text-secondary)",
-              fontFamily: "var(--font-mono)",
+              fontFamily: "var(--font-body)",
+              letterSpacing: "0.16em",
+              textTransform: "uppercase",
+              fontWeight: 600,
+            }}
+          >
+            V1.0 · April 2026
+          </span>
+          <span
+            style={{
+              fontSize: "0.58rem",
+              color: "var(--text-muted)",
+              fontFamily: "var(--font-body)",
               letterSpacing: "0.14em",
               textTransform: "uppercase",
             }}
           >
-            // v1.0 · april 2026
-          </span>
-          <span
-            style={{
-              fontSize: "0.6rem",
-              color: "var(--text-muted)",
-              fontFamily: "var(--font-mono)",
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-            }}
-          >
-            a published manual
+            A Published Manual
           </span>
         </div>
       </aside>
@@ -305,7 +306,7 @@ function NavLink({
   isActive,
   onClick,
 }: {
-  section: { num: string; title: string; href: string };
+  section: { title: string; href: string };
   isActive: boolean;
   onClick: () => void;
 }) {
@@ -314,7 +315,7 @@ function NavLink({
       href={section.href}
       onClick={onClick}
       className={cn(
-        "flex items-center gap-2.5 px-5 py-2 no-underline transition-colors duration-150",
+        "flex items-center gap-3 px-5 py-2 no-underline transition-colors duration-150",
         isActive
           ? "text-white-50 bg-[rgba(93,51,125,0.10)] border-l-2 border-[var(--accent-hover)]"
           : "text-text-secondary border-l-2 border-transparent hover:text-white-50 hover:bg-[rgba(93,51,125,0.06)]"
@@ -322,17 +323,16 @@ function NavLink({
       style={{ fontFamily: "var(--font-body)", fontSize: "0.82rem" }}
     >
       <span
-        className="tabular-nums shrink-0"
+        aria-hidden="true"
         style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.68rem",
-          letterSpacing: "0.08em",
-          minWidth: "22px",
-          color: isActive ? "var(--accent-hover)" : "var(--text-muted)",
+          width: "6px",
+          height: "6px",
+          borderRadius: "50%",
+          flexShrink: 0,
+          backgroundColor: isActive ? "var(--accent-hover)" : "transparent",
+          transition: "background-color 150ms ease",
         }}
-      >
-        {section.num}
-      </span>
+      />
       {section.title}
     </Link>
   );

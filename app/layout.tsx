@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
 import { Sidebar } from "@/components/layout/sidebar";
 import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
@@ -11,11 +11,12 @@ const inter = Inter({
   weight: ["400", "500", "600", "700", "800"],
 });
 
-const interDisplay = Inter({
+const fraunces = Fraunces({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
-  weight: ["700", "800"],
+  weight: "variable",
+  axes: ["opsz", "SOFT"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -38,7 +39,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${interDisplay.variable} ${jetbrainsMono.variable}`}
+      className={`${inter.variable} ${fraunces.variable} ${jetbrainsMono.variable}`}
     >
       <body
         style={{

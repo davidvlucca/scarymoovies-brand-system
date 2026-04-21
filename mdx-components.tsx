@@ -45,6 +45,7 @@ import { AccentStatement } from "@/components/brand/accent-statement";
 import { PrincipleList } from "@/components/brand/principle-list";
 import { SectionHeader } from "@/components/brand/section-header";
 import { CriticalRule } from "@/components/brand/critical-rule";
+import { FullBleed } from "@/components/brand/full-bleed";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -113,5 +114,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     PrincipleList,
     SectionHeader,
     CriticalRule,
+    FullBleed,
   };
 }

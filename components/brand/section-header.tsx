@@ -1,41 +1,44 @@
+import { getGroupFor } from "@/lib/navigation";
+
 interface SectionHeaderProps {
-  num: string;
   title: string;
   echo?: string;
-  kind?: "section" | "page";
+  group?: string;
+  href?: string;
 }
 
-export function SectionHeader({ num, title, echo, kind = "page" }: SectionHeaderProps) {
-  const titleSize = kind === "page" ? "2.75rem" : "2rem";
-  const titleWeight = kind === "page" ? 800 : 700;
+export function SectionHeader({ title, echo, group, href }: SectionHeaderProps) {
+  const eyebrow = group ?? (href ? getGroupFor(href) : null);
 
   return (
     <header
       style={{
         margin: "0 0 2.5rem",
-        paddingBottom: "1.5rem",
+        paddingBottom: "1.75rem",
         borderBottom: "1px solid var(--border-subtle)",
       }}
     >
-      <p
-        style={{
-          margin: "0 0 0.75rem",
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.72rem",
-          color: "var(--text-muted)",
-          textTransform: "uppercase",
-          letterSpacing: "0.14em",
-          fontWeight: 500,
-        }}
-      >
-        // {num} · scarymoovies brand system
-      </p>
+      {eyebrow && (
+        <p
+          style={{
+            margin: "0 0 0.9rem",
+            fontFamily: "var(--font-body)",
+            fontSize: "0.68rem",
+            color: "var(--text-muted)",
+            textTransform: "uppercase",
+            letterSpacing: "0.22em",
+            fontWeight: 700,
+          }}
+        >
+          {eyebrow}
+        </p>
+      )}
       <h1
         style={{
           margin: 0,
           fontFamily: "var(--font-display)",
-          fontSize: titleSize,
-          fontWeight: titleWeight,
+          fontSize: "clamp(2.25rem, 4.5vw, 3.25rem)",
+          fontWeight: 700,
           lineHeight: 1.05,
           letterSpacing: "-0.02em",
           color: "var(--text-primary)",
@@ -46,7 +49,7 @@ export function SectionHeader({ num, title, echo, kind = "page" }: SectionHeader
       {echo && (
         <p
           style={{
-            margin: "0.75rem 0 0",
+            margin: "0.9rem 0 0",
             fontFamily: "var(--font-body)",
             fontStyle: "italic",
             fontSize: "1.0625rem",
