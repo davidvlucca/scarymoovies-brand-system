@@ -53,13 +53,7 @@ export function PersonaCard({ archetype, name, wants, fears, platformGives, acce
       </div>
 
       {/* Body */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: 0,
-        }}
-      >
+      <div className="persona-grid">
         <PersonaSection label="Wants" items={wants} />
         <PersonaSection label="Fears" items={fears} borderLeft danger />
         <PersonaSection label="Platform gives" items={platformGives} borderLeft highlight />
@@ -88,6 +82,7 @@ function PersonaSection({
       : "var(--text-muted)";
   return (
     <div
+      data-persona-section={borderLeft ? "divider" : undefined}
       style={{
         padding: "16px 20px",
         borderLeft: borderLeft ? "1px solid var(--border-subtle)" : undefined,

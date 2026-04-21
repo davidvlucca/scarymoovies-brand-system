@@ -15,7 +15,7 @@ const TYPE_STYLES: Record<TypeLevel, {
   label: string;
 }> = {
   display: {
-    fontSize: "4rem",
+    fontSize: "clamp(2.25rem, 8vw, 4rem)",
     fontWeight: 400,
     lineHeight: 1.1,
     fontFamily: "var(--font-display)",
@@ -23,7 +23,7 @@ const TYPE_STYLES: Record<TypeLevel, {
     label: "Display — Creepster 64px",
   },
   h1: {
-    fontSize: "2.5rem",
+    fontSize: "clamp(1.875rem, 5vw, 2.5rem)",
     fontWeight: 400,
     lineHeight: 1.2,
     fontFamily: "var(--font-display)",
@@ -31,7 +31,7 @@ const TYPE_STYLES: Record<TypeLevel, {
     label: "Heading 1 — Creepster 40px",
   },
   h2: {
-    fontSize: "1.75rem",
+    fontSize: "clamp(1.375rem, 3.5vw, 1.75rem)",
     fontWeight: 400,
     lineHeight: 1.3,
     fontFamily: "var(--font-display)",

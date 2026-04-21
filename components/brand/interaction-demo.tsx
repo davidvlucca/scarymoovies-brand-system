@@ -150,12 +150,6 @@ function GenreFilterDemo() {
 function MoodFilterDemo() {
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
 
-  const gridStyle: React.CSSProperties = {
-    display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
-    gap: "10px",
-  };
-
   const matches = selectedMood ? MOOD_MATCHES[selectedMood] ?? [] : null;
 
   const cardStyle = (moodId: string): React.CSSProperties => {
@@ -181,7 +175,7 @@ function MoodFilterDemo() {
 
   return (
     <div>
-      <div style={gridStyle}>
+      <div className="mood-grid">
         {MOODS.map((mood) => (
           <button
             key={mood.id}

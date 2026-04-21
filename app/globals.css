@@ -481,6 +481,113 @@ input[type="search"]::-webkit-search-decoration {
   }
 }
 
+/* ─── Persona Grid (3-column card body) ───────────── */
+.persona-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+@media (max-width: 768px) {
+  .persona-grid {
+    grid-template-columns: 1fr;
+  }
+  .persona-grid > [data-persona-section="divider"] {
+    border-left: none;
+    border-top: 1px solid var(--border-subtle);
+  }
+}
+
+/* ─── Mood Grid (Pick Your Fear demo) ─────────────── */
+.mood-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+@media (max-width: 520px) {
+  .mood-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ─── Skeleton Poster Grid ───────────────────────── */
+.skeleton-poster-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+@media (max-width: 768px) {
+  .skeleton-poster-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ─── Semantic Token Rows ─────────────────────────── */
+.semantic-token-row,
+.semantic-token-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+@media (max-width: 768px) {
+  .semantic-token-header {
+    display: none;
+  }
+  .semantic-token-row {
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+  .semantic-token-row > [data-col] {
+    min-width: 0 !important;
+    flex-shrink: 1 !important;
+  }
+  .semantic-token-row > [data-col="token"] {
+    flex: 1 1 100%;
+  }
+  .semantic-token-row > [data-col="scale"],
+  .semantic-token-row > [data-col="hex"] {
+    flex: 0 0 auto;
+  }
+  .semantic-token-row > [data-col="usage"] {
+    flex: 1 1 100%;
+  }
+}
+
+/* ─── Icon Showcase Grid ──────────────────────────── */
+.icon-showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 4px;
+}
+@media (max-width: 480px) {
+  .icon-showcase-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Page Nav ────────────────────────────────────── */
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  margin-top: 64px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-subtle);
+  gap: 16px;
+}
+.page-nav > a {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 320px;
+}
+@media (max-width: 560px) {
+  .page-nav {
+    flex-direction: column;
+  }
+  .page-nav > a {
+    max-width: none;
+  }
+}
+
 /* ─── Movie Poster Grid ───────────────────────────── */
 .movie-poster-grid {
   display: grid;

@@ -80,13 +80,7 @@ export function IconShowcase() {
         Core icon set — Lucide React · 20px · strokeWidth 1.5
       </p>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-          gap: "4px",
-        }}
-      >
+      <div className="icon-showcase-grid">
         {CORE_ICONS.map(({ name, icon: Icon, usage }) => (
           <div
             key={name}

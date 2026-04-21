@@ -89,13 +89,7 @@ export function SkeletonShowcase() {
         >
           Poster grid — movie card loading state
         </p>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "16px",
-          }}
-        >
+        <div className="skeleton-poster-grid">
           {Array.from({ length: 4 }).map((_, i) => (
             <SkeletonCard key={i} />
           ))}

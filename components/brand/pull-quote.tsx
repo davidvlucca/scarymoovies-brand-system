@@ -25,7 +25,7 @@ export function PullQuote({
   const quoteStyle: React.CSSProperties = isDisplay
     ? {
         fontFamily: "var(--font-display)",
-        fontSize: "2rem",
+        fontSize: "clamp(1.375rem, 4vw, 2rem)",
         fontStyle: "italic",
         fontWeight: 700,
         color: "var(--text-primary)",
@@ -37,13 +37,13 @@ export function PullQuote({
       }
     : {
         fontFamily: "var(--font-display)",
-        fontSize: "1.375rem",
+        fontSize: "clamp(1.125rem, 2.5vw, 1.375rem)",
         fontStyle: "italic",
         fontWeight: 600,
         color: "var(--text-primary)",
         lineHeight: 1.4,
         borderLeft: "3px solid var(--accent-primary)",
-        padding: "24px 0 24px 32px",
+        padding: "24px 0 24px 24px",
         margin: 0,
       };
 

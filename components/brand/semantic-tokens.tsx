@@ -35,10 +35,8 @@ function TokenRowItem({ row }: { row: TokenRow }) {
 
   return (
     <div
+      className="semantic-token-row"
       style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "16px",
         padding: "12px 16px",
         borderRadius: "8px",
         background: "var(--bg-surface)",
@@ -47,6 +45,7 @@ function TokenRowItem({ row }: { row: TokenRow }) {
     >
       {/* Color circle */}
       <div
+        data-col="swatch"
         style={{
           width: "20px",
           height: "20px",
@@ -59,12 +58,14 @@ function TokenRowItem({ row }: { row: TokenRow }) {
 
       {/* Token name */}
       <div
+        data-col="token"
         style={{
           fontFamily: "var(--font-mono)",
           fontSize: "0.8rem",
           color: "var(--accent-strong)",
           minWidth: "180px",
           flexShrink: 0,
+          wordBreak: "break-all",
         }}
       >
         {row.token}
@@ -72,6 +73,7 @@ function TokenRowItem({ row }: { row: TokenRow }) {
 
       {/* Scale */}
       <div
+        data-col="scale"
         style={{
           fontSize: "0.75rem",
           color: "var(--text-muted)",
@@ -84,6 +86,7 @@ function TokenRowItem({ row }: { row: TokenRow }) {
 
       {/* Hex — clickable to copy */}
       <button
+        data-col="hex"
         onClick={handleCopy}
         style={{
           background: "none",
@@ -97,6 +100,7 @@ function TokenRowItem({ row }: { row: TokenRow }) {
           flexShrink: 0,
           textAlign: "left",
           transition: "color 150ms ease",
+          wordBreak: "break-all",
         }}
         title="Click to copy"
       >
@@ -105,10 +109,12 @@ function TokenRowItem({ row }: { row: TokenRow }) {
 
       {/* Usage */}
       <div
+        data-col="usage"
         style={{
           fontSize: "0.8rem",
           color: "var(--text-secondary)",
           flex: 1,
+          minWidth: 0,
         }}
       >
         {row.usage}
@@ -122,10 +128,8 @@ export function SemanticTokens() {
     <div style={{ margin: "24px 0" }}>
       {/* Column headers */}
       <div
+        className="semantic-token-header"
         style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "16px",
           padding: "0 16px 10px",
         }}
       >
