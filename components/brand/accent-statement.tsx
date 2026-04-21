@@ -1,6 +1,6 @@
 export function AccentStatement({ children }: { children: React.ReactNode }) {
   return (
-    <p
+    <div
       style={{
         fontFamily: "var(--font-body)",
         fontSize: "1.15rem",
@@ -13,6 +13,6 @@ export function AccentStatement({ children }: { children: React.ReactNode }) {
       }}
     >
       {children}
-    </p>
+    </div>
   );
 }

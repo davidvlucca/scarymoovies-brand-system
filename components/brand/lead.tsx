@@ -1,6 +1,6 @@
 export function Lead({ children }: { children: React.ReactNode }) {
   return (
-    <p
+    <div
       style={{
         fontStyle: "italic",
         fontSize: "1.0625rem",
@@ -11,6 +11,6 @@ export function Lead({ children }: { children: React.ReactNode }) {
       }}
     >
       {children}
-    </p>
+    </div>
   );
 }
