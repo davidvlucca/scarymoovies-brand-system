@@ -269,22 +269,30 @@ export function Sidebar() {
 
         {/* Footer */}
         <div
-          className="flex items-center justify-between px-5 py-3.5"
+          className="flex flex-col gap-1 px-5 py-4"
           style={{ borderTop: "1px solid var(--border-subtle)" }}
         >
           <span
-            className="tracking-wider"
             style={{
-              fontSize: "0.63rem",
-              color: "var(--text-muted)",
+              fontSize: "0.62rem",
+              color: "var(--text-secondary)",
               fontFamily: "var(--font-mono)",
-              letterSpacing: "0.08em",
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
             }}
           >
-            v1.0 · Brand System
+            // v1.0 · april 2026
           </span>
-          <span style={{ fontSize: "0.63rem", color: "var(--text-muted)" }}>
-            © 2025
+          <span
+            style={{
+              fontSize: "0.6rem",
+              color: "var(--text-muted)",
+              fontFamily: "var(--font-mono)",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+            }}
+          >
+            a published manual
           </span>
         </div>
       </aside>
@@ -316,8 +324,10 @@ function NavLink({
       <span
         className="tabular-nums shrink-0"
         style={{
-          fontSize: "0.65rem",
-          minWidth: "18px",
+          fontFamily: "var(--font-mono)",
+          fontSize: "0.68rem",
+          letterSpacing: "0.08em",
+          minWidth: "22px",
           color: isActive ? "var(--accent-hover)" : "var(--text-muted)",
         }}
       >

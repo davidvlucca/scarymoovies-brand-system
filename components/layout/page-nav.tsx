@@ -37,22 +37,25 @@ export function PageNav({ prev, next }: PageNavProps) {
         >
           <span
             style={{
-              fontSize: "0.7rem",
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.65rem",
               color: "var(--text-muted)",
               textTransform: "uppercase",
-              letterSpacing: "0.08em",
+              letterSpacing: "0.14em",
             }}
           >
-            ← Previous
+            // Previous
           </span>
           <span
             style={{
-              fontSize: "0.875rem",
+              fontSize: "0.9rem",
               color: "var(--text-primary)",
               fontFamily: "var(--font-body)",
+              fontWeight: 500,
             }}
           >
-            {prev.num} {prev.title}
+            <span style={{ fontFamily: "var(--font-mono)", color: "var(--text-muted)", marginRight: "8px", fontSize: "0.78rem" }}>{prev.num}</span>
+            {prev.title}
           </span>
         </Link>
       ) : (
@@ -77,22 +80,25 @@ export function PageNav({ prev, next }: PageNavProps) {
         >
           <span
             style={{
-              fontSize: "0.7rem",
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.65rem",
               color: "var(--text-muted)",
               textTransform: "uppercase",
-              letterSpacing: "0.08em",
+              letterSpacing: "0.14em",
             }}
           >
-            Next →
+            Next //
           </span>
           <span
             style={{
-              fontSize: "0.875rem",
+              fontSize: "0.9rem",
               color: "var(--text-primary)",
               fontFamily: "var(--font-body)",
+              fontWeight: 500,
             }}
           >
-            {next.num} {next.title}
+            <span style={{ fontFamily: "var(--font-mono)", color: "var(--text-muted)", marginRight: "8px", fontSize: "0.78rem" }}>{next.num}</span>
+            {next.title}
           </span>
         </Link>
       ) : (

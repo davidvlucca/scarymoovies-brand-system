@@ -43,6 +43,8 @@ import { PersonaCard, PersonaShowcase } from "@/components/brand/persona-card";
 import { Lead } from "@/components/brand/lead";
 import { AccentStatement } from "@/components/brand/accent-statement";
 import { PrincipleList } from "@/components/brand/principle-list";
+import { SectionHeader } from "@/components/brand/section-header";
+import { CriticalRule } from "@/components/brand/critical-rule";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -109,5 +111,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Lead,
     AccentStatement,
     PrincipleList,
+    SectionHeader,
+    CriticalRule,
   };
 }

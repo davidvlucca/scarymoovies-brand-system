@@ -1,20 +1,28 @@
 interface BreadcrumbProps {
   section: string;
+  num?: string;
 }
 
-export function Breadcrumb({ section }: BreadcrumbProps) {
+export function Breadcrumb({ section, num }: BreadcrumbProps) {
   return (
-    <nav aria-label="Breadcrumb" style={{ marginBottom: "8px" }}>
+    <nav aria-label="Breadcrumb" style={{ marginBottom: "12px" }}>
       <span
         style={{
-          fontSize: "0.75rem",
+          fontFamily: "var(--font-mono)",
+          fontSize: "0.68rem",
           color: "var(--text-muted)",
-          fontFamily: "var(--font-body)",
-          letterSpacing: "0.04em",
+          letterSpacing: "0.14em",
+          textTransform: "uppercase",
         }}
       >
-        Brand System
-        <span style={{ margin: "0 8px", opacity: 0.4 }}>·</span>
+        // scarymoovies brand system
+        {num && (
+          <>
+            <span style={{ margin: "0 10px", opacity: 0.5 }}>·</span>
+            <span style={{ color: "var(--text-secondary)" }}>{num}</span>
+          </>
+        )}
+        <span style={{ margin: "0 10px", opacity: 0.5 }}>·</span>
         <span style={{ color: "var(--text-secondary)" }}>{section}</span>
       </span>
     </nav>

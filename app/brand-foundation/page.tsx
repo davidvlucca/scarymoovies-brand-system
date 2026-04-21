@@ -9,7 +9,7 @@ export default function BrandFoundationPage() {
   const { prev, next } = getPrevNext("/brand-foundation");
   return (
     <article className="prose">
-      <Breadcrumb section="Brand Foundation" />
+      <Breadcrumb section="Brand Foundation" num="02" />
       <BrandFoundation />
       <PageNav prev={prev} next={next} />
     </article>
