@@ -61,7 +61,7 @@ export function PersonaCard({ archetype, name, wants, fears, platformGives, acce
         }}
       >
         <PersonaSection label="Wants" items={wants} />
-        <PersonaSection label="Fears" items={fears} borderLeft />
+        <PersonaSection label="Fears" items={fears} borderLeft danger />
         <PersonaSection label="Platform gives" items={platformGives} borderLeft highlight />
       </div>
     </div>
@@ -73,12 +73,19 @@ function PersonaSection({
   items,
   borderLeft,
   highlight,
+  danger,
 }: {
   label: string;
   items: string[];
   borderLeft?: boolean;
   highlight?: boolean;
+  danger?: boolean;
 }) {
+  const labelColor = danger
+    ? "var(--accent-danger)"
+    : highlight
+      ? "var(--accent-hover)"
+      : "var(--text-muted)";
   return (
     <div
       style={{
@@ -91,7 +98,7 @@ function PersonaSection({
           margin: "0 0 10px",
           fontFamily: "var(--font-body)",
           fontSize: "0.68rem",
-          color: highlight ? "var(--accent-hover)" : "var(--text-muted)",
+          color: labelColor,
           textTransform: "uppercase",
           letterSpacing: "0.1em",
           fontWeight: 600,
