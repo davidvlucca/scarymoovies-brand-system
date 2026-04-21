@@ -1,15 +1,10 @@
-import { getGroupFor } from "@/lib/navigation";
-
 interface SectionHeaderProps {
   title: string;
   echo?: string;
-  group?: string;
   href?: string;
 }
 
-export function SectionHeader({ title, echo, group, href }: SectionHeaderProps) {
-  const eyebrow = group ?? (href ? getGroupFor(href) : null);
-
+export function SectionHeader({ title, echo }: SectionHeaderProps) {
   return (
     <header
       style={{
@@ -18,21 +13,6 @@ export function SectionHeader({ title, echo, group, href }: SectionHeaderProps) 
         borderBottom: "1px solid var(--border-subtle)",
       }}
     >
-      {eyebrow && (
-        <p
-          style={{
-            margin: "0 0 0.9rem",
-            fontFamily: "var(--font-body)",
-            fontSize: "0.68rem",
-            color: "var(--text-muted)",
-            textTransform: "uppercase",
-            letterSpacing: "0.22em",
-            fontWeight: 700,
-          }}
-        >
-          {eyebrow}
-        </p>
-      )}
       <h1
         style={{
           margin: 0,
