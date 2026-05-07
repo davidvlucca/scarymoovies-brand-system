@@ -2,19 +2,22 @@
 
 export type Tier = "S" | "A" | "B" | "C" | "D" | "E" | "F";
 
-const TIER_STYLES: Record<Tier, { bg: string; color: string }> = {
-  S: { bg: "var(--purple-400)", color: "var(--white-50)" },
-  A: { bg: "var(--purple-300)", color: "var(--white-50)" },
-  B: { bg: "var(--purple-200)", color: "var(--black-700)" },
-  C: { bg: "var(--black-300)",  color: "var(--white-50)" },
-  D: { bg: "var(--red-300)",    color: "var(--white-50)" },
-  E: { bg: "var(--red-400)",    color: "var(--white-50)" },
-  F: { bg: "var(--red-500)",    color: "var(--white-50)" },
+const TIER_BG: Record<Tier, string> = {
+  S: "var(--tier-s)",  /* #5d337d */
+  A: "var(--tier-a)",  /* #785492 */
+  B: "var(--tier-b)",  /* #6e5474 */
+  C: "var(--tier-c)",  /* #9c80a8 */
+  D: "var(--tier-d)",  /* #5c5b5e */
+  E: "var(--tier-e)",  /* #914141 */
+  F: "var(--tier-f)",  /* #751111 */
 };
+
+const TIER_SIZES = { sm: 24, md: 28, xl: 48 };
 
 interface RatingChipTierProps {
   variant: "tier";
   tier: Tier;
+  size?: "sm" | "md" | "xl";
 }
 
 interface RatingChipStarProps {
@@ -26,20 +29,21 @@ type RatingChipProps = RatingChipTierProps | RatingChipStarProps;
 
 export function RatingChip(props: RatingChipProps) {
   if (props.variant === "tier") {
-    const { bg, color } = TIER_STYLES[props.tier];
+    const px = TIER_SIZES[props.size ?? "md"];
+    const fontSize = px >= 40 ? "1.25rem" : px >= 28 ? "0.875rem" : "0.75rem";
     return (
       <span
         style={{
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
-          width: "24px",
-          height: "24px",
+          width: `${px}px`,
+          height: `${px}px`,
           borderRadius: "4px",
-          backgroundColor: bg,
-          color,
+          backgroundColor: TIER_BG[props.tier],
+          color: "var(--white-50)",
           fontFamily: "var(--font-body)",
-          fontSize: "0.75rem",
+          fontSize,
           fontWeight: 700,
           lineHeight: 1,
           userSelect: "none",
@@ -72,7 +76,7 @@ export function RatingChip(props: RatingChipProps) {
         flexShrink: 0,
       }}
     >
-      <span style={{ color: "var(--accent-hover)", fontSize: "0.7rem" }}>★</span>
+      <span style={{ color: "var(--accent-primary)", fontSize: "0.7rem" }}>★</span>
       {clamped.toFixed(1)}
     </span>
   );
@@ -136,7 +140,7 @@ export function RatingChipShowcase() {
         </div>
       </div>
 
-      {/* In context */}
+      {/* Sizes */}
       <div>
         <p
           style={{
@@ -148,15 +152,30 @@ export function RatingChipShowcase() {
             marginBottom: "12px",
           }}
         >
-          In context — on a dark card surface
+          Sizes — sm 24px · md 28px (default) · xl 48px
         </p>
-        <div
+        <div style={{ display: "flex", gap: "16px", alignItems: "center", flexWrap: "wrap" }}>
+          <RatingChip variant="tier" tier="S" size="sm" />
+          <RatingChip variant="tier" tier="S" size="md" />
+          <RatingChip variant="tier" tier="S" size="xl" />
+        </div>
+      </div>
+
+      {/* In context on card */}
+      <div>
+        <p
           style={{
-            display: "flex",
-            gap: "16px",
-            flexWrap: "wrap",
+            fontFamily: "var(--font-body)",
+            fontSize: "0.75rem",
+            color: "var(--text-muted)",
+            textTransform: "uppercase",
+            letterSpacing: "0.08em",
+            marginBottom: "12px",
           }}
         >
+          In context — md on poster overlay, xl standalone
+        </p>
+        <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "flex-end" }}>
           {(["S", "A", "F"] as Tier[]).map((t) => (
             <div
               key={t}
@@ -172,9 +191,11 @@ export function RatingChipShowcase() {
                 position: "relative",
               }}
             >
-              <RatingChip variant="tier" tier={t} />
+              <RatingChip variant="tier" tier={t} size="md" />
             </div>
           ))}
+          <RatingChip variant="tier" tier="S" size="xl" />
+          <RatingChip variant="tier" tier="F" size="xl" />
         </div>
       </div>
     </div>
