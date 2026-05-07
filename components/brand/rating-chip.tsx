@@ -184,14 +184,12 @@ export function RatingChipShowcase() {
                 height: "120px",
                 borderRadius: "8px",
                 backgroundColor: "var(--bg-elevated)",
-                display: "flex",
-                alignItems: "flex-end",
-                justifyContent: "flex-end",
-                padding: "8px",
                 position: "relative",
               }}
             >
-              <RatingChip variant="tier" tier={t} size="md" />
+              <div style={{ position: "absolute", top: "8px", right: "8px" }}>
+                <RatingChip variant="tier" tier={t} size="md" />
+              </div>
             </div>
           ))}
           <RatingChip variant="tier" tier="S" size="xl" />

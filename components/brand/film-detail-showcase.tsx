@@ -1,6 +1,6 @@
 "use client";
 
-const CAST = [
+const CAST: { name: string; director: boolean; photo?: string }[] = [
   { name: "Toni Collette", director: false },
   { name: "Alex Wolff", director: false },
   { name: "Milly Shapiro", director: false },
@@ -26,7 +26,7 @@ const GALLERY = [
 
 const STAT_PILLS = ["★  S", "2018", "127 min", "Supernatural", "4.8 / 5.0"];
 
-function CastPortrait({ name, director }: { name: string; director: boolean }) {
+function CastPortrait({ name, director, photo }: { name: string; director: boolean; photo?: string }) {
   const initials = name
     .split(" ")
     .map((w) => w[0])
@@ -57,9 +57,25 @@ function CastPortrait({ name, director }: { name: string; director: boolean }) {
           fontWeight: 900,
           fontSize: "20px",
           letterSpacing: "0.04em",
+          overflow: "hidden",
         }}
       >
-        {initials}
+        {photo ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={photo}
+            alt={name}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+        ) : (
+          initials
+        )}
         {director && (
           <div
             style={{
@@ -142,7 +158,7 @@ export function FilmDetailShowcase() {
               position: "absolute",
               inset: 0,
               background:
-                "linear-gradient(to bottom, rgba(12,10,14,0) 0%, rgba(12,10,14,1) 100%)",
+                "linear-gradient(180deg, transparent 0%, transparent 30%, rgba(11,9,13,0.4) 60%, var(--bg-primary) 100%)",
             }}
           />
         </div>
@@ -493,6 +509,8 @@ export function FilmDetailShowcase() {
                     src={src}
                     alt=""
                     style={{
+                      position: "absolute",
+                      inset: 0,
                       width: "100%",
                       height: "100%",
                       objectFit: "cover",
