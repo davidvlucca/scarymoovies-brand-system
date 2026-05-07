@@ -617,3 +617,34 @@ Inline spec callout for documentation use. Three variants: `info`, `warning`, `t
 
 Use `info` as the default. Only reach for `warning` when the guidance prevents a real mistake. `tip` is for advice that's useful but not blocking.
 
+---
+
+## Collection Tile
+
+Full-bleed cinematic hero card for the Collections page. Background image with directional gradient overlay; title, blurb, and CTA anchor to the bottom-left (or bottom-right). Used in the vertical tile stack on the Collections browse page.
+
+<CollectionTileShowcase />
+
+### Anatomy
+
+1. **Background image** — `position: absolute`, full bleed, `filter: brightness(0.55) saturate(0.8)` at rest, lightens on hover
+2. **Gradient overlay** — `z-index: 1`, directional: `90deg` for `left` align (left edge darkest), `270deg` for `right` align (right edge darkest)
+3. **Body** — `z-index: 2`, `padding: 28px 32px`, `align-items: flex-start` or `flex-end` based on `align` prop
+4. **Title** — `var(--font-display)` weight 900, `clamp(1.75rem, 3.5vw, 2.75rem)`, uppercase
+5. **Blurb** — 13px, `var(--text-secondary)`, `max-width: 360px`
+6. **CTA** — "View Collection" pill button, `--accent-primary` background, pill radius
+
+### Props
+
+| Prop    | Type              | Default   | Description                        |
+|---------|-------------------|-----------|------------------------------------|
+| `title` | `string`          | —         | Collection name                    |
+| `blurb` | `string`          | —         | One-line curatorial description    |
+| `src`   | `string`          | —         | Background image path              |
+| `align` | `"left" \| "right"` | `"left"` | Text side — drives gradient direction |
+| `href`  | `string?`         | —         | Link target; adds hover lift if set |
+
+### Usage Rules
+
+Alternate `align` between consecutive tiles — `left`, `right`, `left` — to create a visual zigzag that keeps each tile distinct. Minimum tile height is `280px`; use longer blurbs or taller containers to add height, never compress below this. The background image must be atmospheric (cinematic stills, not poster art) to read correctly through the gradient.
+
