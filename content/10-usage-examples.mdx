@@ -219,3 +219,25 @@ The genre and mood filter system is the Explore page's primary interaction model
 **Mood filter.** A second TagChip row appears below the genre filter (or within the selected section): atmosphere descriptors — Slow Burn, Atmospheric, Tense, Gory, Funny, Unsettling. Selecting a mood filter applies the card-level opacity dimming: non-matching cards drop to `opacity: 0.15` with a `200ms ease` transition. Matching cards remain at full opacity. Cards do not reflow — they stay in their grid positions. This is a brand-defining interaction: the horror remains in place, it simply retreats into the dark.
 
 **Interaction constraint.** Never use `display: none` or `visibility: hidden` to hide non-matching items. The ghost of the non-matching card at `opacity: 0.15` is an intentional design choice — it communicates the scope of the catalog even when filtered. The darkness is part of the signal.
+
+---
+
+## 10. Film Detail
+
+<FilmDetailShowcase />
+
+The Film Detail page is the product's most technically layered surface. It applies the cinematic language at full fidelity: full-bleed atmospheric backdrop, two-column hero (trailer + poster), stat pills, cast strip, vibe chips, credits metadata, and the Crime Scene gallery.
+
+**Backdrop hero.** A full-bleed atmospheric image occupies the top of the page and fades completely into `--bg-primary` via a `linear-gradient` overlay. The gradient runs from `rgba(12,10,14,0)` at top to `rgba(12,10,14,1)` at bottom. The poster column is pulled up into this gradient zone using negative margin, creating the effect of the one-sheet emerging from the dark field rather than sitting below it.
+
+**Two-column hero.** The main content area uses a `1fr / 280px` grid. The left cell is the trailer thumbnail — a cinematic backdrop image with a play button overlay. The right cell is the poster at `2:3` aspect ratio. Both sit at the same bottom edge, anchored by `align-items: end`. The trailer image is filtered to `brightness(0.55) saturate(0.85)` at rest, lightening on hover. The play button is a circle with `border: 2px solid var(--purple-300)` and a semi-transparent purple background — the brand's primary accent marking the single primary action.
+
+**Stats pills.** Below the hero, a flex-wrap row of stat chips presents the film's key metadata: tier rating, year, runtime, genre, and star score. Each chip uses `background: var(--purple-900)` and `border: 1px solid var(--purple-800)` — the darkest purple tier, which reads as a subtle tint rather than a saturated color. `font-family: var(--font-mono)` places these firmly in the metadata register. The "Add to Watchlist" button sits right-aligned in the same grid column as the poster — its `border: 1px solid var(--border-strong)` outline treatment signals a secondary action relative to the primary trailer play.
+
+**Cast strip.** Portrait circles (72–76px diameter) use a purple-to-elevated gradient background with `--border-strong` ring. Initials render in `var(--font-display)` weight 900 at large size. The director is distinguished by a small `--accent-primary` badge at the bottom-right of the circle, overlapping the ring. Cast names render in `--text-secondary` at 11px below each circle.
+
+**Vibe chips.** Genre-mood descriptors above the credits block use `var(--purple-800)` background, `var(--purple-200)` text, and `var(--purple-700)` border — a fully purple-scale treatment that reads as atmospheric context rather than an interactive filter. `font-family: var(--font-mono)` and all-caps render them as typed metadata.
+
+**Credits.** A `dl` with `grid-template-columns: 80px 1fr` — `dt` in `--font-mono` 11px uppercase muted, `dd` in body text primary. The grid alignment locks labels and values into clean vertical columns without a table.
+
+**Crime Scene gallery.** A three-column image grid at `16:10` aspect ratio. Images are filtered to `brightness(0.85) saturate(0.85)` at rest — the desaturation keeps the gallery from competing with the poster above it. The section header "Crime Scene" renders in `var(--font-display)` weight 900 uppercase — the horror-specific naming is intentional, matching the platform's voice.
