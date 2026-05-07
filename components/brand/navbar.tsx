@@ -46,8 +46,7 @@ export function Navbar({ user, transparent = false }: NavbarProps) {
         <img
           src="/assets/logo-white.png"
           alt="ScaryMoovies"
-          height={28}
-          style={{ display: "block" }}
+          style={{ display: "block", height: "24px", width: "auto", userSelect: "none" }}
         />
       </a>
 
