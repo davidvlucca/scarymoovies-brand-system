@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 
-type TagChipVariant = "default" | "active" | "outline";
+// Kit variants: "default" (resting, transparent), "active" (selected), "faded" (de-emphasized)
+// Legacy: "outline" was renamed → "default"; old "default" (bg-elevated fill) → "filled" (deprecated)
+type TagChipVariant = "default" | "active" | "faded" | "filled" | "outline";
 type TagChipSize = "sm" | "md";
 
 interface TagChipProps {
@@ -29,8 +31,8 @@ export function TagChip({
     md: "4px 12px",
   };
   const fontSizeMap: Record<TagChipSize, string> = {
-    sm: "0.7rem",
-    md: "0.8rem",
+    sm: "11px",
+    md: "13px",
   };
 
   const baseStyle: React.CSSProperties = {
@@ -49,23 +51,33 @@ export function TagChip({
     whiteSpace: "nowrap",
   };
 
-  const variantStyle: React.CSSProperties = isActive
-    ? {
-        backgroundColor: "var(--accent-primary)",
-        color: "var(--white-50)",
-        border: "1px solid var(--accent-primary)",
-      }
-    : variant === "outline"
-    ? {
-        backgroundColor: "transparent",
-        color: "var(--text-secondary)",
-        border: "1px solid var(--border-default)",
-      }
-    : {
-        backgroundColor: "var(--bg-elevated)",
-        color: "var(--text-secondary)",
-        border: "1px solid var(--border-subtle)",
-      };
+  const resolvedVariant = isActive ? "active" : variant === "outline" ? "default" : variant;
+
+  const VARIANT_STYLES: Record<string, React.CSSProperties> = {
+    default: {
+      backgroundColor: "transparent",
+      color: "var(--text-secondary)",
+      border: "1px solid var(--border-default)",
+    },
+    active: {
+      backgroundColor: "var(--accent-primary)",
+      color: "var(--white-50)",
+      border: "1px solid var(--accent-primary)",
+    },
+    faded: {
+      backgroundColor: "transparent",
+      color: "var(--text-muted)",
+      border: "1px solid var(--border-subtle)",
+    },
+    filled: {
+      // deprecated — use default instead
+      backgroundColor: "var(--bg-elevated)",
+      color: "var(--text-secondary)",
+      border: "1px solid var(--border-subtle)",
+    },
+  };
+
+  const variantStyle = VARIANT_STYLES[resolvedVariant] ?? VARIANT_STYLES.default;
 
   const handleClick = () => {
     if (!interactive) return;
@@ -126,12 +138,12 @@ export function TagChipShowcase() {
             marginBottom: "12px",
           }}
         >
-          Variants — default / active / outline
+          Variants — default / active / faded
         </p>
         <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
           <TagChip label="Slasher" variant="default" />
           <TagChip label="Slow Burn" variant="active" />
-          <TagChip label="Folk Horror" variant="outline" />
+          <TagChip label="Folk Horror" variant="faded" />
         </div>
       </div>
 
