@@ -56,7 +56,7 @@ Click any value to copy it to clipboard.
 - **Red is danger and horror accent only.** Never use it for decorative purposes, category colors, or hover states unrelated to destructive actions.
 - **Never use purple-200 or lighter as text on dark backgrounds.** These steps fail WCAG AA contrast requirements at body text sizes.
 - **Always reference semantic tokens in production code**, not raw scale values. Write `var(--accent-primary)`, not `var(--purple-400)`.
-- **Do not darken `--border-subtle`.** Its 0.06 alpha opacity is intentional — it creates structure without competing with content.
+- **Do not darken `--border-subtle`.** Its opacity is intentional — it creates structure without competing with content.
 - **Text hierarchy is white-only.** Do not use purple or red for headings or labels outside of specific badge contexts.
 
 ---
@@ -74,3 +74,21 @@ WCAG 2.1 contrast ratios for key pairings against `--bg-primary` (`#0c0a0e`):
 | Danger | `--accent-danger` | `#751111` | 3.5 : 1 | Fails AA† |
 
 †`--accent-primary` and `--accent-danger` do not meet WCAG AA for small body text (4.5 : 1 required). They are used exclusively for interactive affordances and icon contexts where large size or bold weight compensates. Never use them for paragraph text.
+
+---
+
+## Tier List Scale
+
+The seven tier colors form a single continuous gradient from brand purple to brand crimson. No grey dead zone — the scale always reads as opinionated.
+
+| Tier | Token | Hex | Intent |
+|---|---|---|---|
+| S | `--tier-s` | `#5d337d` | Brand primary — the signature mark |
+| A | `--tier-a` | `#785492` | Strong — one step lighter |
+| B | `--tier-b` | `#6e5474` | Desaturated purple-plum |
+| C | `--tier-c` | `#9c80a8` | Lighter purple, lifted — the midpoint |
+| D | `--tier-d` | `#5c5b5e` | Neutral grey — the pivot, "no strong opinion" |
+| E | `--tier-e` | `#914141` | Warning red — below average |
+| F | `--tier-f` | `#751111` | Brand crimson — failure, the worst |
+
+**Color logic:** S is `--accent-primary` (the best should wear the brand). F is `--accent-danger` (the worst is a danger signal). D is `--black-300` (neutral grey — the only tier that opts out of the purple-red spectrum). The jump from C to D to E is the emotional pivot of the entire scale.

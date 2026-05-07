@@ -1,12 +1,12 @@
 const TIERS = ["S", "A", "B", "C", "D", "E", "F"] as const;
 const TIER_COLORS: Record<string, string> = {
-  S: "var(--purple-300)",
-  A: "var(--purple-400)",
-  B: "var(--purple-500)",
-  C: "var(--black-400)",
-  D: "var(--black-300)",
-  E: "var(--accent-danger)",
-  F: "var(--red-700)",
+  S: "var(--tier-s)",
+  A: "var(--tier-a)",
+  B: "var(--tier-b)",
+  C: "var(--tier-c)",
+  D: "var(--tier-d)",
+  E: "var(--tier-e)",
+  F: "var(--tier-f)",
 };
 
 interface TierListProps {

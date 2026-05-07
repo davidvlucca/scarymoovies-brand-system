@@ -3,65 +3,42 @@ import { AtmosphericImage } from '@/components/brand/atmospheric-image'
 
 # Typography
 
-Type is atmosphere. On ScaryMoovies, every headline that makes a viewer lean forward and every body line they read in low light is shaped by two deliberately paired typefaces — one built for legibility under pressure, the other for cinematic dread.
+Type is atmosphere. On ScaryMoovies, every headline that makes a viewer lean forward and every body line they read in low light is shaped by one typeface doing two jobs — and doing both without compromise.
 
 ---
 
 ## Font Families
 
-### Primary — Inter
+### Primary & Display — Inter
 
-**Inter** is the backbone of the entire UI. Designed by Rasmus Andersson for screens first, it is an exceptionally legible sans-serif that handles small sizes, dark backgrounds, and dense metadata with zero fatigue. Its slightly wide letterforms and open apertures keep reading comfortable at the low-contrast conditions typical of a dark-mode film platform.
+**Inter** is the only typeface on ScaryMoovies. It carries every word — from the 88px hero title to 12px timestamp metadata. That is not a simplification; it is a deliberate decision. Inter at weight 900 in ALL CAPS is a deadpan horror statement. It does not distress, it does not dramatise, it just holds. At body weight it is the most legible screen sans available. The darkness lives in the content and the colour, not in the typeface.
 
-Use Inter for: all body text, navigation labels, buttons, form inputs, metadata strings (runtime, year, rating), badge text, captions, tooltips, and any interactive element where clarity is mission-critical.
+The display role uses Inter Black (900) set uppercase. The body and UI role uses Inter Regular–SemiBold (400–700). The pairing is the same family at opposite ends of the weight axis.
+
+Use Inter for: hero banners, section titles, navigation labels, buttons, form inputs, metadata strings (runtime, year, rating), badge text, captions, and every interactive element.
 
 **Google Fonts / Next.js loading:**
 
 ```tsx
 // app/layout.tsx
-import { Inter } from 'next/font/google';
+import { Inter, JetBrains_Mono } from 'next/font/google';
 
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-body',
   display: 'swap',
+  weight: ['400', '500', '600', '700', '800', '900'],
 });
 ```
 
-**CSS custom property:** `--font-inter`
+**CSS custom property:** `--font-body` (body) / `--font-display` (aliases body — same family)
 **Fallback stack:** `system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`
-
----
-
-### Display — Playfair Display
-
-**Playfair Display** (heavy weight, Black 900) is the horror voice of ScaryMoovies. It is a high-contrast serif with sharply tapered serifs, dramatic thick-to-thin stroke transitions, and an inherent theatricality rooted in 18th-century type design. At large sizes it reads like a film poster pulled from the archive — authoritative, slightly unsettling, unmistakably cinematic. Unlike novelty "horror" fonts, Playfair Display is fully legible, which means it can carry long hero headlines without sacrificing readability. The darkness lives in the contrast and the weight, not in distortion.
-
-Use Playfair Display for: hero banners, section titles that establish mood, genre header cards, editorial pull-quotes, and any display moment where the type itself needs to carry emotional weight.
-
-**Google Fonts / Next.js loading:**
-
-```tsx
-// app/layout.tsx
-import { Inter, Playfair_Display } from 'next/font/google';
-
-const playfairDisplay = Playfair_Display({
-  subsets: ['latin'],
-  weight: ['700', '900'],
-  style: ['normal', 'italic'],
-  variable: '--font-playfair',
-  display: 'swap',
-});
-```
-
-**CSS custom property:** `--font-playfair`
-**Fallback stack:** `'Georgia', 'Times New Roman', serif`
 
 ---
 
 ## Type Scale
 
-The scale is built on a fluid but deliberate step system. All values are expressed in `rem` (base 16px). The `display-*` steps use Playfair Display; all `heading-*`, `body-*`, and `label` steps use Inter.
+The scale is built on a fluid but deliberate step system. All values are expressed in `rem` (base 16px). Every step uses Inter — display steps at weight 900 uppercase, heading steps at 700, body at 400, labels at 500 uppercase.
 
 <TypeSpecimen level="display" text="Horror Lives in the Dark" />
 
@@ -77,19 +54,19 @@ The scale is built on a fluid but deliberate step system. All values are express
 
 <TypeSpecimen level="label" text="S TIER" />
 
-| Token | rem | px | Font | Default Weight | Usage |
+| Token | rem | px | Weight | Case | Usage |
 |---|---|---|---|---|---|
-| `display-2xl` | 4.5rem | 72px | Playfair Display | 900 Black | Hero moments only — full-bleed banners |
-| `display-xl` | 3.75rem | 60px | Playfair Display | 900 Black | Page heroes, feature film titles |
-| `display-lg` | 3rem | 48px | Playfair Display | 700 Bold | Section heroes, genre landing headers |
-| `heading-xl` | 2.25rem | 36px | Inter | 700 Bold | Page-level titles (h1 within content areas) |
-| `heading-lg` | 1.875rem | 30px | Inter | 700 Bold | Section titles (h2) |
-| `heading-md` | 1.5rem | 24px | Inter | 600 SemiBold | Card titles, modal headers (h3) |
-| `heading-sm` | 1.25rem | 20px | Inter | 600 SemiBold | Subsection labels, accordion headers (h4) |
-| `body-lg` | 1.125rem | 18px | Inter | 400 Regular | Featured body text, synopsis introductions |
-| `body-md` | 1rem | 16px | Inter | 400 Regular | Default body text, list items, descriptions |
-| `body-sm` | 0.875rem | 14px | Inter | 400 Regular | Secondary text, metadata, timestamps |
-| `label` | 0.75rem | 12px | Inter | 500 Medium | Tags, badges, category labels (always uppercase) |
+| `display-2xl` | 4.5rem | 72px | 900 Black | UPPERCASE | Hero moments only — full-bleed banners |
+| `display-xl` | 3.75rem | 60px | 900 Black | UPPERCASE | Page heroes, feature film titles |
+| `display-lg` | 3rem | 48px | 700 Bold | UPPERCASE | Section heroes, genre landing headers |
+| `heading-xl` | 2.25rem | 36px | 700 Bold | Sentence | Page-level titles (h1 within content areas) |
+| `heading-lg` | 1.875rem | 30px | 700 Bold | Sentence | Section titles (h2) |
+| `heading-md` | 1.5rem | 24px | 600 SemiBold | Sentence | Card titles, modal headers (h3) |
+| `heading-sm` | 1.25rem | 20px | 600 SemiBold | Sentence | Subsection labels, accordion headers (h4) |
+| `body-lg` | 1.125rem | 18px | 400 Regular | Sentence | Featured body text, synopsis introductions |
+| `body-md` | 1rem | 16px | 400 Regular | Sentence | Default body text, list items, descriptions |
+| `body-sm` | 0.875rem | 14px | 400 Regular | Sentence | Secondary text, metadata, timestamps |
+| `label` | 0.75rem | 12px | 500 Medium | UPPERCASE | Tags, badges, category labels |
 
 ---
 
@@ -103,7 +80,8 @@ ScaryMoovies uses a controlled weight palette. Using fewer weights keeps the vis
 | Medium | 500 | Subtle emphasis within body, label text, nav items at rest |
 | SemiBold | 600 | Heading-md and heading-sm, active nav states, button labels |
 | Bold | 700 | Heading-xl and heading-lg, strong emphasis, display-lg |
-| Black | 900 | Display-xl and display-2xl (Playfair Display only) |
+| ExtraBold | 800 | Strong marketing callouts where Black is too heavy |
+| Black | 900 | All display-* steps set uppercase — section titles, hero banners, tier letters |
 
 Avoid using weights below 400 in the product UI. Thin weights on dark backgrounds fail contrast checks and feel anaemic against the mood of the platform.
 
@@ -115,7 +93,7 @@ Display text needs compressed tracking so large letterforms feel architectural r
 
 | Category | Line Height | Letter Spacing | Notes |
 |---|---|---|---|
-| `display-2xl` / `display-xl` | 1.05 | −0.03em | Near-solid leading; Playfair serifs provide natural rhythm |
+| `display-2xl` / `display-xl` | 1.05 | −0.03em | Near-solid leading; Inter Black condenses naturally at 900 |
 | `display-lg` | 1.1 | −0.025em | Slight breathing room added |
 | `heading-xl` / `heading-lg` | 1.2 | −0.02em | Tight but not cramped; Inter handles this cleanly |
 | `heading-md` / `heading-sm` | 1.3 | −0.01em | Comfortable for multi-line card titles |
@@ -131,17 +109,17 @@ Display text needs compressed tracking so large letterforms feel architectural r
 
 These rules are non-negotiable across all surfaces — product screens, marketing pages, email templates, and component documentation.
 
-**Playfair Display is for mood, not mechanics.** It appears only at `display-lg` and above. Never use Playfair Display for body text, UI controls, or any interactive element. Never use it below 30px. Never use it at weights lighter than 700.
+**Display text is Inter Black, set uppercase.** `display-lg` and above use weight 900 with negative tracking. Never set display text at weights below 700. Never mix a display step with sentence case — all-caps is part of the specification, not optional styling.
 
-**Inter is for everything functional.** Navigation, buttons, form labels, metadata, body copy, tooltips, captions — Inter handles all of it. If text performs a function rather than setting an atmosphere, Inter is the correct choice.
+**Inter handles everything.** Navigation, buttons, form labels, metadata, body copy, tooltips, captions — Inter at the appropriate weight. One typeface family, zero font-switching complexity, zero serif/sans collisions.
 
-**No mixing within a single element.** Do not apply a Playfair Display italic to emphasised words inside an Inter body paragraph. Emphasis inside Inter body uses `font-weight: 600` or a dedicated `<em>` style.
+**Emphasis inside body uses weight, not a different face.** Stressed words inside a body paragraph get `font-weight: 600`. Do not introduce a second family for emphasis.
 
-**Italic Playfair Display** is reserved for pull-quotes and editorial inserts. It carries a classic-horror-paperback energy that works in isolation but not as structural type.
+**JetBrains Mono** (`--font-mono`) is the third member of the stack. Use it for: film runtime, release year strings, timestamp metadata, code samples in the brand system, and empty-state instructional text in the tier list. It signals "data" rather than "copy."
 
 <AtmosphericImage
   src="/assets/horror-title-card-01.jpg"
-  alt="Horror film title card — Playfair Display weight against deep black, cinematic typography"
+  alt="Horror film title card — Inter Black weight against deep black, cinematic typography"
   caption="The darkness lives in the contrast and the weight, not in distortion."
   size="full"
 />
@@ -150,15 +128,15 @@ These rules are non-negotiable across all surfaces — product screens, marketin
 
 ## Type Pairings
 
-Three real-world examples showing how Playfair Display and Inter work together across different ScaryMoovies contexts.
+Three real-world examples showing how Inter moves across weight and size within ScaryMoovies contexts.
 
 ### Pairing 1 — Hero Banner
 
 ```
-[display-xl / Playfair Display 900]
-The Silence Between Screams
+[display-xl / Inter Black 900 / UPPERCASE / −0.03em]
+THE SILENCE BETWEEN SCREAMS
 
-[body-lg / Inter 400]
+[body-lg / Inter Regular 400]
 A remote mountain lodge. Seven strangers. And something in the walls
 that has been waiting for exactly this long winter.
 ```
@@ -168,10 +146,10 @@ that has been waiting for exactly this long winter.
 ### Pairing 2 — Genre Section Header
 
 ```
-[display-lg / Playfair Display 700]
-New in Psychological Horror
+[display-lg / Inter Bold 700 / UPPERCASE / −0.025em]
+NEW IN PSYCHOLOGICAL HORROR
 
-[body-md / Inter 400]
+[body-md / Inter Regular 400]
 Films that get under your skin and stay there. Curated weekly from
 festival premieres and underground submissions.
 ```
@@ -181,13 +159,13 @@ festival premieres and underground submissions.
 ### Pairing 3 — Film Detail Card
 
 ```
-[heading-md / Inter 600]
+[heading-md / Inter SemiBold 600 / Sentence case]
 The Caretaker's Vigil
 
-[body-sm / Inter 400]
+[body-sm / JetBrains Mono 400]
 2024 · 1h 52m · Unrated · Directed by Mara Osei
 
-[label / Inter 500 / uppercase / wide tracking]
+[label / Inter Medium 500 / UPPERCASE / 0.08em tracking]
 SLOW BURN   FOLK HORROR   ISOLATION
 ```
 
@@ -197,11 +175,11 @@ SLOW BURN   FOLK HORROR   ISOLATION
 
 **Minimum body text size is 14px (`body-sm`).** No informational text in the product may render below this threshold. The `label` token at 12px is permitted only for decorative tags and badges where the same information is available elsewhere in context (for example, a genre tag on a card that also displays the genre in the title).
 
-**Playfair Display at large display sizes** has high inherent contrast between thick and thin strokes. Do not reduce opacity of display type below 90% — the thin strokes disappear first and legibility collapses faster than the eye expects.
+**Display text at weight 900** is an even-stroke sans at large sizes — no thin hairlines to lose. Still: do not reduce opacity of display type below 90%. At small sizes the heavier strokes can bleed, so never use display weights below `display-lg` (48px).
 
 **Letter spacing and all-caps labels:** the `label` token requires `letter-spacing: 0.08em` whenever text is rendered in uppercase. All-caps text without wide tracking fails WCAG SC 1.4.12 (Text Spacing) in practice even when it technically passes.
 
-**Font loading:** both fonts are loaded via `next/font/google` with `display: swap`. This ensures body text is visible immediately using the system fallback stack rather than leaving an invisible text flash during font load. Fallback metrics should be adjusted via `adjustFontFallback: true` (the Next.js default) to minimise layout shift.
+**Font loading:** Inter and JetBrains Mono are loaded via `next/font/google` with `display: swap`. System fallbacks are visible immediately — no invisible text flash. Next.js applies `adjustFontFallback: true` by default to minimise layout shift.
 
 ---
 
@@ -209,9 +187,10 @@ SLOW BURN   FOLK HORROR   ISOLATION
 
 ```css
 :root {
-  /* Font families */
-  --font-inter: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-playfair: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+  /* Font families — injected by next/font; fallbacks below */
+  --font-body:    'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: var(--font-body); /* same family, set at 900 weight */
+  --font-mono:    'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
 
   /* Type scale — size */
   --text-display-2xl: 4.5rem;

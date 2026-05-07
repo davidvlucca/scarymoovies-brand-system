@@ -50,6 +50,11 @@
   --white-800: #868587;
   --white-900: #666667;
 
+  /* ─── Font Stacks (fallbacks; overridden by next/font at runtime) ─── */
+  --font-body:    'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: var(--font-body); /* Inter Black — display matches body family */
+  --font-mono:    'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+
   /* ─── Semantic Tokens ─────────────────────────────── */
   --bg-primary:          var(--black-500);
   --bg-surface:          var(--black-600);   /* #0b090d — near-black surface */
@@ -66,9 +71,85 @@
   --accent-danger:       var(--red-500);
   --accent-danger-hover: var(--red-400);
 
-  --border-subtle:       rgba(254, 254, 254, 0.08);   /* slightly more visible */
+  --border-subtle:       rgba(254, 254, 254, 0.08);
   --border-default:      rgba(254, 254, 254, 0.12);
   --border-focus:        var(--purple-300);
+
+  /* ─── Tier List Scale ─────────────────────────────── */
+  /* S = brand primary purple → F = brand crimson. No grey dead zone.
+     The scale is one continuous hue shift: vivid purple → muted plum → crimson. */
+  --tier-s: var(--purple-400);  /* #5d337d — signature */
+  --tier-a: var(--purple-300);  /* #785492 — strong */
+  --tier-b: #6e5474;            /* desaturated purple-plum */
+  --tier-c: #9c80a8;            /* lighter purple, lifted */
+  --tier-d: var(--black-300);   /* #5c5b5e — neutral pivot */
+  --tier-e: var(--red-400);     /* #914141 — warning */
+  --tier-f: var(--red-500);     /* #751111 — failure, brand crimson */
+
+  /* ─── Type Scale ──────────────────────────────────── */
+  --text-display-2xl: 4.5rem;    /* 72px — hero banners */
+  --text-display-xl:  3.75rem;   /* 60px — page heroes */
+  --text-display-lg:  3rem;      /* 48px — section heroes */
+  --text-heading-xl:  2.25rem;   /* 36px — h1 */
+  --text-heading-lg:  1.875rem;  /* 30px — h2 */
+  --text-heading-md:  1.5rem;    /* 24px — h3, card titles */
+  --text-heading-sm:  1.25rem;   /* 20px — h4 */
+  --text-body-lg:     1.125rem;  /* 18px — featured body */
+  --text-body-md:     1rem;      /* 16px — default body */
+  --text-body-sm:     0.875rem;  /* 14px — metadata */
+  --text-label:       0.75rem;   /* 12px — caps labels */
+
+  /* ─── Line Heights ────────────────────────────────── */
+  --leading-display-2xl: 1.05;
+  --leading-display-xl:  1.05;
+  --leading-display-lg:  1.1;
+  --leading-heading-xl:  1.2;
+  --leading-heading-lg:  1.2;
+  --leading-heading-md:  1.3;
+  --leading-heading-sm:  1.3;
+  --leading-body-lg:     1.6;
+  --leading-body-md:     1.6;
+  --leading-body-sm:     1.5;
+  --leading-label:       1.2;
+
+  /* ─── Letter Spacing ──────────────────────────────── */
+  --tracking-display-2xl: -0.03em;
+  --tracking-display-xl:  -0.03em;
+  --tracking-display-lg:  -0.025em;
+  --tracking-heading-xl:  -0.02em;
+  --tracking-heading-lg:  -0.02em;
+  --tracking-heading-md:  -0.01em;
+  --tracking-heading-sm:  -0.01em;
+  --tracking-body-lg:      0em;
+  --tracking-body-md:      0em;
+  --tracking-body-sm:      0.01em;
+  --tracking-label:        0.08em;
+
+  /* ─── Motion Tokens ───────────────────────────────── */
+  --duration-fast:      100ms;   /* hover color, focus ring */
+  --duration-base:      150ms;   /* buttons, card hover */
+  --duration-moderate:  250ms;   /* dropdowns, flyouts */
+  --duration-slow:      400ms;   /* modals, page transitions */
+  --duration-cinematic: 700ms;   /* hero backdrop reveals */
+  --ease-default: ease;
+  --ease-enter:   ease-out;
+  --ease-exit:    ease-in;
+  --ease-inout:   ease-in-out;
+
+  /* ─── Radii ───────────────────────────────────────── */
+  --radius-sm:   3px;    /* small pills, search thumbs */
+  --radius-md:   6px;    /* chips */
+  --radius:      8px;    /* default — cards, posters, buttons */
+  --radius-lg:   10px;   /* modals */
+  --radius-pill: 9999px; /* PYF CTA, tag chips, avatars */
+
+  /* ─── Shadows ─────────────────────────────────────── */
+  --shadow-sm:     0 1px 0 rgba(255, 255, 255, 0.02) inset;
+  --shadow-card:   0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-popup:  0 12px 32px rgba(0, 0, 0, 0.5);
+  --shadow-modal:  0 24px 64px rgba(0, 0, 0, 0.7);
+  --shadow-toast:  0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-flyout: 0 16px 40px rgba(0, 0, 0, 0.6);
 }
 
 /* ─── shadcn/ui CSS Variable Bridge ──────────────── */
@@ -131,7 +212,30 @@
   --color-border:             var(--border);
   --color-input:              var(--input);
   --color-ring:               var(--ring);
-  --radius-md:                var(--radius);
+
+  /* Radii */
+  --radius-sm:   var(--radius-sm);
+  --radius-md:   var(--radius-md);
+  --radius-default: var(--radius);
+  --radius-lg:   var(--radius-lg);
+  --radius-pill: var(--radius-pill);
+
+  /* Shadows */
+  --shadow-sm:     var(--shadow-sm);
+  --shadow-card:   var(--shadow-card);
+  --shadow-popup:  var(--shadow-popup);
+  --shadow-modal:  var(--shadow-modal);
+  --shadow-toast:  var(--shadow-toast);
+  --shadow-flyout: var(--shadow-flyout);
+
+  /* Tier colors */
+  --color-tier-s: var(--tier-s);
+  --color-tier-a: var(--tier-a);
+  --color-tier-b: var(--tier-b);
+  --color-tier-c: var(--tier-c);
+  --color-tier-d: var(--tier-d);
+  --color-tier-e: var(--tier-e);
+  --color-tier-f: var(--tier-f);
 
   --color-purple-50: var(--purple-50);
   --color-purple-100: var(--purple-100);
