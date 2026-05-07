@@ -5,13 +5,13 @@ import { useState } from "react";
 type TierLabel = "S" | "A" | "B" | "C" | "D" | "E" | "F";
 
 const TIER_COLORS: Record<TierLabel, string> = {
-  S: "var(--purple-300)",
-  A: "var(--purple-400)",
-  B: "var(--purple-500)",
-  C: "var(--black-400)",
-  D: "var(--black-300)",
-  E: "var(--accent-danger)",
-  F: "var(--red-700)",
+  S: "var(--tier-s)",
+  A: "var(--tier-a)",
+  B: "var(--tier-b)",
+  C: "var(--tier-c)",
+  D: "var(--tier-d)",
+  E: "var(--tier-e)",
+  F: "var(--tier-f)",
 };
 
 // ─── MoviePosterCard ───────────────────────────────
@@ -42,16 +42,15 @@ export function MoviePosterCard({
   const containerStyle: React.CSSProperties = {
     position: "relative",
     display: "block",
-    borderRadius: "6px",
+    borderRadius: "var(--radius)",
     overflow: "hidden",
     aspectRatio: "2 / 3",
     cursor: href ? "pointer" : "default",
-    boxShadow:
-      hovered || focused
-        ? "0 0 0 2px var(--accent-hover), 0 12px 40px rgba(93,51,125,0.35)"
-        : "0 0 0 1px var(--border-subtle)",
-    transition: "box-shadow 200ms ease",
-    outline: "none",
+    transform: hovered ? "scale(1.03)" : "scale(1)",
+    transformOrigin: "center",
+    transition: "transform 200ms var(--ease-enter)",
+    outline: focused ? "2px solid var(--border-focus)" : "none",
+    outlineOffset: "2px",
   };
 
   const imageStyle: React.CSSProperties = {
@@ -60,8 +59,6 @@ export function MoviePosterCard({
     height: "100%",
     objectFit: "cover",
     objectPosition: "center top",
-    transform: hovered ? "scale(1.04)" : "scale(1)",
-    transition: "transform 300ms ease",
   };
 
   const metadataOverlayStyle: React.CSSProperties = {
@@ -76,7 +73,7 @@ export function MoviePosterCard({
 
   const titleStyle: React.CSSProperties = {
     display: "block",
-    fontFamily: "var(--font-body)",
+    fontFamily: "var(--font-display)",
     fontSize: "0.9375rem",
     fontWeight: 600,
     color: "var(--white-50)",
@@ -85,25 +82,26 @@ export function MoviePosterCard({
   };
 
   const metaStyle: React.CSSProperties = {
-    fontSize: "0.75rem",
+    fontFamily: "var(--font-mono)",
+    fontSize: "12px",
     color: "var(--text-muted)",
-    fontFamily: "var(--font-body)",
+    letterSpacing: "0.04em",
   };
 
   const tierBadgeStyle: React.CSSProperties = {
     position: "absolute",
     top: "8px",
-    left: "8px",
-    width: "32px",
-    height: "32px",
+    right: "8px",
+    width: "24px",
+    height: "24px",
     borderRadius: "4px",
     backgroundColor: tier ? TIER_COLORS[tier] : "transparent",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     fontFamily: "var(--font-display)",
-    fontSize: "0.875rem",
-    fontWeight: 700,
+    fontSize: "13px",
+    fontWeight: 900,
     color: "var(--white-50)",
     userSelect: "none",
   };
