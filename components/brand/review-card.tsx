@@ -42,8 +42,8 @@ export function ReviewCard({
     <div
       style={{
         backgroundColor: "var(--bg-surface)",
-        border: "1px solid var(--border-subtle)",
-        borderRadius: "8px",
+        border: "1px solid var(--border-default)",
+        borderRadius: "var(--radius)",
         padding: "20px",
       }}
     >
@@ -96,7 +96,7 @@ export function ReviewCard({
         )}
       </div>
 
-      {/* Film context */}
+      {/* TODO(kit-sync): film context pill not yet documented in design system — keep, contextual on profile/feed views */}
       {film && (
         <div
           style={{
@@ -125,8 +125,8 @@ export function ReviewCard({
           </span>
           <span
             style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "0.75rem",
+              fontFamily: "var(--font-mono)",
+              fontSize: "11px",
               color: "var(--text-muted)",
             }}
           >
@@ -159,13 +159,15 @@ export function ReviewCard({
       >
         <span
           style={{
-            fontFamily: "var(--font-body)",
-            fontSize: "0.75rem",
+            fontFamily: "var(--font-mono)",
+            fontSize: "12px",
             color: "var(--text-muted)",
+            letterSpacing: "0.04em",
           }}
         >
           {date}
         </span>
+        {/* TODO(kit-sync): "Helpful" interaction not yet documented in design system — keep until kit catches up */}
         {helpfulCount !== undefined && (
           <button
             style={{
@@ -206,7 +208,7 @@ const SAMPLE_REVIEWS: ReviewCardProps[] = [
     rating: { variant: "tier", tier: "S" },
     film: { title: "Hereditary", year: 2018 },
     text: "The grief here is real. Aster doesn't let you enjoy the horror — he makes you feel the family falling apart first, so by the time the third act arrives, you're already broken. Grief as horror. The best kind.",
-    date: "3 days ago",
+    date: "apr 28, 2026",
     helpfulCount: 47,
   },
   {
@@ -214,7 +216,7 @@ const SAMPLE_REVIEWS: ReviewCardProps[] = [
     rating: { variant: "star", score: 4.5 },
     film: { title: "The Shining", year: 1980 },
     text: "Kubrick's Overlook isn't haunted the way King wrote it. It's architectural dread. The hotel is wrong at a structural level — the impossible geography, the window that shouldn't exist. Patient as a trap.",
-    date: "1 week ago",
+    date: "apr 21, 2026",
     helpfulCount: 112,
   },
   {
@@ -222,7 +224,7 @@ const SAMPLE_REVIEWS: ReviewCardProps[] = [
     rating: { variant: "star", score: 2.5 },
     film: { title: "Halloween Ends", year: 2022 },
     text: "Messy in ways that feel accidental rather than deliberate. The mid-section belongs to a different film entirely. Not unwatchable — just confused about what it wants to be.",
-    date: "2 months ago",
+    date: "feb 18, 2026",
     helpfulCount: 8,
   },
 ];
