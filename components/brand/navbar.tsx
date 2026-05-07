@@ -22,7 +22,7 @@ export function Navbar({ user, transparent = false }: NavbarProps) {
         zIndex: 50,
         width: "100%",
         height: "64px",
-        backgroundColor: transparent ? "transparent" : "var(--bg-surface)",
+        backgroundColor: transparent ? "transparent" : "var(--bg-primary)",
         borderBottom: "1px solid var(--border-subtle)",
         display: "flex",
         alignItems: "center",
@@ -42,18 +42,13 @@ export function Navbar({ user, transparent = false }: NavbarProps) {
           flexShrink: 0,
         }}
       >
-        <span
-          style={{
-            fontFamily: "var(--font-body)",
-            fontWeight: 800,
-            fontSize: "1rem",
-            color: "var(--white-50)",
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-          }}
-        >
-          ScaryMoovies
-        </span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/assets/logo-white.png"
+          alt="ScaryMoovies"
+          height={28}
+          style={{ display: "block" }}
+        />
       </a>
 
       {/* Center Nav Links */}
@@ -67,7 +62,7 @@ export function Navbar({ user, transparent = false }: NavbarProps) {
           justifyContent: "center",
         }}
       >
-        {["Explore", "Collections"].map((link) => (
+        {["Home", "Explore", "Collections"].map((link) => (
           <a
             key={link}
             href={`/${link.toLowerCase()}`}
@@ -109,7 +104,7 @@ export function Navbar({ user, transparent = false }: NavbarProps) {
             background: "none",
             border: "none",
             cursor: "pointer",
-            color: "var(--text-secondary)",
+            color: "var(--text-muted)",
             padding: "4px",
             display: "flex",
             alignItems: "center",
@@ -119,7 +114,7 @@ export function Navbar({ user, transparent = false }: NavbarProps) {
             (e.currentTarget.style.color = "var(--white-50)")
           }
           onMouseLeave={(e) =>
-            (e.currentTarget.style.color = "var(--text-secondary)")
+            (e.currentTarget.style.color = "var(--text-muted)")
           }
         >
           <Search size={20} strokeWidth={1.5} />
@@ -159,7 +154,7 @@ export function Navbar({ user, transparent = false }: NavbarProps) {
             background: "none",
             border: "none",
             cursor: "pointer",
-            color: "var(--text-secondary)",
+            color: "var(--text-muted)",
             padding: "4px",
             display: "flex",
             alignItems: "center",
@@ -169,7 +164,7 @@ export function Navbar({ user, transparent = false }: NavbarProps) {
             (e.currentTarget.style.color = "var(--white-50)")
           }
           onMouseLeave={(e) =>
-            (e.currentTarget.style.color = "var(--text-secondary)")
+            (e.currentTarget.style.color = "var(--text-muted)")
           }
         >
           <Bell size={20} strokeWidth={1.5} />
