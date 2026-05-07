@@ -44,7 +44,7 @@ export function DosDonts({
                 color: "var(--text-secondary)",
                 marginBottom: "8px",
                 paddingLeft: "12px",
-                borderLeft: "2px solid var(--purple-700)",
+                borderLeft: "2px solid var(--border-subtle)",
                 lineHeight: 1.5,
                 fontFamily: "var(--font-body)",
               }}
@@ -86,7 +86,7 @@ export function DosDonts({
                 color: "var(--text-secondary)",
                 marginBottom: "8px",
                 paddingLeft: "12px",
-                borderLeft: "2px solid var(--red-700)",
+                borderLeft: "2px solid var(--border-subtle)",
                 lineHeight: 1.5,
                 fontFamily: "var(--font-body)",
               }}

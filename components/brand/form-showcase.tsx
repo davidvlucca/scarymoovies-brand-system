@@ -19,7 +19,7 @@ const t = {
   borderFocus: "var(--border-focus)",
   fontBody: "var(--font-body)",
   fontMono: "var(--font-mono)",
-  radius: "6px",
+  radius: "var(--radius-md)",
   radiusFull: "9999px",
 };
 

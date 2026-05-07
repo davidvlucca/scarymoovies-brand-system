@@ -67,12 +67,13 @@
 
   --accent-primary:      var(--purple-400);  /* #5d337d — buttons, active states */
   --accent-hover:        var(--purple-300);  /* #785492 — hover state */
-  --accent-strong:       var(--purple-200);  /* #a28ab4 — readable purple on dark */
+  --accent-strong:       #785492;  /* same hex as --accent-hover; intent differs: inline emphasis, not interactive state */
   --accent-danger:       var(--red-500);
   --accent-danger-hover: var(--red-400);
 
   --border-subtle:       rgba(254, 254, 254, 0.08);
   --border-default:      rgba(254, 254, 254, 0.12);
+  --border-strong:       rgba(254, 254, 254, 0.20);  /* emphatic dividers, active panel borders */
   --border-focus:        var(--purple-300);
 
   /* ─── Tier List Scale ─────────────────────────────── */
@@ -139,7 +140,7 @@
   /* ─── Radii ───────────────────────────────────────── */
   --radius-sm:   3px;    /* small pills, search thumbs */
   --radius-md:   6px;    /* chips */
-  --radius:      8px;    /* default — cards, posters, buttons */
+  --radius:      8px;    /* default — cards, posters, buttons; shadcn bridge redefines as 0.5rem (equal) */
   --radius-lg:   10px;   /* modals */
   --radius-pill: 9999px; /* PYF CTA, tag chips, avatars */
 
@@ -531,6 +532,15 @@ html, body {
 }
 @media (prefers-reduced-motion: reduce) {
   .skeleton::after { display: none; }
+}
+
+/* ─── Form Input Focus ───────────────────────────── */
+/* Inputs use a border-color shift + box-shadow ring, not the global outline —
+   prevents a double focus indicator. */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
 }
 
 /* ─── Sidebar Search ─────────────────────────────── */

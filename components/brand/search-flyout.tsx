@@ -229,7 +229,7 @@ export function SearchFlyout() {
                   <p
                     style={{
                       margin: "2px 0 0",
-                      fontFamily: "var(--font-body)",
+                      fontFamily: "var(--font-mono)",
                       fontSize: "0.75rem",
                       color: "var(--text-muted)",
                     }}

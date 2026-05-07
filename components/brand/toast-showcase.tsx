@@ -16,7 +16,7 @@ const TOAST_CONFIG: Record<
 > = {
   success: {
     icon: <CheckCircle size={16} strokeWidth={1.5} />,
-    accent: "var(--purple-300)",
+    accent: "var(--accent-hover)",
     label: "Success",
   },
   error: {
