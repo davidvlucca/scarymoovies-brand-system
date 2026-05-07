@@ -14,7 +14,7 @@ The sections below walk through each major product surface, naming the specific 
   caption="Homepage: primary discovery surface — hero, Featured, Coming Soon, Scary Picks, Spooky People"
   annotations={[
     { number: 1, x: 10, y: 8, label: "Global navigation — sticky, 64px, black-600 bg" },
-    { number: 2, x: 50, y: 30, label: "Hero — full-width backdrop, Playfair Display 900, PYF Button CTA" },
+    { number: 2, x: 50, y: 30, label: "Hero — full-width backdrop, Inter Black 900, PYF Button CTA" },
     { number: 3, x: 15, y: 58, label: "Section label — Inter 700, all-caps, 0.08em tracking, white-50" },
     { number: 4, x: 50, y: 65, label: "Featured row — landscape 16:9 cards, 8px radius, black-700 fallback" },
     { number: 5, x: 78, y: 65, label: "Coming Soon badge — red-500 bg, white Inter 11px" }
@@ -23,7 +23,7 @@ The sections below walk through each major product surface, naming the specific 
 
 The Homepage is the densest single surface in the product and the one that must establish the cinematic tone within the first viewport.
 
-**Hero.** The hero occupies the full viewport width and roughly 60–70% of the viewport height. A movie backdrop image fills the container via `object-fit: cover`, and a dark overlay — `black-900` at approximately 70% opacity — sits above it. This overlay is the defining technique of the dark-first surface system: it absorbs the image's color noise and ensures that white text remains legible regardless of the poster behind it. The hero title renders in Playfair Display, weight 900, at display scale (56–72px depending on breakpoint), color `white-50`. The PYF Button sits centered beneath the title as the primary CTA, using its resting state: `purple-400` background, `white` label, `PICK YOUR FEAR` text all-caps, pill shape. This is the highest-emphasis placement for that component in the entire product.
+**Hero.** The hero occupies the full viewport width and roughly 60–70% of the viewport height. A movie backdrop image fills the container via `object-fit: cover`, and a dark overlay — `black-900` at approximately 70% opacity — sits above it. This overlay is the defining technique of the dark-first surface system: it absorbs the image's color noise and ensures that white text remains legible regardless of the poster behind it. The hero title renders in Inter Black, weight 900, at display scale (56–72px depending on breakpoint), color `white-50`. The PYF Button sits centered beneath the title as the primary CTA, using its resting state: `purple-400` background, `white` label, `PICK YOUR FEAR` text all-caps, pill shape. This is the highest-emphasis placement for that component in the entire product.
 
 **Featured and Coming Soon rows.** Below the hero, horizontal scroll rows present landscape movie cards. Section labels — "FEATURED", "COMING SOON" — render in Inter, weight 700, all-caps, letter-spacing `0.08em`, color `white-50`, at approximately 14–16px. This caps-plus-tracking treatment is the consistent section-header pattern throughout the app. Landscape cards use a 16:9 aspect ratio, `border-radius: 8px`, and `black-700` as the fallback background before images load. The Coming Soon row adds release date chips — small pill badges in `red-500` background with `white` Inter text at 11px — overlaid at the bottom-left of each card. Red here functions as its designated role: a genre-marking urgency signal, not a decorative accent.
 
@@ -65,7 +65,7 @@ The Explore page is organized as a vertically stacked list of sub-genre sections
   annotations={[
     { number: 1, x: 50, y: 15, label: "Cover banner — object-fit: cover, black-900 gradient overlay" },
     { number: 2, x: 50, y: 28, label: "Avatar — 120-140px, border-radius: 9999px, 3px purple-400 ring" },
-    { number: 3, x: 50, y: 42, label: "Stats row — Playfair Display 700 numerals, Inter 12px labels" },
+    { number: 3, x: 50, y: 42, label: "Stats row — Inter Black 700 numerals, Inter 12px labels" },
     { number: 4, x: 10, y: 60, label: "Watchlist label — standard caps-and-tracking Inter treatment" },
     { number: 5, x: 50, y: 70, label: "Watchlist row — vertical poster thumbnails, 2:3, horizontal scroll" }
   ]}
@@ -77,7 +77,7 @@ The Profile page adapts the cinematic language to a personal context without los
 
 **Avatar.** A centered circular avatar (120–140px diameter, `border-radius: 9999px`, `border: 3px solid purple-400`) sits at the bottom edge of the cover banner, overlapping it by roughly 50%. The `purple-400` ring is the brand's primary accent making its clearest non-interactive appearance: here it marks the user's identity as the most important element on the surface.
 
-**Stats row.** Four stat blocks — Films Watched, Watchlist, Reviews, Hours — are laid out in equal-width columns beneath the avatar. The numeric value renders in Playfair Display, weight 700, at 28–32px, `white-50`. The label beneath each number is Inter Regular, 12px, `white-500`. This pairing (display serif for the number, body sans for the label) applies the typographic hierarchy at a data-display scale: the number carries the emotional weight, the label provides context.
+**Stats row.** Four stat blocks — Films Watched, Watchlist, Reviews, Hours — are laid out in equal-width columns beneath the avatar. The numeric value renders in Inter Black, weight 700, at 28–32px, `white-50`. The label beneath each number is Inter Regular, 12px, `white-500`. This pairing (display serif for the number, body sans for the label) applies the typographic hierarchy at a data-display scale: the number carries the emotional weight, the label provides context.
 
 **Watchlist row.** A horizontal scroll row of vertical poster thumbnails (2:3 ratio, `border-radius: 8px`) represents the user's saved films. The section label "WATCHLIST" follows the standard caps-and-tracking treatment.
 
