@@ -43,7 +43,7 @@ export function UserAvatar({
         overflow: "hidden",
         flexShrink: 0,
         position: "relative",
-        backgroundColor: "var(--bg-elevated)",
+        backgroundColor: "var(--purple-500)",
         border: ring
           ? "2px solid var(--accent-primary)"
           : "1px solid var(--border-subtle)",
