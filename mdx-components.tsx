@@ -46,6 +46,7 @@ import { PrincipleList } from "@/components/brand/principle-list";
 import { SectionHeader } from "@/components/brand/section-header";
 import { CriticalRule } from "@/components/brand/critical-rule";
 import { FilmDetailShowcase } from "@/components/brand/film-detail-showcase";
+import { PYFShowcase } from "@/components/brand/pyf-showcase";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -115,5 +116,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     SectionHeader,
     CriticalRule,
     FilmDetailShowcase,
+    PYFShowcase,
   };
 }
