@@ -15,6 +15,9 @@ interface StarRatingProps {
 
 const STAR_SIZES = { sm: 14, md: 20, lg: 28 };
 
+const STAR_PATH =
+  "M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z";
+
 function Star({
   fill,
   size,
@@ -22,7 +25,27 @@ function Star({
   fill: "empty" | "half" | "full";
   size: number;
 }) {
-  const id = `half-${Math.random().toString(36).slice(2, 7)}`;
+  if (fill === "half") {
+    return (
+      <div
+        aria-hidden="true"
+        style={{ position: "relative", width: size, height: size, flexShrink: 0 }}
+      >
+        <svg width={size} height={size} viewBox="0 0 24 24" style={{ position: "absolute", inset: 0 }}>
+          <path d={STAR_PATH} fill="var(--text-muted)" />
+        </svg>
+        <svg
+          width={size}
+          height={size}
+          viewBox="0 0 24 24"
+          style={{ position: "absolute", inset: 0, clipPath: "inset(0 50% 0 0)" }}
+        >
+          <path d={STAR_PATH} fill="var(--accent-primary)" />
+        </svg>
+      </div>
+    );
+  }
+
   return (
     <svg
       width={size}
@@ -31,26 +54,9 @@ function Star({
       style={{ flexShrink: 0 }}
       aria-hidden="true"
     >
-      {fill === "half" && (
-        <defs>
-          <linearGradient id={id}>
-            <stop offset="50%" stopColor="var(--accent-hover)" />
-            <stop offset="50%" stopColor="var(--bg-elevated)" />
-          </linearGradient>
-        </defs>
-      )}
       <path
-        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-        fill={
-          fill === "full"
-            ? "var(--accent-hover)"
-            : fill === "half"
-            ? `url(#${id})`
-            : "var(--bg-elevated)"
-        }
-        stroke="var(--accent-hover)"
-        strokeWidth="1"
-        strokeLinejoin="round"
+        d={STAR_PATH}
+        fill={fill === "full" ? "var(--accent-primary)" : "var(--text-muted)"}
       />
     </svg>
   );
@@ -63,7 +69,8 @@ export function StarRating({
   size = "md",
 }: StarRatingProps) {
   const [hovered, setHovered] = useState<number | null>(null);
-  const displayed = hovered ?? value;
+  // Round to nearest 0.5 so arbitrary floats (e.g. 4.3) display as half-stars
+  const displayed = Math.round((hovered ?? value) * 2) / 2;
   const px = STAR_SIZES[size];
 
   const getStarFill = (
